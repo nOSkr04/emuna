@@ -17,7 +17,7 @@ const StepOne = memo(({ stepOne, step }:Props) => {
       onPress={() => {
         stepOne(2);
       }}
-      style={step.includes(2) ?styles.unUserContainer:   styles.userContainer}>
+      style={step.includes(2) ? styles.unUserContainer:   styles.userContainer}>
         <Text style={step.includes(2) ? styles.unUserMessage : styles.userMessage}>Тэгье</Text>
       </TouchableOpacity>
     </>
@@ -36,17 +36,8 @@ const styles = StyleSheet.create({
     alignItems     : "center",
     borderRadius   : 16,
     marginTop      : 24,
-    backgroundColor: Colors.strokeDark
-  },
-  userContainer: {
-    marginRight   : 18,
-    alignSelf     : "flex-end",
-    borderWidth   : 1,
-    borderColor   : Colors.primary,
-    justifyContent: "center",
-    alignItems    : "center",
-    borderRadius  : 16,
-    marginTop     : 24,
+    backgroundColor: Colors.chatBotBg,
+    
   },
   unUserMessage: {
     fontSize         : 14,
@@ -55,13 +46,26 @@ const styles = StyleSheet.create({
     paddingVertical  : 8,
     paddingHorizontal: 16
   },
+  userContainer: {
+    marginRight    : 18,
+    alignSelf      : "flex-end",
+    borderWidth    : 1,
+    borderColor    : Colors.primary,
+    justifyContent : "center",
+    alignItems     : "center",
+    borderRadius   : 16,
+    marginTop      : 24,
+    backgroundColor: Colors.chatBotBg
+  },
   userMessage: {
     fontSize         : 14,
     fontFamily       : "Mon500",
     color            : Colors.newText,
     opacity          : 0.72,
     paddingVertical  : 8,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
+    letterSpacing    : 0.25,
+    lineHeight       : 20
   },
 });
 

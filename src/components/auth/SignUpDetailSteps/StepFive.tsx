@@ -14,8 +14,8 @@ const StepFive = memo(({ heightInput, height, weight } : Props) => {
     <>
       <EmunaChats chat1="Таны биеийн өндөр, жин хэд вэ?" />
       {!heightInput && (
-        <TouchableOpacity style={styles.userContainer}>
-          <Text style={styles.userMessage}>{`${height}/${weight}`}</Text>
+        <TouchableOpacity style={styles.unUserContainer}>
+          <Text style={styles.unUserMessage}>{`${height} см/${weight} кг`}</Text>
         </TouchableOpacity>
             )}
     </>
@@ -25,25 +25,25 @@ const StepFive = memo(({ heightInput, height, weight } : Props) => {
 StepFive.displayName="StepFive";
 
 const styles = StyleSheet.create({
-    userContainer: {
-      marginRight    : 18,
-      alignSelf      : "flex-end",
-      borderWidth    : 1,
-      borderColor    : Colors.primary,
-      justifyContent : "center",
-      alignItems     : "center",
-      borderRadius   : 16,
-      marginTop      : 24,
-      backgroundColor: Colors.primary
-    },
-    userMessage: {
-      fontSize         : 14,
-      fontFamily       : "Mon500",
-      opacity          : 0.72,
-      paddingVertical  : 8,
-      paddingHorizontal: 16,
-      color            : Colors.white,
-    },
+  unUserContainer: {
+    marginRight    : 18,
+    alignSelf      : "flex-end",
+    borderWidth    : 1,
+    borderColor    : Colors.chatBotBg,
+    justifyContent : "center",
+    alignItems     : "center",
+    borderRadius   : 16,
+    marginTop      : 24,
+    backgroundColor: Colors.chatBotBg,
+    
+  },
+  unUserMessage: {
+    fontSize         : 14,
+    fontFamily       : "Mon500",
+    color            : Colors.darkGrey,
+    paddingVertical  : 8,
+    paddingHorizontal: 16
+  },
   });
 
 export default StepFive;

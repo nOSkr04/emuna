@@ -9,7 +9,7 @@ const StepSeven = memo(({ firstName } : {firstName: string}) => {
       <EmunaChats chat1={`Баярлалаа, ${firstName}. Би таниас хангалттай мэдээлэл цуглууллаа. Одоо би зөвхөн танд зориулсан зөвлөгөөг хүргэж чадхаар боллоо.`} />
       <TouchableOpacity
       style={styles.userContainer}>
-        <Text style={styles.userMessage}>Тэгье</Text>
+        <Text style={styles.userMessage}>Үргэлжлүүлэх</Text>
       </TouchableOpacity>
     </>
   );

@@ -15,7 +15,7 @@ export const homeScreenOption = {
 };
 export const profileScreenOptions = {
   headerShadowVisible: false,
-  // headerStyle        : styles.profileHeader,
+  headerStyle        : styles.profileHeader,
   headerTitle        : "",
 };
 export const loginScreenOptions = {

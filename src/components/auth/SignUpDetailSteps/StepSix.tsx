@@ -121,15 +121,16 @@ const styles = StyleSheet.create({
     justifyContent : "center",
     alignItems     : "center",
     borderRadius   : 16,
-    marginTop      : 8,
-    backgroundColor: Colors.strokeDark,
+    marginTop      : 12,
+    backgroundColor: Colors.chatBotBg,
+    
   },
   unUserMessage: {
     fontSize         : 14,
     fontFamily       : "Mon500",
     color            : Colors.darkGrey,
     paddingVertical  : 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
 });
 

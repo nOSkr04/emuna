@@ -8,9 +8,12 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.primary
   },
   softBg: {
-    backgroundColor: Colors.softPrimary
+    backgroundColor: Colors.softBg
   },
   profileHeader: {
-    backgroundColor: Colors.primary
+    backgroundColor        : Colors.primary,
+    borderBottomLeftRadius : 16,
+    borderBottomRightRadius: 16,
+    height                 : 100
   }
 });

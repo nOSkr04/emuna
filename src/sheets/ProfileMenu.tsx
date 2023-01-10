@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../constants/Colors";
 import BackIcon from "../../assets/svg/xButotn.svg";
@@ -10,12 +10,17 @@ import SheildIcon from "../../assets/svg/ShieldCheck.svg";
 import Button from "../components/Button";
 import { useDispatch } from "react-redux";
 import { authLogout } from "../store/authSlice";
+import Modal from "react-native-modal";
 const ProfileMenuSheets = memo(() => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const logout = async () => {
     dispatch(authLogout());
     navigation.goBack();
+  };
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
   };
   return (
     <View style={styles.container}>
@@ -23,22 +28,31 @@ const ProfileMenuSheets = memo(() => {
         <BackIcon />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ProfileEditScreen")} style={styles.contentContainer}>
-        <UserIcon/>
+        <UserIcon />
         <Text style={styles.contentTItle}>Хувийн мэдээлэл</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contentContainer}>
-        <SaveIcon/>
+        <SaveIcon />
         <Text style={styles.contentTItle}>Хадгалсан эмүүд</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contentContainer}>
-        <SettingsIcon/>
+        <SettingsIcon />
         <Text style={styles.contentTItle}>Тохиргоо</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contentContainer}>
-        <SheildIcon/>
+        <SheildIcon />
         <Text style={styles.contentTItle}>Тусламж</Text>
       </TouchableOpacity>
-      <Button onPress={logout} style={styles.myButton} title="Системээс гарах" titleStyle={styles.myButtonTitle}  />
+      <Button onPress={toggleModal} style={styles.myButton} title="Системээс гарах" titleStyle={styles.myButtonTitle} />
+      <Modal isVisible={isModalVisible}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>Та системээс гарахдаа итгэлтэй байна уу?</Text>
+          <View style={styles.buttonContainer}>
+            <Button onPress={toggleModal} style={[styles.modalButton, styles.visibleButton]} title="Болих" titleStyle={styles.visibleTitle} />
+            <Button danger={true} onPress={logout} style={styles.modalButton} title="Тийм" />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 });
@@ -62,21 +76,49 @@ const styles = StyleSheet.create({
     alignItems      : "center",
     marginHorizontal: 16,
     paddingVertical : 10,
-    marginTop       : 10
+    marginTop       : 10,
   },
   contentTItle: {
     fontSize     : 14,
     marginLeft   : 16,
     fontFamily   : "Mon500",
     lineHeight   : 20,
-    letterSpacing: 0.25
+    letterSpacing: 0.25,
   },
   myButton: {
     marginHorizontal: 16,
     marginTop       : 20,
-    backgroundColor : Colors.PrimarySoft
+    backgroundColor : Colors.PrimarySoft,
   },
   myButtonTitle: {
-    color: Colors.text
-  }
+    color: Colors.text,
+  },
+  modalContainer: {
+    backgroundColor: Colors.white,
+    borderRadius   : 24,
+  },
+  modalTitle: {
+    fontSize        : 15,
+    fontFamily      : "Mon700",
+    lineHeight      : 24,
+    letterSpacing   : 0.15,
+    color           : Colors.newText,
+    marginHorizontal: 24,
+    marginVertical  : 32,
+  },
+  buttonContainer: {
+    flexDirection   : "row",
+    marginHorizontal: 24,
+    marginBottom    : 32,
+  },
+  modalButton: {
+    width: "50%",
+  },
+  visibleButton: {
+    backgroundColor: Colors.white,
+  },
+  visibleTitle: {
+    opacity: 0.72,
+    color  : Colors.newText,
+  },
 });

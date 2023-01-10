@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     alignItems     : "center",
     borderRadius   : 16,
     marginTop      : 24,
-    backgroundColor: Colors.strokeDark
+    backgroundColor: Colors.chatBotBg,
+    
   },
   unUserMessage: {
     fontSize         : 14,

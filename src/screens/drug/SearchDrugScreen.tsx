@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import {  StyleSheet, View } from "react-native";
 import React, { memo } from "react";
 import { FlashList } from "@shopify/flash-list";
 import SearchDrug from "../../components/drug/SearchDrug";
@@ -22,11 +22,10 @@ const SearchDrugScreen = memo(() => {
       </View>
       <FlashList
       data={data}
-      estimatedItemSize={100}
+      estimatedItemSize={66}
       renderItem={({ item }) => {
         return <SearchDrug name={item.name} />;
       }}
-      style={styles.container}
       />
       {/* <EmptyResultDrug/> */}
     </View>
@@ -38,7 +37,7 @@ SearchDrugScreen.displayName = "SearchDrugScreen";
 const styles = StyleSheet.create({
   container: {
     flex           : 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.transparent,
   },
   
 });

@@ -15,8 +15,8 @@ const StepFour = memo(({ birthInput, year, month, day } : Props) => {
     <>
       <EmunaChats chat1="Та надад төрсөн он, сар аа хэлж өгөөч?" />
       {!birthInput && (
-        <TouchableOpacity style={styles.userContainer}>
-          <Text style={styles.userMessage}>{`${year}/${month}/${day}`}</Text>
+        <TouchableOpacity style={styles.unUserContainer}>
+          <Text style={styles.unUserMessage}>{`${year}.${month}.${day}`}</Text>
         </TouchableOpacity>
             )}
     </>
@@ -26,28 +26,25 @@ const StepFour = memo(({ birthInput, year, month, day } : Props) => {
 StepFour.displayName="StepFour";
 
 const styles = StyleSheet.create({
-
-    userContainer: {
-      marginRight    : 18,
-      alignSelf      : "flex-end",
-      borderWidth    : 1,
-      borderColor    : Colors.primary,
-      justifyContent : "center",
-      alignItems     : "center",
-      borderRadius   : 16,
-      marginTop      : 24,
-      backgroundColor: Colors.primary
-    },
-
-    userMessage: {
-      fontSize         : 14,
-      fontFamily       : "Mon500",
-    //   color            : Colors.newText,
-      opacity          : 0.72,
-      paddingVertical  : 8,
-      paddingHorizontal: 16,
-      color            : Colors.white,
-    },
+  unUserContainer: {
+    marginRight    : 18,
+    alignSelf      : "flex-end",
+    borderWidth    : 1,
+    borderColor    : Colors.chatBotBg,
+    justifyContent : "center",
+    alignItems     : "center",
+    borderRadius   : 16,
+    marginTop      : 24,
+    backgroundColor: Colors.chatBotBg,
+    
+  },
+  unUserMessage: {
+    fontSize         : 14,
+    fontFamily       : "Mon500",
+    color            : Colors.darkGrey,
+    paddingVertical  : 8,
+    paddingHorizontal: 16
+  },
   });
 
 export default StepFour;

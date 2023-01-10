@@ -5,16 +5,22 @@ import { Colors } from "../constants/Colors";
 import Button from "../components/Button";
 import Modal from "react-native-modal";
 import WarningIcon from "../../assets/svg/checked-checkbox.svg";
+import { useNavigation } from "@react-navigation/native";
 const PharmacistRequestSheet = () => {
+  const navigation = useNavigation();
     const [isModalVisible, setIsModalVisible] = useState(false);
   const onCancel = () => {
     setIsModalVisible(!isModalVisible);
   };
   const onAdd = () => {
-    console.log("object");
+    navigation.goBack();
   };
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
+  };
+  const deleteAlert= () => {
+    setIsModalVisible(!isModalVisible);
+    navigation.goBack();
   };
   return (
     <View>
@@ -34,7 +40,7 @@ const PharmacistRequestSheet = () => {
           <Text style={styles.modalDescription}>Хэрвээ та татгалзвал сануулга устахыг анхаарна уу!</Text>
           <View style={styles.buttonContainer}>
             <Button danger={true} onPress={toggleModal} style={styles.dangerButton} title={"Болих"} titleStyle={styles.textColor} />
-            <Button danger={true} onPress={toggleModal} style={styles.button} title={"Тийм"} />
+            <Button danger={true} onPress={deleteAlert} style={styles.button} title={"Тийм"} />
           </View>
           <View style={styles.mv8} />
         </View>

@@ -49,19 +49,24 @@ const styles = StyleSheet.create({
         width          : width * 0.7,
         padding        : 16,
         borderRadius   : 16,
+       
       },
       emunaChats: {
-        fontSize  : 14,
-        fontFamily: "Mon500",
-        opacity   : 0.72,
-        color     : Colors.text,
+        fontSize     : 14,
+        fontFamily   : "Mon500",
+        opacity      : 0.72,
+        color        : Colors.text,
+        lineHeight   : 24,
+        letterSpacing: 0.5
       },
       emunaChats1: {
-        fontSize  : 14,
-        fontFamily: "Mon400",
-        marginTop : 16,
-        opacity   : 0.72,
-        color     : Colors.text,
+        fontSize     : 14,
+        fontFamily   : "Mon400",
+        marginTop    : 16,
+        opacity      : 0.72,
+        color        : Colors.text,
+        lineHeight   : 24,
+        letterSpacing: 0.5
       },
 });
 
