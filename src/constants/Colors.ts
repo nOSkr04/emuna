@@ -38,4 +38,5 @@ export abstract class Colors  {
  static warning = "#FAA219";
  static timeBg = "#F4F6F9";
  static PrimarySoft = "#EBF9F8";
+ static profileBg = "#E9F7F7";
 }

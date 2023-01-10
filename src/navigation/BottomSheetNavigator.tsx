@@ -7,6 +7,7 @@ import { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sh
 import PharmacistRequestSheet from "../sheets/PharmacistRequest";
 import DrugStyleChooseSheet from "../sheets/addDrug/DrugStyleChoose";
 import DosageChooseSheet from "../sheets/addDrug/DosageChoose";
+import ProfileMenuSheets from "../sheets/ProfileMenu";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -31,6 +32,7 @@ const BottomSheetNavigator = () => {
           snapPoints       : ["40%"],
           index            : 1,
           topInset         : insets.top,
+          
         }}
       />
       <Screen
@@ -46,6 +48,16 @@ const BottomSheetNavigator = () => {
       <Screen
         component={DosageChooseSheet}
         name="DosageChooseSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["80%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={ProfileMenuSheets}
+        name="ProfileMenuSheets"
         options={{
           backdropComponent: renderBackdrop,
           snapPoints       : ["80%"],

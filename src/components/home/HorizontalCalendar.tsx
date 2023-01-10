@@ -48,7 +48,7 @@ const isTodays = (date: Date): boolean => {
   return isToday(date);
 };
 
-const generateHorizontalCalendarDates = (days:number): Date[] => {
+const generateHorizontalCalendarDates = (days: number): Date[] => {
   const today = new Date();
   const firstDay = subDays(today, days);
   return new Array(days * 2).fill(undefined).map((entry, index) => {
@@ -61,7 +61,7 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
   const [index, setIndex] = useState(0);
   useEffect(() => {
     ref.current?.scrollToIndex({
-      index,
+      index      ,
       animated    : true,
       viewPosition: 0,
       viewOffset  : 10,
@@ -87,13 +87,13 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
       />
     );
   };
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIndex(14);
-  //   }, 5000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIndex(14);
+    }, 5000);
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.headerText}>
@@ -115,7 +115,7 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
   );
 });
 
-HorizontalCalendar.displayName="HorizontalCalendar";
+HorizontalCalendar.displayName = "HorizontalCalendar";
 
 const styles = StyleSheet.create({
   dayStyle: {
@@ -126,17 +126,17 @@ const styles = StyleSheet.create({
     backgroundColor        : Colors.primary,
     paddingBottom          : 20,
     borderBottomRightRadius: 20,
-    borderBottomLeftRadius : 20
+    borderBottomLeftRadius : 20,
   },
   headerText: {
     flexDirection   : "row",
     marginHorizontal: 14,
-    paddingBottom   : 10
+    paddingBottom   : 10,
   },
   text: {
     fontSize  : 16,
     fontFamily: "semibold",
-    color     : Colors.white
+    color     : Colors.white,
   },
   contentContainer: {
     alignItems: "center",
@@ -163,11 +163,11 @@ const styles = StyleSheet.create({
     borderRadius  : 100,
   },
   activeDateStr: {
-    color: Colors.black
+    color: Colors.black,
   },
   unActiveDateStr: {
     color: Colors.white,
-  }
+  },
 });
 
 export default HorizontalCalendar;

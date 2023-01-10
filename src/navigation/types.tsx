@@ -34,6 +34,7 @@ export type BottomSheetParamList = {
   PharmacistRequestSheet: undefined;
   DrugStyleChooseSheet: undefined;
   DosageChooseSheet: undefined;
+  ProfileMenuSheets: undefined
 };
 export type TopTabParamList = {
   DrugDetail: {

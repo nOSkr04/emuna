@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "998912254637",
+    "project_id": "emuna-15eaf",
+    "storage_bucket": "emuna-15eaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998912254637:android:a083a15e316557538d9c24",
+        "android_client_info": {
+          "package_name": "mn.emuna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998912254637-mbemodlsj0q5r898sl2gdqbtvu4urbaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4fT3BK1ExCl_NcVjD1We47WvMkFt02fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998912254637-mbemodlsj0q5r898sl2gdqbtvu4urbaf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

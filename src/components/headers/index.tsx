@@ -1,21 +1,22 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Colors } from "../../constants/Colors";
 import BackArrow from "./BackArrow";
 import BackButton from "./BackButton";
 import SkipButton from "./SkipButton";
 import HeaderLeft from "../home/HeaderLeft";
 import HeaderRight from "../home/HeaderRight";
-import { View } from "react-native";
+import {  View } from "react-native";
+import { styles } from "./styles";
 export const homeScreenOption = {
   headerShadowVisible: false,
   headerTitle        : "",
-  headerStyle        : { backgroundColor: Colors.primary, },
+  headerStyle        : styles.primaryBg,
   headerLeft         : () => <HeaderLeft />,
   headerRight        : () => <HeaderRight />,
 };
 export const profileScreenOptions = {
   headerShadowVisible: false,
-  headerTitle        : "Профайл",
+  // headerStyle        : styles.profileHeader,
+  headerTitle        : "",
 };
 export const loginScreenOptions = {
   headerShadowVisible: false,
@@ -37,13 +38,13 @@ export const addDrugScreenOptions = {
   headerShadowVisible: false,
   headerTitle        : "",
   headerLeft         : () => <BackArrow/>,
-  headerStyle        : { backgroundColor: Colors.softBg, }
+  headerStyle        : styles.softBg
 };
 export const barCodeScannerScreenOptions = {
   headerShadowVisible: false,
   headerTitle        : "",
   headerLeft         : () => <BackButton/>,
-  headerStyle        : { backgroundColor: Colors.softBg, }
+  headerStyle        : styles.softBg
 };
 
 export const addDrugAlertOptions = {

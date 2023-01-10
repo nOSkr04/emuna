@@ -1,38 +1,35 @@
-import { Button,  Text,  View } from "react-native";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import LoginField from "../../components/auth/LoginField";
-import { authLogin, authLogout } from "../../store/authSlice";
-import { AuthApi } from "../../apis";
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { Colors } from "../../constants/Colors";
+import { useSelector } from "react-redux";
 import { IAuth } from "../../interfaces/IAuth";
+import { useNavigation } from "@react-navigation/native";
+import ProfileHeaderLeft from "../../components/profile/ProfileHeaderLeft";
+import ProfileHeaderRight from "../../components/profile/ProfileHeaderRight";
 
 const ProfileScreen = () => {
-  const dispatch = useDispatch();
-  const [username, setUsername] = useState("97014400");
-  const [password, setPassword] = useState("goodtech123");
-   const { user, accessToken } = useSelector((state: { auth: IAuth }) => state.auth);
-  const onLogin = async () => {
-    try {
-      const data = await AuthApi.login(username, password);
-      console.log(data);
-      dispatch(authLogin(data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const logout = async () => {
-    dispatch(authLogout());
-  };
-
+  const navigation = useNavigation();
+  const { user } = useSelector((state: { auth: IAuth }) => state.auth);
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft : () => <ProfileHeaderLeft firstName={user.firstName} profile={"https://images.pexels.com/photos/14792109/pexels-photo-14792109.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} />,
+      headerRight: () => <ProfileHeaderRight  />
+    });
+  }, []);
   return (
-    <View>
-      <LoginField password={password} setPassword={setPassword} setUsername={setUsername} username={username} />
-      <Text>{JSON.stringify(user)}</Text>
-      <Text>{JSON.stringify(accessToken)}</Text>
-      <Button onPress={onLogin} title="go" />
-      <Button onPress={logout} title="goLogout" />
+    <View style={styles.container}>
+      <Text>ProfileScreen</Text>
     </View>
   );
 };
 
 export default ProfileScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex           : 1,
+    backgroundColor: Colors.profileBg
+  }
+});

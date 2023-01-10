@@ -1,4 +1,4 @@
-import { HttpRequest } from "../utils/aaa";
+import { HttpRequest } from "../utils";
 
 const httpRequest = new HttpRequest();
 
