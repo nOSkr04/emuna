@@ -52,3 +52,8 @@ export const addDrugAlertOptions = {
   headerTitle        : "Эмийн сануулга үүсгэх",
   headerLeft         : () => <BackButton/>
 };
+export const profileEditScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Хувийн мэдээлэл",
+  headerLeft         : () => <BackButton/>
+};

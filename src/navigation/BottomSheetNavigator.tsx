@@ -60,7 +60,7 @@ const BottomSheetNavigator = () => {
         name="ProfileMenuSheets"
         options={{
           backdropComponent: renderBackdrop,
-          snapPoints       : ["80%"],
+          snapPoints       : ["50%"],
           index            : 1,
           topInset         : insets.top,
         }}

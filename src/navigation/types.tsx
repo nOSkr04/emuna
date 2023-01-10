@@ -20,6 +20,7 @@ export type RootStackParamList = {
   SearchBarcodeScreen: undefined;
   DrugDetailScreen: undefined;
   AddDrugAlertScreen:{ pill: string | undefined, bgColor: string | undefined  }
+  ProfileEditScreen: undefined
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;

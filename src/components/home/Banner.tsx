@@ -1,9 +1,9 @@
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Dimensions, ImageBackground, StyleSheet,  View } from "react-native";
+import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 
 const { width } = Dimensions.get("window");
-const Banner = ({ ads }: { ads: string }) => {
+const Banner = memo(({ ads }: { ads: string }) => {
   return (
     <ImageBackground imageStyle={styles.image} source={{ uri: ads }} style={styles.container}>
       <View style={styles.indicatorContainer}>
@@ -13,7 +13,9 @@ const Banner = ({ ads }: { ads: string }) => {
       </View>
     </ImageBackground>
   );
-};
+});
+
+Banner.displayName = "Banner";
 
 export default Banner;
 

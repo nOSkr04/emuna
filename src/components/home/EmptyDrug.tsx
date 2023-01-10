@@ -1,10 +1,10 @@
 import { StyleSheet, Text,  View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import PlusIcon from "../../../assets/svg/plus.svg";
 import Button from "../Button";
-const EmptyDrug = () => {
+const EmptyDrug = memo(() => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -13,9 +13,11 @@ const EmptyDrug = () => {
      
     </View>
   );
-};
+});
 
 export default EmptyDrug;
+
+EmptyDrug.displayName ="EmptyDrug";
 
 const styles = StyleSheet.create({
   container: {

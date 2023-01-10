@@ -20,6 +20,7 @@ import {
   barCodeScannerScreenOptions,
   loginScreenOptions,
   otpVerifyScreenOptions,
+  profileEditScreenOptions,
   userDetailRegisterScreenOptions,
 } from "../components/headers";
 import SignUpScreen from "../screens/auth/SignUp";
@@ -32,6 +33,7 @@ import AddDrugAlertScreen from "../screens/drug/AddDrugAlert";
 import { useEffect } from "react";
 import * as Notifications from "expo-notifications";
 import { useNotification } from "../hooks/useNotification";
+import ProfileEditScreen from "../screens/profile/ProfileEditScreen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -77,6 +79,7 @@ function RootNavigator() {
           <Stack.Screen component={SearchBarcodeScreen} name="SearchBarcodeScreen" options={barCodeScannerScreenOptions} />
           <Stack.Screen component={DrugDetailScreen} name="DrugDetailScreen" options={{ headerShown: false }} />
           <Stack.Screen component={AddDrugAlertScreen} name="AddDrugAlertScreen" options={addDrugAlertOptions} />
+          <Stack.Screen component={ProfileEditScreen} name="ProfileEditScreen" options={profileEditScreenOptions} />
         </Stack.Group>
       ) : (
         <Stack.Group

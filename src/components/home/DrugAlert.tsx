@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import PlusCircle from "../../../assets/svg/PlusCircle.svg";
 import RightIcon from "../../../assets/svg/CaretRight.svg";
 import { useNavigation } from "@react-navigation/native";
-const DrugAlert = () => {
+const DrugAlert = memo(() => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -22,7 +22,9 @@ const DrugAlert = () => {
       </TouchableOpacity>
     </View>
   );
-};
+});
+
+DrugAlert.displayName="DrugAlert";
 
 export default DrugAlert;
 

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import SearchIcon from "../../../assets/svg/search.svg";
 import { Colors } from "../../constants/Colors";
 import Button from "../Button";
 import PlusIcon from "../../../assets/svg/plus.svg";
-const EmptyResultDrug = () => {
+const EmptyResultDrug = memo(() => {
   return (
     <View style={styles.container}>
       <SearchIcon color={Colors.white} height={70} width={70} />
@@ -13,7 +13,9 @@ const EmptyResultDrug = () => {
       <Button iconRight={<PlusIcon height={15} style={styles.icon} width={15} />} onPress={() => console.log("first")} style={styles.button} title="Гараар оруулах"   />
     </View>
   );
-};
+});
+
+EmptyResultDrug.displayName = "EmptyResultDrug";
 
 export default EmptyResultDrug;
 
