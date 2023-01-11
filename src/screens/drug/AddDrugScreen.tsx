@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import SearchIcon from "../../../assets/svg/search.svg";
@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import QRCode from "react-native-qrcode-svg";
 import { useSelector } from "react-redux";
 import { IAuth } from "../../interfaces/IAuth";
-const AddDrugScreen = () => {
+const AddDrugScreen = memo(() => {
   const navigaiton = useNavigation();
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
   const logo = require("../../../assets/images/logo.png");
@@ -36,7 +36,9 @@ const AddDrugScreen = () => {
       </View>
     </View>
   );
-};
+});
+
+AddDrugScreen.displayName = "AddDrugScreen";
 
 export default AddDrugScreen;
 

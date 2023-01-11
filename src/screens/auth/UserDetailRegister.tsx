@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import BirthDayField from "../../components/auth/BirthDayField";
 import IconButton from "../../../assets/svg/sent.svg";
@@ -10,7 +10,7 @@ import StepFour from "../../components/auth/SignUpDetailSteps/StepFour";
 import StepFive from "../../components/auth/SignUpDetailSteps/StepFive";
 import StepSix from "../../components/auth/SignUpDetailSteps/StepSix";
 import StepSeven from "../../components/auth/SignUpDetailSteps/StepSeven";
-const UserDetailScreen = () => {
+const UserDetailScreen = memo(() => {
   const [step, setStep] = useState([1]);
   const [firstName, setFirstName] = useState("");
   const [nameInput, setNameInput] = useState(false);
@@ -189,7 +189,9 @@ const UserDetailScreen = () => {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-};
+});
+
+UserDetailScreen.displayName = "UserDetailScreen";
 
 export default UserDetailScreen;
 

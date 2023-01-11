@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Colors } from "../constants/Colors";
 
 type Props = {
@@ -8,7 +8,7 @@ onChangeText: (text: string) => void
 title:string;
 icon: React.ReactElement
 }
-const IconInput = ({ value,onChangeText,title,icon }: Props) => {
+const IconInput = memo(({ value,onChangeText,title,icon }: Props) => {
   return (
     <>
       <Text style={styles.inputLabel}>{title}</Text>
@@ -22,7 +22,9 @@ const IconInput = ({ value,onChangeText,title,icon }: Props) => {
       </View>
     </>
   );
-};
+});
+
+IconInput.displayName = "IconInput";
 
 export default IconInput;
 

@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import PillIcon1 from "../../../assets/svg/1.svg";
 import PillIcon2 from "../../../assets/svg/2.svg";
@@ -10,7 +10,7 @@ import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
-const DrugStyleChooseSheet = () => {
+const DrugStyleChooseSheet = memo(() => {
   const navigation = useNavigation();
   const [choosedPill, setChoosedPill] = useState("Шахмал");
   const [chooseBg, setChooseBg] = useState("#FCC314");
@@ -97,7 +97,9 @@ const DrugStyleChooseSheet = () => {
       />
     </View>
   );
-};
+});
+
+DrugStyleChooseSheet.displayName="DrugStyleChooseSheet";
 
 export default DrugStyleChooseSheet;
 

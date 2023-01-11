@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import ClocIcon from "../../../assets/svg/clock.svg";
 import { Colors } from "../../constants/Colors"; 
-const DrugHeaderContent = () => {
+const DrugHeaderContent = memo(() => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Миний эм</Text>
@@ -11,8 +11,9 @@ const DrugHeaderContent = () => {
       </TouchableOpacity>
     </View>
   );
-};
+});
 
+DrugHeaderContent.displayName="DrugHeaderContent";
 
 export default DrugHeaderContent;
 

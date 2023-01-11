@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { Colors } from "../../constants/Colors";
 import { useSelector } from "react-redux";
 import { IAuth } from "../../interfaces/IAuth";
@@ -13,7 +13,7 @@ import { FlashList } from "@shopify/flash-list";
 import MyDrug from "../../components/profile/MyDrug";
 import DrugHeaderContent from "../../components/profile/DrugHeaderContent";
 
-const ProfileScreen = () => {
+const ProfileScreen = memo(() => {
   const navigation = useNavigation();
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
   const data = [
@@ -44,7 +44,9 @@ const ProfileScreen = () => {
       />
     </View>
   );
-};
+});
+
+ProfileScreen.displayName= "ProfileScreen";
 
 export default ProfileScreen;
 

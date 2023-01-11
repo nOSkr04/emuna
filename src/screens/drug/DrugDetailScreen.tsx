@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -11,7 +11,7 @@ import RxIcon from "../../../assets/svg/rx.svg";
 import DrugDetail from "./TopTabDetail/DrugDetail";
 import DrugSummary from "./TopTabDetail/DrugSummary";
 import Button from "../../components/Button";
-const DrugDetailScreen = () => {
+const DrugDetailScreen = memo(() => {
   const insents = useSafeAreaInsets();
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
@@ -90,7 +90,9 @@ const DrugDetailScreen = () => {
       <Button onPress={() => navigation.navigate("AddDrugAlertScreen")} style={styles.button}  title="Үргэлжлүүлэх" />
     </View>
   );
-};
+});
+
+DrugDetailScreen.displayName = "DrugDetailScreen";
 
 export default DrugDetailScreen;
 

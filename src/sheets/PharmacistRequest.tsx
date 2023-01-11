@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
-import React,{ useState } from "react";
+import React,{ memo, useState } from "react";
 import PlusCircleIcon from "../../assets/svg/PlusCircle.svg";
 import { Colors } from "../constants/Colors";
 import Button from "../components/Button";
 import Modal from "react-native-modal";
 import WarningIcon from "../../assets/svg/checked-checkbox.svg";
 import { useNavigation } from "@react-navigation/native";
-const PharmacistRequestSheet = () => {
+const PharmacistRequestSheet = memo(() => {
   const navigation = useNavigation();
     const [isModalVisible, setIsModalVisible] = useState(false);
   const onCancel = () => {
@@ -47,7 +47,9 @@ const PharmacistRequestSheet = () => {
       </Modal>
     </View>
   );
-};
+});
+
+PharmacistRequestSheet.displayName = "PharmacistRequestSheet";
 
 export default PharmacistRequestSheet;
 

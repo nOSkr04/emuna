@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { TopTabParamList } from "../../../navigation/types";
 import { Colors } from "../../../constants/Colors";
@@ -7,7 +7,7 @@ import WarningIcon from "../../../../assets/svg/WarningCircle.svg";
 import SnowIcon from "../../../../assets/svg/Snowflake.svg";
 type PropsPage = NativeStackScreenProps<TopTabParamList, "DrugDetail">;
 
-const DrugDetail = (props: PropsPage) => {
+const DrugDetail = memo((props: PropsPage) => {
   const { gradus, description, hemjee, isTrue } = props.route.params;
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -36,7 +36,9 @@ const DrugDetail = (props: PropsPage) => {
       <Text style={styles.description} >{hemjee}</Text>
     </ScrollView>
   );
-};
+});
+
+DrugDetail.displayName = "DrugDetail";
 
 export default DrugDetail;
 

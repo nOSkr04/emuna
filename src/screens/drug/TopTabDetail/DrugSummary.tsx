@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { TopTabParamList } from "../../../navigation/types";
 import { Colors } from "../../../constants/Colors";
 
 type PropsPage = NativeStackScreenProps<TopTabParamList, "DrugSummary">;
 
-const DrugSummary = (props: PropsPage) => {
+const DrugSummary = memo((props: PropsPage) => {
   const { buyName,countryName,info,nairlaga } = props.route.params;
   return (
     <View style={styles.container}>
@@ -28,7 +28,9 @@ const DrugSummary = (props: PropsPage) => {
       </View>
     </View>
   );
-};
+});
+
+DrugSummary.displayName = "DrugSummary";
 
 export default DrugSummary;
 

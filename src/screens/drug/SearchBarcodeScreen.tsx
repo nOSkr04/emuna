@@ -1,12 +1,12 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Button from "../../components/Button";
 import Layout from "../../constants/Layout";
 import { useNavigation } from "@react-navigation/native";
 
-const SearchBarcodeScreen = () => {
+const SearchBarcodeScreen = memo( () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcode, setBarcode] = useState("");
@@ -41,7 +41,9 @@ const SearchBarcodeScreen = () => {
       <Button disabled={scanned ? false: true} onPress={() => navigation.navigate("DrugDetailScreen")} secondary={scanned ? false : true} style={styles.button} title="Үргэлжлүүлэх"  />
     </View>
   );
-};
+});
+
+SearchBarcodeScreen.displayName = "SearchBarcodeScreen";
 
 export default SearchBarcodeScreen;
 

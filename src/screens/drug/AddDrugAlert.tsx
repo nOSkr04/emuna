@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import PillIcon1 from "../../../assets/svg/1.svg";
 import PillIcon2 from "../../../assets/svg/2.svg";
@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
 type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
-const AddDrugAlertScreen = (props: Props) => {
+const AddDrugAlertScreen = memo((props: Props) => {
   const navigation = useNavigation();
   // { id: 1, icon: PillIcon1, name: "Шахмал" },
   // { id: 2, icon: PillIcon2, name: "Капсул" },
@@ -107,7 +107,9 @@ const AddDrugAlertScreen = (props: Props) => {
       <Button onPress={() => console.log("object")} style={styles.button} title="Хадгалах" />
     </ScrollView>
   );
-};
+});
+
+AddDrugAlertScreen.displayName = "AddDrugAlertScreen";
 
 export default AddDrugAlertScreen;
 

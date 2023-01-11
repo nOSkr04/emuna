@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import ProfileField from "../../components/profile/ProfileEditField";
 
-const ProfileEditScreen = () => {
+const ProfileEditScreen = memo(() => {
   const [firstName, setFirstName] = useState("Tselmen");
   const [phone, setPhone] = useState("80019088");
   const [email, setEmail] = useState("tselmen.ihelp@gmail.com");
@@ -38,7 +38,9 @@ const ProfileEditScreen = () => {
       />
     </View>
   );
-};
+});
+
+ProfileEditScreen.displayName = "ProfileEditScreen";
 
 export default ProfileEditScreen;
 

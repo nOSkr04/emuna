@@ -1,10 +1,10 @@
 /* eslint-disable react/hook-use-state */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Image,  StyleSheet,    View, useWindowDimensions } from "react-native";
-import React, {  useState } from "react";
+import React, {  memo, useState } from "react";
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
-const Banner = ({ imageData }: any) => {
+const Banner = memo(({ imageData }: any) => {
   const { width } = useWindowDimensions();
   const [newData] = useState([{ key: "spacer-left" }, ...imageData, { key: "spacer-right" }]);
   const SIZE = width * 0.8;
@@ -58,7 +58,9 @@ const Banner = ({ imageData }: any) => {
         })} */}
     </>
   );
-};
+});
+
+Banner.displayName = "Banner";
 
 export default Banner;
 

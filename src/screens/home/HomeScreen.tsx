@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { SectionList, StyleSheet, View,  } from "react-native";
 import { Colors } from "../../constants/Colors";
 import RenderDrug from "../../components/home/RenderDrug";
@@ -7,7 +7,7 @@ import EmptyDrug from "../../components/home/EmptyDrug";
 import Banner from "../../components/home/Banner";
 import HorizontalCalendar from "../../components/home/HorizontalCalendar";
 import DrugAlert from "../../components/home/DrugAlert";
-const HomeScreen = () => {
+const HomeScreen = memo(() => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const data = [
     {
@@ -127,7 +127,9 @@ const HomeScreen = () => {
       )}
     </View>
   );
-};
+});
+
+HomeScreen.displayName = "HomeScreen";
 
 export default HomeScreen;
 
