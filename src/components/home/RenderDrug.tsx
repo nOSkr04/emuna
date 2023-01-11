@@ -51,12 +51,13 @@ RenderDrug.displayName = "RenderDrug";
 
 const styles = StyleSheet.create({
   container: {
-    flex           : 1,
-    backgroundColor: Colors.white,
-    padding        : 16,
-    alignItems     : "center",
-    flexDirection  : "row",
-    flexWrap       : "wrap",
+    flex            : 1,
+    backgroundColor : Colors.white,
+    padding         : 16,
+    alignItems      : "center",
+    flexDirection   : "row",
+    flexWrap        : "wrap",
+    marginHorizontal: 16
   },
   iconContainer: {
     backgroundColor: Colors.primary,

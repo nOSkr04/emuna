@@ -1,17 +1,17 @@
 import { AccessibilityState, GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { memo, useEffect, useRef } from "react";
+import React, { ReactElement, memo, useEffect, useRef } from "react";
 import * as Animatable from "react-native-animatable";
 import { Colors } from "../constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
 
 type MyTabBarProps = {
-  activeIcon: string;
+  activeIcon: ReactElement;
+  inActiveIcon: ReactElement;
   label: string;
   onPress: (event: GestureResponderEvent) => void;
   accessibilityState: AccessibilityState;
 };
 
-const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label }: MyTabBarProps) => {
+const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label,inActiveIcon }: MyTabBarProps) => {
   const focused = accessibilityState.selected;
   const viewRef = useRef(null);
   const textViewRef = useRef(null);
@@ -25,11 +25,12 @@ const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label }: MyTab
     }
   }, [focused]);
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress} style={[styles.container, focused ? styles.flex : styles.flex07]}>
+    <TouchableOpacity activeOpacity={1} onPress={onPress} style={styles.container}>
       <View>
         <Animatable.View ref={viewRef} style={[StyleSheet.absoluteFillObject, styles.any]} />
         <View style={styles.btn}>
-          <AntDesign color={focused ? Colors.primary : Colors.darkGrey} name={activeIcon} size={24} />
+
+          {focused ? activeIcon : inActiveIcon}
           <Animatable.View ref={textViewRef}>{focused && <Text style={styles.label}>{label}</Text>}</Animatable.View>
         </View>
       </View>
@@ -43,28 +44,28 @@ const styles = StyleSheet.create({
   container: {
     alignItems    : "center",
     justifyContent: "center",
-  },
-  flex07: {
-    flex: 0.7,
-  },
-  flex: {
-    flex: 1,
+    flex          : 1
   },
   btn: {
-    flexDirection: "row",
-    alignItems   : "center",
-    padding      : 8,
-    borderRadius : 16,
-    zIndex       : 2,
+    flexDirection  : "row",
+    alignItems     : "center",
+    padding        : 8,
+    borderRadius   : 16,
+    zIndex         : 2,
+    paddingVertical: 10,
   },
   label: {
     color            : Colors.primary,
     paddingHorizontal: 8,
-    fontFamily       : "semibold",
+    fontFamily       : "Mon700",
+    fontSize         : 14,
+    lineHeight       : 20,
+    textAlign        : "center"
+    
   },
   any: {
-    backgroundColor: Colors.primarySoft,
-    borderRadius   : 16,
+    backgroundColor: Colors.profileBg,
+    borderRadius   : 40,
   },
 });
 
