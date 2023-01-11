@@ -31,7 +31,7 @@ const DrugDetailScreen = memo(() => {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../../assets/images/adaptive-icon.png")} style={[styles.image, { marginTop: insents.top }]}>
+      <ImageBackground source={require("../../../assets/images/bg.jpg")} style={[styles.image, { marginTop: insents.top }]}>
         <View style={styles.headerIconContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
             <BackIcon color={Colors.text} height={15} width={7.5} />

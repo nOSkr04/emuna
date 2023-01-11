@@ -39,14 +39,14 @@ class HttpRequest {
         Accept        : "application/json",
         "Content-Type": "application/json; charset=utf-8",
         // "X-Device"    : deviceToken,
-        // Authorization : accessToken ? `Bearer ${accessToken}` : "",
+        // Authorization : token ? `Bearer ${token}` : "",
       },
     };
 
-    if (state.auth && state.auth.accessToken && typeof state.auth.accessToken === "string") {
+    if (state.auth && state.auth.token && typeof state.auth.token === "string") {
       defaultOptions.headers = {
         ...defaultOptions.headers,
-        Authorization: `Bearer ${state.auth.accessToken}`,
+        Authorization: `Bearer ${state.auth.token}`,
       };
     }
 

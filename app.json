@@ -28,13 +28,10 @@
       "versionCode": 13,
       "package": "mn.emuna",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json"
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
     },
     "extra": {
       "eas": {
@@ -48,9 +45,8 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification-icon.png",
-          "color": "#ffffff",
-          "sounds": []
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#ffffff"
         }
       ]
     ]

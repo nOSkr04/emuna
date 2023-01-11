@@ -1,88 +1,61 @@
-/* eslint-disable react/hook-use-state */
-/* eslint-disable react-hooks/rules-of-hooks */
-import { Image,  StyleSheet,    View, useWindowDimensions } from "react-native";
-import React, {  memo, useState } from "react";
-import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-
-const Banner = memo(({ imageData }: any) => {
-  const { width } = useWindowDimensions();
-  const [newData] = useState([{ key: "spacer-left" }, ...imageData, { key: "spacer-right" }]);
-  const SIZE = width * 0.8;
-  const SPACER = (width - SIZE) / 2;
-  const x = useSharedValue(0);
-  const onScroll = useAnimatedScrollHandler({
-    onScroll: event => {
-      x.value = event.contentOffset.x;
-    },
-  });
+/* eslint-disable react/react-in-jsx-scope */
+import { Dimensions, StyleSheet, View } from "react-native";
+import { memo, useRef } from "react";
+import Animated from "react-native-reanimated";
+import { Colors } from "../../constants/Colors";
+const { width } = Dimensions.get("screen");
+const ITEM_WIDTH = width * 0.96;
+const ITEM_HEIGHT = 200;
+const TabTwoScreen = memo(({ imageData }: any) => {
+  const scrollX = useRef(new Animated.Value(0)).current;
   return (
-    <>
-      <Animated.ScrollView
-      bounces={false}
-      decelerationRate="fast"
-      horizontal
-      onScroll={onScroll}
-      scrollEventThrottle={16}
-      showsHorizontalScrollIndicator={false}
-      snapToInterval={SIZE}>
-        {newData.map((item, index) => {
-        const style = useAnimatedStyle(() => {
-          const scale = interpolate(
-            x.value,
-            [(index-2) * SIZE, (index - 1) * SIZE, index * SIZE],
-            [0.88, 1, 0.88]
-            );
-            return{
-              transform: [{
-                scale
-              }]
-            };
+    <View>
+      <Animated.FlatList
+        data={imageData}
+        horizontal
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: true })}
+        pagingEnabled
+        renderItem={({ item, index }) => {
+          const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
+          const translateX = scrollX.interpolate({
+            inputRange,
+            outputRange: [-width * 0.7, 0, width * 0.7],
           });
-          if (!item.ads) {
-            return <View key={index} style={{ width: SPACER }} />;
-          }
           return (
-            <View key={index} style={{ width: SIZE }}>
-              <Animated.View style={[styles.imageContainer, style]}>
-                <Image source={{ uri: item.ads }} style={styles.image} />
-              </Animated.View>
+            <View style={styles.container}>
+              <View style={styles.contentContainer}>
+                <Animated.Image source={{ uri: item.ads }} style={[styles.ads, { transform: [{ translateX }] }]} />
+              </View>
             </View>
-        );
-      })}
-      </Animated.ScrollView>
-      {/* {imageData.map((e,index) => {
-        return(
-          <Text style={styles.activeDot}>{index}</Text>
-          // <View key={index}  style={styles.activeDot} />
           );
-        })} */}
-    </>
+        }}
+      />
+    </View>
   );
 });
 
-Banner.displayName = "Banner";
-
-export default Banner;
-
+TabTwoScreen.displayName = "TabTwoScreen";
 const styles = StyleSheet.create({
-  imageContainer: {
-    borderRadius: 34,
+  container: {
+    width,
+    justifyContent: "center",
+    alignItems    : "center",
+    marginTop     : 16,
+    marginBottom  : 40,
+  },
+  contentContainer: {
+    width       : ITEM_WIDTH,
+    height      : ITEM_HEIGHT,
     overflow    : "hidden",
-    marginTop   : 16,
-    marginBottom: 40
+    alignItems  : "center",
+    borderRadius: 18,
+    borderColor : Colors.white,
   },
-  image: {
-    width      : "100%",
-    height     : 192,
-    aspectRatio: 2/1,
+  ads: {
+    width     : ITEM_WIDTH,
+    height    : ITEM_HEIGHT,
+    resizeMode: "cover",
   },
-  // activeDot: {
-  //   width          : 100,
-  //   height         : 20,
-  //   backgroundColor: Colors.redPill,
-  //   zIndex         : 10,
-  //   position       : "absolute",
-  //   bottom         : 10,
-  //   alignSelf      : "center"
-  // }
 });
+
+export default TabTwoScreen;

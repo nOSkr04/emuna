@@ -9,11 +9,11 @@ import LoginField from "../../components/auth/LoginField";
 
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
-  const [username,setUsername] = useState("97014400");
-  const [password,setPassword] = useState("goodtech123");
+  const [phone,setPhone] = useState("95040448");
+  const [password,setPassword] = useState("1234");
   const onSubmit = async () => {
    try{
-    const data = await AuthApi.login(username, password);
+    const data = await AuthApi.login(phone, password);
     dispatch(authLogin(data));
    } catch(err) {
     console.log(err);
@@ -22,7 +22,7 @@ const LoginScreen = memo(() => {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <LoginField password={password} setPassword={setPassword} setUsername={setUsername} username={username}  />
+        <LoginField password={password} phone={phone} setPassword={setPassword} setPhone={setPhone}  />
       </ScrollView>
       <Button onPress={onSubmit} secondary={password.length > 3 ? false : true} style={styles.button} title="Үргэлжлүүлэх"   />
     </KeyboardAvoidingView>

@@ -4,16 +4,16 @@ import { Colors } from "../../constants/Colors";
 
 type Props = {
   password: string,
-  username:string,
+  phone:string,
   setPassword: Dispatch<SetStateAction<string>>
-  setUsername: Dispatch<SetStateAction<string>>
+  setPhone: Dispatch<SetStateAction<string>>
 }
 
-const LoginField = memo(({ password, setPassword, username, setUsername }: Props) => {
+const LoginField = memo(({ password, setPassword, phone, setPhone }: Props) => {
   return (
     <View>
       <Text style={styles.inputLabel}>Утасны дугаар</Text>
-      <TextInput onChangeText={setUsername} style={styles.input} value={username}   />
+      <TextInput onChangeText={setPhone} style={styles.input} value={phone}   />
       <Text style={styles.inputLabel}>Нууц үг</Text>
       <TextInput onChangeText={setPassword} style={styles.input} value={password}    />
     </View>
