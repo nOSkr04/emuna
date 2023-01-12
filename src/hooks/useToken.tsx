@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { IAuth } from "../interfaces/IAuth";
 
 const useToken = (): string | null => {
-  const { accessToken } = useSelector((state: { auth: IAuth }) => state.auth);
+  const { token } = useSelector((state: { auth: IAuth }) => state.auth);
 
-  return accessToken;
+  return token;
 };
 
 export { useToken };

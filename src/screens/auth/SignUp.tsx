@@ -6,18 +6,18 @@ import { useNavigation } from "@react-navigation/native";
 
 
 const SignUpScreen = memo(() => {
-  const [username,setUsername] = useState("97014400");
+  const [phone,setPhone] = useState("97014400");
   const navigation = useNavigation();
   const onSubmit = async () => {
-navigation.navigate("OtpVerifyScreen", { phone: username });
+navigation.navigate("OtpVerifyScreen", { phone: phone });
   };
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Утасны дугаар</Text>
-        <TextInput onChangeText={setUsername} style={styles.input} value={username}   />
+        <TextInput onChangeText={setPhone} style={styles.input} value={phone}   />
       </ScrollView>
-      <Button onPress={onSubmit} secondary={username.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх"   />
+      <Button onPress={onSubmit} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх"   />
     </KeyboardAvoidingView>
   );
 });

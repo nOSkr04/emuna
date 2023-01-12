@@ -17,9 +17,9 @@ const useSWRToken = <T extends BaseModel>(
 } => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
-  const { accessToken } = useSelector((state: { auth: IAuth }) => state.auth);
+  const { token } = useSelector((state: { auth: IAuth }) => state.auth);
 
-  const { data, error, mutate } = swr(key === null ? null : [key, accessToken], api, {
+  const { data, error, mutate } = swr(key === null ? null : [key, token], api, {
     shouldRetryOnError: false,
     ...options,
   });

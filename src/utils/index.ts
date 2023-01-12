@@ -3,7 +3,7 @@ import { HttpRequest as BaseHttpRequest,HttpHandler } from "../helper";
 import { authLogout } from "../store/authSlice";
 
 export class HttpRequest extends BaseHttpRequest {
-  uri = "https://dev-xs.zto.mn/app";
+  uri = "http://24.199.126.56/api/v1";
   store = store;
   errorHandler = (statusCode: number, error: HttpHandler): void => {
     if(statusCode === 401){

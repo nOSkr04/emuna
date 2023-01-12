@@ -11,13 +11,19 @@ import Button from "../components/Button";
 import { useDispatch } from "react-redux";
 import { authLogout } from "../store/authSlice";
 import Modal from "react-native-modal";
+import { AuthApi } from "../apis";
 const ProfileMenuSheets = memo(() => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const logout = async () => {
-    dispatch(authLogout());
-    navigation.goBack();
+    try{
+      await AuthApi.logout();
+      dispatch(authLogout());
+      navigation.goBack();
+     } catch(err) {
+      console.log(err);
+     }
   };
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);

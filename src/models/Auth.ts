@@ -3,16 +3,16 @@ import { IUser } from "../interfaces/IUser";
 import { BaseModel } from "./BaseModel";
 
 export class Auth extends BaseModel implements IAuth {
-  username?: string | null;
+  phone?: string | null;
   password?: string | null;
-  accessToken: string | null;
+  token: string | null;
   user: IUser | null;
 
-  constructor ({ username, password, accessToken, user }: IAuth) {
+  constructor ({ phone, password, token, user }: IAuth) {
     super();
-    this.username = username;
+    this.phone = phone;
     this.password = password;
-    this.accessToken = accessToken;
+    this.token = token;
     this.user = user;
   }
 
