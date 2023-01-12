@@ -14,11 +14,7 @@ RenderDrugHeader.displayName = "RenderDrugHeader";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor     : Colors.white,
-    marginTop           : 20,
-    borderTopLeftRadius : 20,
-    borderTopRightRadius: 20,
-    padding             : 16,
+    padding: 16,
   },
   title: {
     fontSize  : 16,

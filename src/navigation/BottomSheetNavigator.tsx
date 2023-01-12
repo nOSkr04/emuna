@@ -8,6 +8,8 @@ import PharmacistRequestSheet from "../sheets/PharmacistRequest";
 import DrugStyleChooseSheet from "../sheets/addDrug/DrugStyleChoose";
 import DosageChooseSheet from "../sheets/addDrug/DosageChoose";
 import ProfileMenuSheets from "../sheets/ProfileMenu";
+import HomeMedicalSheet from "../sheets/HomeMedical";
+import DeleteAlertSheet from "../sheets/DeleteAlert";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -29,12 +31,32 @@ const BottomSheetNavigator = () => {
         name="PharmacistRequestSheet"
         options={{
           backdropComponent: renderBackdrop,
-          snapPoints       : ["40%"],
+          snapPoints       : ["30%"],
           index            : 1,
           topInset         : insets.top,
-          
         }}
       />
+      <Screen
+        component={HomeMedicalSheet}
+        name="HomeMedicalSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["90%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={DeleteAlertSheet}
+        name="DeleteAlertSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["30%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+
       <Screen
         component={DrugStyleChooseSheet}
         name="DrugStyleChooseSheet"

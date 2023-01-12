@@ -1,17 +1,25 @@
 import { IDrug } from "../interfaces/IDrug";
-import { IDrugData } from "../interfaces/IDrugData";
 import { BaseModel } from "./BaseModel";
 
 export class Drug extends BaseModel implements IDrug {
-  id: string;
-  title: string;
-  data: IDrugData;
-  constructor({ id, title,data  }: IDrug) {
+  id: number | null;
+  drug: string | null;
+  when: string | null;
+  isSkip: boolean | null;
+  much: number | null;
+  isDone: boolean | null;
+  bgColor: string | null;
+  icon: string | null;
+  constructor({ id, drug, when, isSkip, much, isDone, bgColor, icon }: IDrug) {
     super();
     this.id = id;
-    this.title = title;
-    this.data = data;
-   
+    this.drug = drug;
+    this.when = when;
+    this.isSkip = isSkip;
+    this.much = much;
+    this.isDone = isDone;
+    this.bgColor = bgColor;
+    this.icon = icon;
   }
 
   static fromJson(json: IDrug) {

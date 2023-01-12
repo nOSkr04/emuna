@@ -23,7 +23,8 @@ const DrugDetailScreen = memo(() => {
     isTrueText : "Эмийн найрлагад орсон үйлчлэгч болон туслах бодист харшилтай, Жирэмсэн болон хөхүүл эх Хүүхдэд хэрэглэхийг хориглоно.",
     gradus     : "+15oC- +30oC",
     description: "Кавинтон ба Кавинтон Фонте шахмалыг тархины цусан хангамжийн өөрчлөлтийн үед хэрэглэдэг.",
-    hemjee     : "Эмчилгээний хоногийн тун Кавинтон 1-2 шахмалаар өдөрт 3 удаа уух; харин Кавинтон Форте-г 1 шахмалаар өдөр 3 удаа ууж хэрэглэнэ. Хоол хамаарахгүй.",
+    hemjee:
+      "Эмчилгээний хоногийн тун Кавинтон 1-2 шахмалаар өдөрт 3 удаа уух; харин Кавинтон Форте-г 1 шахмалаар өдөр 3 удаа ууж хэрэглэнэ. Хоол хамаарахгүй.",
     buyName    : "Нистатин",
     countryName: "Нистатин (Nystatin).",
     info       : "Ногоовтор туяа бүхий  цайвар шар өнгийн хальсан бүрхүүлтэй,  2 талдаа гүдгэр, дугариг хэлбэртэй шахмал.",
@@ -31,7 +32,7 @@ const DrugDetailScreen = memo(() => {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../../assets/images/adaptive-icon.png")} style={[styles.image, { marginTop: insents.top }]}>
+      <ImageBackground source={require("../../../assets/images/bg.jpg")} style={[styles.image, { marginTop: insents.top }]}>
         <View style={styles.headerIconContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
             <BackIcon color={Colors.text} height={15} width={7.5} />
@@ -52,21 +53,20 @@ const DrugDetailScreen = memo(() => {
         </View>
       </View>
       <Tab.Navigator
-      initialRouteName="DrugDetail"
+        initialRouteName="DrugDetail"
         screenOptions={{
-          
           tabBarActiveTintColor  : Colors.primary,
           tabBarInactiveTintColor: Colors.DarkText,
           tabBarLabelStyle       : styles.tabBarLabelStyle,
           tabBarIndicatorStyle   : styles.tabbarIndicator,
         }}>
         <Tab.Screen
-        component={DrugDetail}
+          component={DrugDetail}
           initialParams={{
-          isTrue     : data.isTrue,
-          gradus     : data.gradus,
-          description: data.description,
-          hemjee     : data.hemjee
+            isTrue     : data.isTrue,
+            gradus     : data.gradus,
+            description: data.description,
+            hemjee     : data.hemjee,
           }}
           name="DrugDetail"
           options={{
@@ -79,7 +79,7 @@ const DrugDetailScreen = memo(() => {
             buyName    : data.buyName,
             countryName: data.countryName,
             info       : data.info,
-            nairlaga   : data.nairlaga
+            nairlaga   : data.nairlaga,
           }}
           name="DrugSummary"
           options={{
@@ -87,7 +87,7 @@ const DrugDetailScreen = memo(() => {
           }}
         />
       </Tab.Navigator>
-      <Button onPress={() => navigation.navigate("AddDrugAlertScreen")} style={styles.button}  title="Үргэлжлүүлэх" />
+      <Button onPress={() => navigation.navigate("AddDrugAlertScreen")} style={styles.button} title="Үргэлжлүүлэх" />
     </View>
   );
 });
@@ -171,6 +171,6 @@ const styles = StyleSheet.create({
   button: {
     marginTop       : 8,
     marginHorizontal: 24,
-    marginBottom    : 40
-  }
+    marginBottom    : 40,
+  },
 });

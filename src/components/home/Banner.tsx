@@ -10,7 +10,7 @@ interface AdsProps {
 }
 
 const { width, height } = Dimensions.get("screen");
-const ITEM_WIDTH = width * 0.96;
+const ITEM_WIDTH = width * 0.92;
 const ITEM_HEIGHT = 198;
 const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 
@@ -34,7 +34,7 @@ const Banner = memo(({ imageData }: any) => {
     setModalData(null);
   };
   return (
-    <View>
+    <View style={styles.contentContainer} >
       <Animated.FlatList
         data={imageData}
         horizontal
@@ -97,13 +97,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems    : "center",
   },
+  contentContainer: {
+    marginTop   : 16,
+    marginBottom: 40
+  },
   imageContainer: {
     width       : ITEM_WIDTH,
     height      : ITEM_HEIGHT,
     overflow    : "hidden",
     alignItems  : "center",
     borderRadius: 18,
-    borderWidth : 10,
     borderColor : Colors.white,
   },
   image: {
@@ -114,20 +117,20 @@ const styles = StyleSheet.create({
   dotContainer: {
     flexDirection: "row",
     position     : "absolute",
-    bottom       : 15,
+    bottom       : 8,
     alignSelf    : "center",
   },
   dot: {
-    width           : 20,
-    height          : 10,
+    width           : 32,
+    height          : 6,
     borderRadius    : 10,
     marginHorizontal: 4,
   },
   activeDotColor: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.white,
   },
   unActiveDotColor: {
-    backgroundColor: Colors.danger,
+    backgroundColor: Colors.transparent,
   },
   modalContainer: {
     flex           : 1,

@@ -28,7 +28,7 @@
       "versionCode": 13,
       "package": "mn.emuna",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json"
@@ -48,7 +48,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification-icon.png",
+          "icon": "./assets/images/notification-icon.png",
           "color": "#ffffff",
           "sounds": []
         }

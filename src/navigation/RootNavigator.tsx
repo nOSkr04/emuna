@@ -34,6 +34,7 @@ import { useEffect } from "react";
 import * as Notifications from "expo-notifications";
 import { useNotification } from "../hooks/useNotification";
 import ProfileEditScreen from "../screens/profile/ProfileEditScreen";
+import SetPasswordScreen from "../screens/auth/SetPassword";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -90,6 +91,7 @@ function RootNavigator() {
           <Stack.Screen component={LoginScreen} name="LoginScreen" options={loginScreenOptions} />
           <Stack.Screen component={SignUpScreen} name="SignUpScreen" options={loginScreenOptions} />
           <Stack.Screen component={OtpVerifyScreen} name="OtpVerifyScreen" options={otpVerifyScreenOptions} />
+          <Stack.Screen component={SetPasswordScreen} name="SetPasswordScreen" />
           <Stack.Screen component={UserDetailRegisterScreen} name="UserDetailRegisterScreen" options={userDetailRegisterScreenOptions} />
         </Stack.Group>
       )}

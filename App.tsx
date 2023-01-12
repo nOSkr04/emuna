@@ -8,8 +8,8 @@ import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import NavigationContainer from "./src/navigation/NavigationContainer";
 import useCachedResources from "./src/hooks/useCachedResources";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-
+import { StyleSheet } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -57,9 +57,9 @@ export default function App() {
               },
             }}>
             <SafeAreaProvider>
-              <BottomSheetModalProvider>
+              <GestureHandlerRootView style={styles.container}>
                 <NavigationContainer />
-              </BottomSheetModalProvider>
+              </GestureHandlerRootView>
             </SafeAreaProvider>
           </SWRConfig>
         </PersistGate>
@@ -67,3 +67,7 @@ export default function App() {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1 }
+});

@@ -4,20 +4,19 @@ import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
-
 const SignUpScreen = memo(() => {
-  const [phone,setPhone] = useState("97014400");
+  const [phone, setPhone] = useState("97014400");
   const navigation = useNavigation();
   const onSubmit = async () => {
-navigation.navigate("OtpVerifyScreen", { phone: phone });
+    navigation.navigate("OtpVerifyScreen", { phone: phone });
   };
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Утасны дугаар</Text>
-        <TextInput onChangeText={setPhone} style={styles.input} value={phone}   />
+        <TextInput onChangeText={setPhone} style={styles.input} value={phone} />
       </ScrollView>
-      <Button onPress={onSubmit} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх"   />
+      <Button onPress={onSubmit} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх" />
     </KeyboardAvoidingView>
   );
 });
@@ -27,7 +26,7 @@ SignUpScreen.displayName = "SignUpScreen";
 const styles = StyleSheet.create({
   container: {
     flex           : 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   inputLabel: {
     fontSize        : 11,
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     color           : Colors.texts,
     opacity         : 0.72,
     marginHorizontal: 32,
-    marginTop       : 32
+    marginTop       : 32,
   },
   input: {
     borderWidth     : 1,
@@ -44,12 +43,12 @@ const styles = StyleSheet.create({
     borderColor     : Colors.primary,
     borderRadius    : 8,
     marginTop       : 8,
-    padding         : 8
+    padding         : 8,
   },
   button: {
     bottom          : 20,
-    marginHorizontal: 24
-  }
+    marginHorizontal: 24,
+  },
 });
 
 export default SignUpScreen;

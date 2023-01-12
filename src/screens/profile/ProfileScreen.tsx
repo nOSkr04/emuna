@@ -33,20 +33,19 @@ const ProfileScreen = memo(() => {
   }, []);
   return (
     <View style={styles.container}>
-
       <FlashList
-      ListEmptyComponent={ <EmptyDrug />}
-        ListHeaderComponent={<DrugHeaderContent/> }
+        ListEmptyComponent={<EmptyDrug />}
+        ListHeaderComponent={<DrugHeaderContent />}
         data={data}
         estimatedItemSize={72}
         keyExtractor={item => item.id.toLocaleString()}
-        renderItem={({ item }) => <MyDrug bg={item.bg} capsule={item.capsule}  name={item.name} when={item.when} />}
+        renderItem={({ item }) => <MyDrug bg={item.bg} capsule={item.capsule} name={item.name} when={item.when} />}
       />
     </View>
   );
 });
 
-ProfileScreen.displayName= "ProfileScreen";
+ProfileScreen.displayName = "ProfileScreen";
 
 export default ProfileScreen;
 

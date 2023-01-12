@@ -1,4 +1,4 @@
-import { Alert, Linking, Platform } from "react-native";
+import {  Linking, Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 export const useNotification = () => {

@@ -17,7 +17,7 @@ const OtpVerifyScreen = memo(({ route }: Props) => {
     const otp = e.join("");
     setOtpA(otp);
     try {
-      navigation.navigate("UserDetailRegisterScreen");
+      navigation.navigate("SetPasswordScreen", { phone: phone });
       console.log(otpA);
       Keyboard.dismiss();
     } catch (error) {

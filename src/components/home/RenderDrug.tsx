@@ -1,23 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
-import Icon1 from "../../../assets/svg/1.svg";
 import Dot from "../../../assets/svg/dot.svg";
 import Xicon from "../../../assets/svg/X.svg";
 import CheckIcon from "../../../assets/svg/Check.svg";
+import MedicalIcon from "../MedicalIcon";
 type Props = {
-  name: string;
-  when: string;
-  much: number;
-  isSkip: boolean;
-  isDone: boolean;
+  name?: string;
+  when?: string;
+  much?: number;
+  isSkip?: boolean;
+  isDone?: boolean;
+  bgColor?:string;
+  icon?:string
 };
 
-const RenderDrug = memo(({ name, when, much, isSkip, isDone }: Props) => {
+const RenderDrug = memo(({ name, when, much, isSkip, isDone,bgColor, icon }: Props) => {
   return (
     <View style={styles.container}>
-      <View style={styles.iconContainer}>
-        <Icon1 color={Colors.white} />
+      <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
+        <MedicalIcon icon={icon} />
       </View>
       <View style={styles.drugDetailContainer}>
         <Text style={styles.drugName}>{name}</Text>
@@ -51,21 +53,18 @@ RenderDrug.displayName = "RenderDrug";
 
 const styles = StyleSheet.create({
   container: {
-    flex            : 1,
-    backgroundColor : Colors.white,
-    padding         : 16,
-    alignItems      : "center",
-    flexDirection   : "row",
-    flexWrap        : "wrap",
-    marginHorizontal: 16
+    flex         : 1,
+    padding      : 16,
+    alignItems   : "center",
+    flexDirection: "row",
+    flexWrap     : "wrap",
   },
   iconContainer: {
-    backgroundColor: Colors.primary,
-    height         : 48,
-    width          : 48,
-    borderRadius   : 100,
-    alignItems     : "center",
-    justifyContent : "center",
+    height        : 48,
+    width         : 48,
+    borderRadius  : 100,
+    alignItems    : "center",
+    justifyContent: "center",
   },
   drugName: {
     fontSize  : 15,
@@ -102,9 +101,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkGrey,
   },
   infoText: {
-    fontSize  : 12,
-    fontFamily: "Mon700",
-    color     : Colors.darkGrey
+    fontSize     : 12,
+    fontFamily   : "Mon700",
+    color        : Colors.darkGrey,
+    letterSpacing: 0.1,
+    lineHeight   : 16
   },
   checkedInfoIcon: {
     backgroundColor: Colors.primary,

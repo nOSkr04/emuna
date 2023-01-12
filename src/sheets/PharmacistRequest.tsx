@@ -42,7 +42,6 @@ const PharmacistRequestSheet = memo(() => {
             <Button danger={true} onPress={toggleModal} style={styles.dangerButton} title={"Болих"} titleStyle={styles.textColor} />
             <Button danger={true} onPress={deleteAlert} style={styles.button} title={"Тийм"} />
           </View>
-          <View style={styles.mv8} />
         </View>
       </Modal>
     </View>
@@ -89,6 +88,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection : "row",
     justifyContent: "center",
+    marginBottom  : 32
+    
   },
   button: {
     width     : "40%",
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     textAlign    : "center",
     opacity      : 0.72,
     color        : Colors.newText,
-    marginBottom : 16
+    marginBottom : 24
   },
   mv8: {
     marginVertical: 8
