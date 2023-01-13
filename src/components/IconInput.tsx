@@ -6,7 +6,8 @@ type Props = {
 value: string
 onChangeText: (text: string) => void
 title:string;
-icon: React.ReactElement
+icon: React.ReactElement;
+
 }
 const IconInput = memo(({ value,onChangeText,title,icon }: Props) => {
   return (
@@ -18,7 +19,7 @@ const IconInput = memo(({ value,onChangeText,title,icon }: Props) => {
             {icon}
           </View>
     }
-        <TextInput onChangeText={onChangeText} style={styles.input} value={value} />
+        <TextInput onChangeText={onChangeText} style={styles.input} value={value}  />
       </View>
     </>
   );

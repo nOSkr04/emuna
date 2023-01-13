@@ -36,7 +36,7 @@ module.exports = {
     "react-native/split-platform-components"     : 2,
     "react-native/no-inline-styles"              : 2,
     "react-native/no-color-literals"             : 2,
-    "react-native/no-raw-text"                   : 2,
+    // "react-native/no-raw-text"                   : 2,
     "react-native/no-single-element-style-arrays": 2,
     "react/jsx-indent"                           : [2, 2, { checkAttributes: true, indentLogicalExpressions: true }],
     "react-hooks/exhaustive-deps"                : "error",

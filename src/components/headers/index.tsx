@@ -57,3 +57,23 @@ export const profileEditScreenOptions = {
   headerTitle        : "Хувийн мэдээлэл",
   headerLeft         : () => <BackButton/>
 };
+export const profileEditAllergiesScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Харшил",
+  headerLeft         : () => <BackButton/>
+};
+export const profileEditChronicScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Архаг хууч өвчин",
+  headerLeft         : () => <BackButton/>
+};
+export const savedDrugScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Хадгалсан эмнүүд",
+  headerLeft         : () => <BackButton/>
+};
+export const profileSettingsScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Тохиргоо",
+  headerLeft         : () => <BackButton/>
+};

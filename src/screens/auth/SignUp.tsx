@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
 const SignUpScreen = memo(() => {
-  const [phone, setPhone] = useState("97014400");
+  const [phone, setPhone] = useState("80099088");
   const navigation = useNavigation();
   const onSubmit = async () => {
     navigation.navigate("OtpVerifyScreen", { phone: phone });

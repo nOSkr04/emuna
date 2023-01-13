@@ -20,7 +20,11 @@ import {
   barCodeScannerScreenOptions,
   loginScreenOptions,
   otpVerifyScreenOptions,
+  profileEditAllergiesScreenOptions,
+  profileEditChronicScreenOptions,
   profileEditScreenOptions,
+  profileSettingsScreenOptions,
+  savedDrugScreenOptions,
   userDetailRegisterScreenOptions,
 } from "../components/headers";
 import SignUpScreen from "../screens/auth/SignUp";
@@ -35,12 +39,16 @@ import * as Notifications from "expo-notifications";
 import { useNotification } from "../hooks/useNotification";
 import ProfileEditScreen from "../screens/profile/ProfileEditScreen";
 import SetPasswordScreen from "../screens/auth/SetPassword";
+import ProfileEditAllergiesScreen from "../screens/profile/ProfileEditAllergiesScreen";
+import ProfileEditChronicScreen from "../screens/profile/ProfileEditChronicScreen";
+import SavedDrugScreen from "../screens/drug/SavedDrugScreen";
+import ProfileSettingScreen from "../screens/profile/ProfileSettingScreen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const dispatch = useDispatch();
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
-  const { registerForPushNotificationsAsync, handleNotificationResponse,  } = useNotification();
+  const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotification();
   const { isInitialLoading } = useSWRToken<Auth>(
     "/auth/me",
     async () => {
@@ -81,6 +89,10 @@ function RootNavigator() {
           <Stack.Screen component={DrugDetailScreen} name="DrugDetailScreen" options={{ headerShown: false }} />
           <Stack.Screen component={AddDrugAlertScreen} name="AddDrugAlertScreen" options={addDrugAlertOptions} />
           <Stack.Screen component={ProfileEditScreen} name="ProfileEditScreen" options={profileEditScreenOptions} />
+          <Stack.Screen component={ProfileEditAllergiesScreen} name="ProfileEditAllergiesScreen" options={profileEditAllergiesScreenOptions} />
+          <Stack.Screen component={ProfileEditChronicScreen} name="ProfileEditChronicScreen" options={profileEditChronicScreenOptions} />
+          <Stack.Screen component={SavedDrugScreen} name="SavedDrugScreen" options={savedDrugScreenOptions} />
+          <Stack.Screen component={ProfileSettingScreen} name="ProfileSettingScreen" options={profileSettingsScreenOptions} />
         </Stack.Group>
       ) : (
         <Stack.Group

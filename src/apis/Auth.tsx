@@ -4,7 +4,7 @@ const httpRequest = new HttpRequest();
 
 export const me = async () => {
   const res = await httpRequest.get("/users/me");
-  return res;
+  return res.data;
 };
 
 export const login = async ( phone: string,password: string ) => {
@@ -12,7 +12,7 @@ export const login = async ( phone: string,password: string ) => {
   return res;
 };
 export const register = async ( phone: string,password: string ) => {
-  const res = await httpRequest.post("/users", { phone: phone,password: password });
+  const res = await httpRequest.post("/users/register", { phone: phone,password: password });
   return res;
 };
 export const logout = async () => {

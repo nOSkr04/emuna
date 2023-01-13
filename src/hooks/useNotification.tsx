@@ -15,7 +15,6 @@ export const useNotification = () => {
         return;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } 
 
     if (Platform.OS === "android") {
@@ -28,7 +27,6 @@ export const useNotification = () => {
     }
   };
   const handleNotification = (notification: Notifications.Notification) => {
-    console.log(notification);
   };
   const handleNotificationResponse = (response: Notifications.NotificationResponse) => {
     const data: { url?: string } = response.notification.request.content.data;

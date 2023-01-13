@@ -10,6 +10,8 @@ import DosageChooseSheet from "../sheets/addDrug/DosageChoose";
 import ProfileMenuSheets from "../sheets/ProfileMenu";
 import HomeMedicalSheet from "../sheets/HomeMedical";
 import DeleteAlertSheet from "../sheets/DeleteAlert";
+import ProfileHealthDetailSheet from "../sheets/ProfileHealthDetail";
+import SavedDrugMenuSheets from "../sheets/SavedDrugMenu";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -52,6 +54,26 @@ const BottomSheetNavigator = () => {
         options={{
           backdropComponent: renderBackdrop,
           snapPoints       : ["30%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={ProfileHealthDetailSheet}
+        name="ProfileHealthDetailSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["30%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={SavedDrugMenuSheets}
+        name="SavedDrugMenuSheets"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["25%"],
           index            : 1,
           topInset         : insets.top,
         }}

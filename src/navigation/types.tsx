@@ -23,6 +23,10 @@ export type RootStackParamList = {
   DrugDetailScreen: undefined;
   AddDrugAlertScreen: { pill: string | undefined; bgColor: string | undefined };
   ProfileEditScreen: undefined;
+  ProfileEditAllergiesScreen:undefined
+  ProfileEditChronicScreen:undefined
+  SavedDrugScreen:undefined
+  ProfileSettingScreen:undefined
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;
@@ -40,6 +44,8 @@ export type BottomSheetParamList = {
   DrugStyleChooseSheet: undefined;
   DosageChooseSheet: undefined;
   ProfileMenuSheets: undefined;
+  ProfileHealthDetailSheet: {type:number};
+  SavedDrugMenuSheets: undefined;
 };
 export type TopTabParamList = {
   DrugDetail: {

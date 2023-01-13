@@ -8,7 +8,7 @@ const ProfileEditScreen = memo(() => {
   const [phone, setPhone] = useState("80019088");
   const [email, setEmail] = useState("tselmen.ihelp@gmail.com");
   const [gender, setGender] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birth, setBirth] = useState("1999-04-01T18:39:23.097Z");
   const [height, setHeight] = useState("175");
   const [weight, setWeight] = useState("72");
   const width = "50%";

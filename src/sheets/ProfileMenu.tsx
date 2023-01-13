@@ -8,23 +8,11 @@ import SaveIcon from "../../assets/svg/BookmarkSimple.svg";
 import SettingsIcon from "../../assets/svg/GearSix.svg";
 import SheildIcon from "../../assets/svg/ShieldCheck.svg";
 import Button from "../components/Button";
-import { useDispatch } from "react-redux";
-import { authLogout } from "../store/authSlice";
-import Modal from "react-native-modal";
-import { AuthApi } from "../apis";
+import LogoutModal from "../components/profile/LogoutModal";
 const ProfileMenuSheets = memo(() => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const logout = async () => {
-    try{
-      await AuthApi.logout();
-      dispatch(authLogout());
-      navigation.goBack();
-     } catch(err) {
-      console.log(err);
-     }
-  };
+ 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
@@ -37,11 +25,11 @@ const ProfileMenuSheets = memo(() => {
         <UserIcon />
         <Text style={styles.contentTItle}>Хувийн мэдээлэл</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.contentContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate("SavedDrugScreen")} style={styles.contentContainer}>
         <SaveIcon />
         <Text style={styles.contentTItle}>Хадгалсан эмүүд</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.contentContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate("ProfileSettingScreen")} style={styles.contentContainer}>
         <SettingsIcon />
         <Text style={styles.contentTItle}>Тохиргоо</Text>
       </TouchableOpacity>
@@ -50,15 +38,8 @@ const ProfileMenuSheets = memo(() => {
         <Text style={styles.contentTItle}>Тусламж</Text>
       </TouchableOpacity>
       <Button onPress={toggleModal} style={styles.myButton} title="Системээс гарах" titleStyle={styles.myButtonTitle} />
-      <Modal isVisible={isModalVisible}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Та системээс гарахдаа итгэлтэй байна уу?</Text>
-          <View style={styles.buttonContainer}>
-            <Button onPress={toggleModal} style={[styles.modalButton, styles.visibleButton]} title="Болих" titleStyle={styles.visibleTitle} />
-            <Button danger={true} onPress={logout} style={styles.modalButton} title="Тийм" />
-          </View>
-        </View>
-      </Modal>
+      <LogoutModal isModalVisible={isModalVisible} toggleModal={toggleModal}  />
+    
     </View>
   );
 });
