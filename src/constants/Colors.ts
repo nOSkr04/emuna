@@ -40,4 +40,5 @@ export abstract class Colors  {
  static PrimarySoft = "#EBF9F8";
  static profileBg = "#E9F7F7";
  static transparent = "rgba(0,0,0,0.5)";
+ static greyBg = "#EEF0F1"
 }

@@ -46,6 +46,8 @@ export type BottomSheetParamList = {
   ProfileMenuSheets: undefined;
   ProfileHealthDetailSheet: {type:number};
   SavedDrugMenuSheets: undefined;
+  FrequencyDrugSheet: undefined;
+  AddTimeSheet: undefined;
 };
 export type TopTabParamList = {
   DrugDetail: {

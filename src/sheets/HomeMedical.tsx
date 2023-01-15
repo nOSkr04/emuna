@@ -19,7 +19,7 @@ const HomeMedicalSheet = memo((props: Props) => {
       <Text style={styles.sectionDate}>{format(selectedDate, "eeee, M сарын d", { locale: mn })} </Text>
       <BottomSheetFlatList
         data={data.data}
-        keyExtractor={item => item.id.toLocaleString()}
+        keyExtractor={item => item.toLocaleString()}
         renderItem={({ item }) => {
           return <RenderDrugDetails item={item}  />;
         }}

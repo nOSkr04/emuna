@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unstable-nested-components */
+ 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { StyleSheet,  View } from "react-native";
 import React, { memo, useEffect } from "react";
@@ -24,7 +24,7 @@ const ProfileScreen = memo(() => {
     navigation.setOptions({
       headerLeft: () => (
         <ProfileHeaderLeft
-          firstName={user.firstName ? user.firstName : user.phone}
+          firstName={user?.firstName ? user.firstName : user?.phone}
           profile={"https://images.pexels.com/photos/14792109/pexels-photo-14792109.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
         />
       ),

@@ -2,7 +2,7 @@
   "expo": {
     "name": "emuna",
     "slug": "emun",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "emuna",
@@ -22,10 +22,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "mn.emuna",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "android": {
-      "versionCode": 13,
+      "versionCode": 1,
       "package": "mn.emuna",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",

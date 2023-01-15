@@ -11,17 +11,17 @@ type MyTabBarProps = {
   accessibilityState: AccessibilityState;
 };
 
-const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label,inActiveIcon }: MyTabBarProps) => {
+const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label, inActiveIcon }: MyTabBarProps) => {
   const focused = accessibilityState.selected;
   const viewRef = useRef(null);
-  const textViewRef = useRef(null);
+  const textViewRef = useRef<any | null>(null);
   useEffect(() => {
     if (focused) {
-      viewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
-      textViewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
+      viewRef?.current?.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
+      textViewRef?.current?.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
     } else {
-      viewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
-      textViewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
+      viewRef.current?.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
+      textViewRef.current?.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
     }
   }, [focused]);
   return (
@@ -29,7 +29,6 @@ const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label,inActive
       <View>
         <Animatable.View ref={viewRef} style={[StyleSheet.absoluteFillObject, styles.any]} />
         <View style={styles.btn}>
-
           {focused ? activeIcon : inActiveIcon}
           <Animatable.View ref={textViewRef}>{focused && <Text style={styles.label}>{label}</Text>}</Animatable.View>
         </View>
@@ -38,13 +37,13 @@ const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label,inActive
   );
 });
 
-MyTabBar.displayName="MyTabBar";
+MyTabBar.displayName = "MyTabBar";
 
 const styles = StyleSheet.create({
   container: {
     alignItems    : "center",
     justifyContent: "center",
-    flex          : 1
+    flex          : 1,
   },
   btn: {
     flexDirection  : "row",
@@ -60,8 +59,7 @@ const styles = StyleSheet.create({
     fontFamily       : "Mon700",
     fontSize         : 14,
     lineHeight       : 20,
-    textAlign        : "center"
-    
+    textAlign        : "center",
   },
   any: {
     backgroundColor: Colors.profileBg,

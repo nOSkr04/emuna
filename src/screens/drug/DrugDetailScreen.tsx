@@ -23,7 +23,7 @@ const DrugDetailScreen = memo(() => {
     isTrueText : "Эмийн найрлагад орсон үйлчлэгч болон туслах бодист харшилтай, Жирэмсэн болон хөхүүл эх Хүүхдэд хэрэглэхийг хориглоно.",
     gradus     : "+15oC- +30oC",
     description: "Кавинтон ба Кавинтон Фонте шахмалыг тархины цусан хангамжийн өөрчлөлтийн үед хэрэглэдэг.",
-    hemjee:
+    hemjee     :
       "Эмчилгээний хоногийн тун Кавинтон 1-2 шахмалаар өдөрт 3 удаа уух; харин Кавинтон Форте-г 1 шахмалаар өдөр 3 удаа ууж хэрэглэнэ. Хоол хамаарахгүй.",
     buyName    : "Нистатин",
     countryName: "Нистатин (Nystatin).",
@@ -32,7 +32,7 @@ const DrugDetailScreen = memo(() => {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../../assets/images/bg.jpg")} style={[styles.image, { marginTop: insents.top }]}>
+      <ImageBackground source={{ uri: "https://images.pexels.com/photos/5745225/pexels-photo-5745225.jpeg?auto=compress&cs=tinysrgb&w=1600" }} style={[styles.image, { marginTop: insents.top }]}>
         <View style={styles.headerIconContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
             <BackIcon color={Colors.text} height={15} width={7.5} />

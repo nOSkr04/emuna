@@ -11,7 +11,7 @@ const HeaderLeft = memo(() => {
     <View style={styles.container}>
       <Logo  color={Colors.white} height={32}  width={32} />
       <View style={styles.nameContainer}>
-        <Text style={styles.name}>{user.firstName ? user.firstName : user.phone}</Text>
+        <Text style={styles.name}>{user?.firstName ? user.firstName : user?.phone}</Text>
         <Down height={5} width={10} />
       </View>
     </View>

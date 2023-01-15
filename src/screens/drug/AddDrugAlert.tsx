@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { memo } from "react";
+import React, { memo, } from "react";
 import { Colors } from "../../constants/Colors";
 import PillIcon1 from "../../../assets/svg/1.svg";
 import PillIcon2 from "../../../assets/svg/2.svg";
@@ -17,6 +17,7 @@ import { RootStackParamList } from "../../navigation/types";
 type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
 const AddDrugAlertScreen = memo((props: Props) => {
   const navigation = useNavigation();
+
   // { id: 1, icon: PillIcon1, name: "Шахмал" },
   // { id: 2, icon: PillIcon2, name: "Капсул" },
   // { id: 3, icon: PillIcon3, name: "Түрхлэг" },
@@ -53,7 +54,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
           <RightIcon />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.choosedContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate("FrequencyDrugSheet")} style={styles.choosedContainer}  >
         <Text style={styles.chooseTitle}>Давтамж</Text>
         <View style={styles.choosedContent}>
           <Text style={styles.chooseDescription}>Өдөр бүр</Text>
@@ -64,20 +65,12 @@ const AddDrugAlertScreen = memo((props: Props) => {
       <TouchableOpacity style={styles.choosedTimeContainer}>
         <View style={styles.choosedContent}>
           <MinusIcon />
-          <Text style={styles.chooseTime}>08:00</Text>
-        </View>
-        <Text style={styles.chooseCapsule}>1 капсул</Text>
-      </TouchableOpacity>
-      <View style={styles.border} />
-      <TouchableOpacity style={styles.choosedTimeContainer}>
-        <View style={styles.choosedContent}>
-          <MinusIcon />
           <Text style={styles.chooseTime}>16:00</Text>
         </View>
         <Text style={styles.chooseCapsule}>1 капсул</Text>
       </TouchableOpacity>
       <View style={styles.border} />
-      <TouchableOpacity style={styles.choosedTimeContainer}>
+      <TouchableOpacity  onPress={() => navigation.navigate("AddTimeSheet")} style={styles.choosedTimeContainer} >
         <View style={styles.choosedContent}>
           <PlusIcon />
           <Text style={styles.addTimeTitle}>Цаг нэмэх</Text>

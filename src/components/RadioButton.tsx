@@ -3,6 +3,8 @@ import React, { Dispatch, SetStateAction, memo } from "react";
 import { Mon700 } from "./StyledText";
 import { Colors } from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import CheckedRadio from "./CheckedRadio";
+import UnCheckedRadio from "./UnCheckedRadio";
 
 type Props = {
   selected: boolean;
@@ -26,15 +28,9 @@ const RadioButton = memo(({ selected, setSelected, isGoBack }: Props) => {
         }}
         style={[styles.container, selected && styles.selectedContainer]}>
         {selected ? (
-          <View style={styles.radioContainer}>
-            <View style={styles.selectedRadioCont}>
-              <View style={styles.selectedRadio} />
-            </View>
-          </View>
+          <CheckedRadio/>
         ) : (
-          <View style={styles.radioContainer}>
-            <View style={styles.radio} />
-          </View>
+          <UnCheckedRadio/>
         )}
         <Mon700 style={styles.text}>Байгаа</Mon700>
       </TouchableOpacity>
@@ -44,15 +40,9 @@ const RadioButton = memo(({ selected, setSelected, isGoBack }: Props) => {
         }}
         style={[styles.container, !selected && styles.selectedContainer]}>
         {!selected ? (
-          <View style={styles.radioContainer}>
-            <View style={styles.selectedRadioCont}>
-              <View style={styles.selectedRadio} />
-            </View>
-          </View>
+          <CheckedRadio/>
         ) : (
-          <View style={styles.radioContainer}>
-            <View style={styles.radio} />
-          </View>
+          <UnCheckedRadio/>
         )}
         <Mon700 style={styles.text}>Байхгүй</Mon700>
       </TouchableOpacity>
@@ -84,32 +74,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginLeft: 16,
   },
-  radioContainer: {
-    width         : 24,
-    height        : 24,
-    alignItems    : "center",
-    justifyContent: "center",
-  },
-  radio: {
-    width       : 16.5,
-    height      : 16.5,
-    borderWidth : 1,
-    borderRadius: 100,
-    borderColor : Colors.text,
-  },
-  selectedRadioCont: {
-    justifyContent: "center",
-    alignItems    : "center",
-    width         : 16.5,
-    height        : 16.5,
-    borderWidth   : 1,
-    borderRadius  : 100,
-    borderColor   : Colors.primary,
-  },
-  selectedRadio: {
-    backgroundColor: Colors.primary,
-    height         : 10,
-    width          : 10,
-    borderRadius   : 100,
-  },
+ 
 });

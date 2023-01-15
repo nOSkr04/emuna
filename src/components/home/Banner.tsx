@@ -65,10 +65,10 @@ const Banner = memo(({ imageData }: any) => {
         viewabilityConfig={viewConfigRef}
       />
       <View style={styles.dotContainer}>
-        {imageData.map((_, index: number) => {
+        {imageData.map((image, index: number) => {
           return (
             <TouchableOpacity
-              key={index}
+              key={image.id}
               onPress={() => scrollToIndex(index)}
               style={[styles.dot, currentIndex === index ? styles.activeDotColor : styles.unActiveDotColor]}
             />

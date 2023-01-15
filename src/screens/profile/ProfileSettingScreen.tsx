@@ -8,9 +8,15 @@ import ArrowRight from "../../../assets/svg/CaretRight.svg";
 import DangerArrowRight from "../../../assets/svg/DangerRight.svg";
 import LogOutIcon from "../../../assets/svg/SignOut.svg";
 import { Mon500 } from "../../components/StyledText";
+import LogoutModal from "../../components/profile/LogoutModal";
 const ProfileSettingScreen = memo(() => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+ 
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer1}>
@@ -43,13 +49,14 @@ const ProfileSettingScreen = memo(() => {
         <ArrowRight/>
       </View>
       <View style={styles.border} />
-      <TouchableOpacity style={styles.logoutContainer}>
+      <TouchableOpacity onPress={toggleModal} style={styles.logoutContainer}>
         <View style={styles.titleContainer}>
           <LogOutIcon  />
-          <Mon500 style={[styles.dangerColor,styles.title, ]}>Бүртгэл устгах</Mon500>
+          <Mon500 style={[styles.dangerColor,styles.title, ]}>Системээс гарах</Mon500>
         </View>
         <DangerArrowRight />
       </TouchableOpacity>
+      <LogoutModal isModalVisible={isModalVisible} toggleModal={toggleModal}  />
     </View>
   );
 });

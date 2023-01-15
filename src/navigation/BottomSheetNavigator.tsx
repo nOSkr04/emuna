@@ -12,6 +12,8 @@ import HomeMedicalSheet from "../sheets/HomeMedical";
 import DeleteAlertSheet from "../sheets/DeleteAlert";
 import ProfileHealthDetailSheet from "../sheets/ProfileHealthDetail";
 import SavedDrugMenuSheets from "../sheets/SavedDrugMenu";
+import FrequencyDrugSheet from "../sheets/addDrug/FrequencyDrug";
+import AddTimeSheet from "../sheets/addDrug/AddTime";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -33,7 +35,7 @@ const BottomSheetNavigator = () => {
         name="PharmacistRequestSheet"
         options={{
           backdropComponent: renderBackdrop,
-          snapPoints       : ["30%"],
+          snapPoints       : ["40%"],
           index            : 1,
           topInset         : insets.top,
         }}
@@ -53,7 +55,7 @@ const BottomSheetNavigator = () => {
         name="DeleteAlertSheet"
         options={{
           backdropComponent: renderBackdrop,
-          snapPoints       : ["30%"],
+          snapPoints       : ["40%"],
           index            : 1,
           topInset         : insets.top,
         }}
@@ -63,7 +65,7 @@ const BottomSheetNavigator = () => {
         name="ProfileHealthDetailSheet"
         options={{
           backdropComponent: renderBackdrop,
-          snapPoints       : ["30%"],
+          snapPoints       : ["40%"],
           index            : 1,
           topInset         : insets.top,
         }}
@@ -95,6 +97,26 @@ const BottomSheetNavigator = () => {
         options={{
           backdropComponent: renderBackdrop,
           snapPoints       : ["80%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={FrequencyDrugSheet}
+        name="FrequencyDrugSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["50%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={AddTimeSheet}
+        name="AddTimeSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["50%"],
           index            : 1,
           topInset         : insets.top,
         }}

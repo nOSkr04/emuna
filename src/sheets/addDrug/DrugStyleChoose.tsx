@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {  StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import PillIcon1 from "../../../assets/svg/1.svg";
@@ -6,7 +6,7 @@ import PillIcon2 from "../../../assets/svg/2.svg";
 import PillIcon3 from "../../../assets/svg/3.svg";
 import PillIcon6 from "../../../assets/svg/6.svg";
 import PillIcon8 from "../../../assets/svg/8.svg";
-import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import {  BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
@@ -37,7 +37,7 @@ const DrugStyleChooseSheet = memo(() => {
   ];
 
   return (
-    <View style={styles.container}>
+    <BottomSheetScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <Text style={styles.title}>Харагдац өөрчлөх</Text>
       <View style={[styles.pillContainer, { backgroundColor: chooseBg }]}>
         {choosedPill === "Шахмал" ? (
@@ -52,54 +52,46 @@ const DrugStyleChooseSheet = memo(() => {
       </View>
       <Text style={styles.title}>Ибупрофен</Text>
       <Text style={styles.description}>Эмийн хэлбэр</Text>
-      <FlatList
-        data={pills}
-        horizontal
-        keyExtractor={item => item.id.toLocaleString()}
-        renderItem={({ item }) => {
-          return (
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  setChoosedPill(item.name);
-                }}
-                style={[styles.pills, choosedPill.includes(item.name) ? styles.primaryBg : styles.softPrimaryBg]}>
-                {<item.icon color={choosedPill.includes(item.name) ? Colors.white : Colors.primary} height={40} width={40} />}
-              </TouchableOpacity>
-              <Text style={styles.pillText}>{item.name}</Text>
-            </View>
-          );
-        }}
-        showsHorizontalScrollIndicator={false}
-        style={styles.horizontalPills}
-      />
+      <View>
+        <BottomSheetScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.horizontalPills}>
+          {pills.map(pill => {
+            return (
+              <View key={pill.id}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setChoosedPill(pill.name);
+                  }}
+                  style={[styles.pills, choosedPill.includes(pill.name) ? styles.primaryBg : styles.softPrimaryBg]}>
+                  {<pill.icon color={choosedPill.includes(pill.name) ? Colors.white : Colors.primary} height={40} width={40} />}
+                </TouchableOpacity>
+                <Text style={styles.pillText}>{pill.name}</Text>
+              </View>
+            );
+          })}
+        </BottomSheetScrollView>
+      </View>
       <Text style={styles.description}>Эмийн хэлбэр</Text>
-      <BottomSheetFlatList
-        data={colors}
-        keyExtractor={item => item.id.toLocaleString()}
-        numColumns={6}
-        renderItem={({ item }) => {
+      <View style={styles.colorsContainer}>
+        {colors.map(color => {
           return (
-            <TouchableOpacity onPress={() => setChooseBg(item.color)}>
-              <View style={chooseBg.includes(item.color) ? styles.choosedBgBorder : styles.unChoosedBgBorder}>
-                <View style={[styles.chooseBg, { backgroundColor: item.color }]} />
+            <TouchableOpacity key={color.id} onPress={() => setChooseBg(color.color)}>
+              <View style={chooseBg.includes(color.color) ? styles.choosedBgBorder : styles.unChoosedBgBorder}>
+                <View style={[styles.chooseBg, { backgroundColor: color.color }]} />
               </View>
             </TouchableOpacity>
           );
-        }}
-        showsVerticalScrollIndicator={false}
-        style={styles.chooseBgDatas}
-      />
+        })}
+      </View>
       <Button
         onPress={() => navigation.navigate("AddDrugAlertScreen", { pill: choosedPill, bgColor: chooseBg })}
         style={styles.button}
         title="Хадгалах"
       />
-    </View>
+    </BottomSheetScrollView>
   );
 });
 
-DrugStyleChooseSheet.displayName="DrugStyleChooseSheet";
+DrugStyleChooseSheet.displayName = "DrugStyleChooseSheet";
 
 export default DrugStyleChooseSheet;
 
@@ -191,5 +183,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginTop       : 20,
     marginBottom    : 40,
+  },
+  colorsContainer: {
+    flexDirection : "row",
+    flexWrap      : "wrap",
+    alignItems    : "center",
+    justifyContent: "center",
   },
 });

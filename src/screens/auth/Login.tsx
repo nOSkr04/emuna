@@ -1,4 +1,4 @@
-import { ActivityIndicator, KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
+import {  KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
 import React, { memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Colors } from "../../constants/Colors";

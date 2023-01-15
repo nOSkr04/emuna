@@ -7,7 +7,12 @@ import Pill5 from "../../assets/svg/5.svg";
 import Pill6 from "../../assets/svg/6.svg";
 import Pill7 from "../../assets/svg/7.svg";
 import Pill8 from "../../assets/svg/8.svg";
-const MedicalIcon = memo(({ icon }: any) => {
+
+type Props = {
+  icon? :string
+}
+
+const MedicalIcon = memo(({ icon }: Props) => {
   if(icon === "1medical"){
     return <Pill1 />;
   }

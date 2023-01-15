@@ -105,7 +105,7 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
         data={dates}
         horizontal
         initialScrollIndex={index}
-        keyExtractor={item => item}
+        keyExtractor={(item) => item.toString()}
         ref={ref}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}

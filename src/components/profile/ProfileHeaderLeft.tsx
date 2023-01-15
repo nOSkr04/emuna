@@ -4,8 +4,8 @@ import { Colors } from "../../constants/Colors";
 import Down from "../../../assets/svg/down.svg";
 
 type Props = {
-  profile: string;
-  firstName: string;
+  profile?: string;
+  firstName?: string;
 };
 
 const ProfileHeaderLeft = memo(({ profile, firstName }: Props) => {

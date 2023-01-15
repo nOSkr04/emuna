@@ -5,10 +5,10 @@ export class User implements IUser {
   auth: string;
   userType: string;
   phone: string;
-  drugCount: number;
-  birthDate: Date;
-  firstName: string;
-  lastName: string;
+  drugCount: number | null;
+  birthDate: Date | null;
+  firstName: string | null;
+  lastName: string | null;
 
   constructor({
     _id,

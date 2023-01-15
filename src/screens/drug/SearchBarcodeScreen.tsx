@@ -20,9 +20,9 @@ const SearchBarcodeScreen = memo( () => {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = ({  data }: {data:string}) => {
     setScanned(true);
-    Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    Alert.alert(`${data}`);
     setBarcode(data);
   };
 

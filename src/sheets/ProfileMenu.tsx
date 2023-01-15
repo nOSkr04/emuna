@@ -80,32 +80,6 @@ const styles = StyleSheet.create({
   myButtonTitle: {
     color: Colors.text,
   },
-  modalContainer: {
-    backgroundColor: Colors.white,
-    borderRadius   : 24,
-  },
-  modalTitle: {
-    fontSize        : 15,
-    fontFamily      : "Mon700",
-    lineHeight      : 24,
-    letterSpacing   : 0.15,
-    color           : Colors.newText,
-    marginHorizontal: 24,
-    marginVertical  : 32,
-  },
-  buttonContainer: {
-    flexDirection   : "row",
-    marginHorizontal: 24,
-    marginBottom    : 32,
-  },
-  modalButton: {
-    width: "50%",
-  },
-  visibleButton: {
-    backgroundColor: Colors.white,
-  },
-  visibleTitle: {
-    opacity: 0.72,
-    color  : Colors.newText,
-  },
+
+
 });

@@ -43,7 +43,7 @@ const ProfileField = memo(
     const hideDatePicker = () => {
       setIsDatePickerVisible(false);
     };
-    const handleConfirm = date => {
+    const handleConfirm = (date: any) => {
       setBirth(date);
       hideDatePicker();
     };

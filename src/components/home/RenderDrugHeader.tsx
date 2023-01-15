@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
-import { Colors } from "../../constants/Colors";
 
 const RenderDrugHeader = memo(({ title }: { title: string }) => {
   return (

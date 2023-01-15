@@ -1,8 +1,9 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, } from "react-native";
 import React, { memo } from "react";
 import { Mon700 } from "./StyledText";
 import { Colors } from "../constants/Colors";
-import CheckIcon from "../../assets/svg/Check.svg";
+import CheckedBox from "./CheckedBox";
+import UnCheckedBox from "./UnCheckedBox";
 type Props = {
   data: {
     id: number;
@@ -29,11 +30,9 @@ const CheckBox = memo(({ data, select, selected, unselect }: Props) => {
             }}
             style={[styles.container, selected.includes(item.name) ? styles.activeContainer : styles.unActiveContainer]}>
             {selected.includes(item.name) ? (
-              <View style={styles.activeCheck}>
-                <CheckIcon />
-              </View>
+              <CheckedBox/>
             ) : (
-              <View style={styles.unActiveCheck} />
+              <UnCheckedBox/>
             )}
             <Mon700 style={styles.text}>{item.name}</Mon700>
           </TouchableOpacity>
@@ -68,18 +67,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginLeft: 16,
   },
-  unActiveCheck: {
-    opacity    : 0.64,
-    borderColor: Colors.text,
-    borderWidth: 0.5,
-    width      : 19,
-    height     : 19,
-  },
-  activeCheck: {
-    backgroundColor: Colors.primary,
-    width          : 20,
-    height         : 20,
-    alignItems     : "center",
-    justifyContent : "center",
-  },
+
+
 });
