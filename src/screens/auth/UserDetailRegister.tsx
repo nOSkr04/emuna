@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import BirthDayField from "../../components/auth/BirthDayField";
 import IconButton from "../../../assets/svg/sent.svg";
@@ -10,8 +10,20 @@ import StepFour from "../../components/auth/SignUpDetailSteps/StepFour";
 import StepFive from "../../components/auth/SignUpDetailSteps/StepFive";
 import StepSix from "../../components/auth/SignUpDetailSteps/StepSix";
 import StepSeven from "../../components/auth/SignUpDetailSteps/StepSeven";
-const UserDetailScreen = memo(() => {
+import { AuthApi } from "../../apis";
+import { authLogin } from "../../store/authSlice";
+import { useDispatch } from "react-redux";
+import { RootStackParamList } from "../../navigation/types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import SkipButton from "../../components/headers/SkipButton";
+
+type Props = NativeStackScreenProps<RootStackParamList, "UserDetailRegisterScreen">;
+
+const UserDetailScreen = memo((props : Props) => {
+  const navigation = useNavigation();
   const [step, setStep] = useState([1]);
+  const { phone,password } = props.route.params;
   const [firstName, setFirstName] = useState("");
   const [nameInput, setNameInput] = useState(false);
   const [birthInput, setBirthInput] = useState(false);
@@ -22,9 +34,18 @@ const UserDetailScreen = memo(() => {
   const [day, setDay] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [selectDone, setSelectDone] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
+  const dispatch = useDispatch();
+  const onSubmit = async () => {
+    try {
+      const data = await AuthApi.register(phone, password);
+      dispatch(authLogin(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // let listViewRef;
   const select = (chooseId: string) => {
     setSelected(selecting => {
@@ -86,6 +107,19 @@ const UserDetailScreen = memo(() => {
     setTimeout(() => scrollViewRef.current?.scrollToEnd({ animated: true }), 200);
   };
 
+  // export const userDetailRegisterScreenOptions = {
+  //   headerShadowVisible: false,
+  //   headerTitle        : "",
+  //   headerRight        : () => <SkipButton/>,
+  //   headerLeft         : () => <View/>
+  // };
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft : () => <SkipButton onSubmit={onSubmit}  />,
+      headerRight: () => <View />,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView

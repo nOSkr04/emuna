@@ -1,10 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import BackArrow from "./BackArrow";
 import BackButton from "./BackButton";
-import SkipButton from "./SkipButton";
+// import SkipButton from "./SkipButton";
 import HeaderLeft from "../home/HeaderLeft";
 import HeaderRight from "../home/HeaderRight";
-import {  View } from "react-native";
+// import {  View } from "react-native";
 import { styles } from "./styles";
 export const homeScreenOption = {
   headerShadowVisible: false,
@@ -28,12 +28,12 @@ export const otpVerifyScreenOptions = {
   headerTitle        : "",
   headerLeft         : () => <BackArrow/>
 };
-export const userDetailRegisterScreenOptions = {
-  headerShadowVisible: false,
-  headerTitle        : "",
-  headerRight        : () => <SkipButton/>,
-  headerLeft         : () => <View/>
-};
+// export const userDetailRegisterScreenOptions = {
+//   headerShadowVisible: false,
+//   headerTitle        : "",
+//   headerRight        : () => <SkipButton/>,
+//   headerLeft         : () => <View/>
+// };
 export const addDrugScreenOptions = {
   headerShadowVisible: false,
   headerTitle        : "",

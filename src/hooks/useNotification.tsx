@@ -1,7 +1,9 @@
-import {  Linking, Platform } from "react-native";
+import { Linking, Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import { useState } from "react";
 export const useNotification = () => {
+  const [token, setToken] = useState("");
   const registerForPushNotificationsAsync = async () => {
     if (Device.isDevice) {
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -15,7 +17,8 @@ export const useNotification = () => {
         return;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-    } 
+      setToken(token);
+    }
 
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
@@ -26,12 +29,10 @@ export const useNotification = () => {
       });
     }
   };
-  const handleNotification = (notification: Notifications.Notification) => {
-  };
   const handleNotificationResponse = (response: Notifications.NotificationResponse) => {
     const data: { url?: string } = response.notification.request.content.data;
     if (data?.url) Linking.openURL(data.url);
   };
 
-  return { registerForPushNotificationsAsync, handleNotificationResponse,handleNotification };
+  return { registerForPushNotificationsAsync, handleNotificationResponse,  token };
 };

@@ -4,27 +4,20 @@ import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
 import { RootStackParamList } from "../../navigation/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { AuthApi } from "../../apis";
-import { authLogin } from "../../store/authSlice";
-import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SetPasswordScreen">;
 
 const SetPasswordScreen = memo((props: Props) => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { phone } = props.route.params; 
   const [password, setPassword] = useState("1234");
   const [password1, setPassword1] = useState("1234");
-  const onSubmit = async () => {
-    try {
-      const data = await AuthApi.register(phone, password);
-      dispatch(authLogin(data));
-      navigation.navigate("UserDetailRegisterScreen");
-    } catch (err) {
-      console.log(err);
+  const onSubmit =  () => {
+    if(password === password1){
+      navigation.navigate("UserDetailRegisterScreen", { phone: phone, password: password });
     }
+    
   };
   return (
     <KeyboardAvoidingView style={styles.container}>

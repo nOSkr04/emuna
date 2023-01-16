@@ -8,165 +8,48 @@ import Banner from "../../components/home/Banner";
 import HorizontalCalendar from "../../components/home/HorizontalCalendar";
 import DrugAlert from "../../components/home/DrugAlert";
 import { useNavigation } from "@react-navigation/native";
+import { useSWRToken } from "../../hooks/useSWRToken";
+import { HistoryApi } from "../../apis";
+import { format } from "date-fns";
+import HomeLoader from "../../components/loader/HomeLoader";
 
 const HomeScreen = memo(() => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigation = useNavigation();
-  const data = [
-    {
-      id   : 1,
-      title: "13:00",
-      data : [
-        {
-          id     : 1,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : true,
-          much   : 2,
-          isDone : false,
-          bgColor: "#FCC314",
-          icon   : "1medical",
-        },
-        {
-          id     : 2,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : true,
-          bgColor: "#FD8000",
-          icon   : "2medical",
-        },
-        {
-          id     : 3,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : false,
-          bgColor: "#FF3800",
-          icon   : "3medical",
-        },
-        {
-          id     : 4,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : false,
-          bgColor: "#D60100",
-          icon   : "4medical",
-        },
-        {
-          id     : 10,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : true,
-          bgColor: "#BC0000",
-          icon   : "5medical",
-        },
-      ],
-    },
-    {
-      id   : 2,
-      title: "22:00",
-      data : [
-        {
-          id     : 5,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : true,
-          much   : 2,
-          isDone : false,
-          bgColor: "#571640",
-          icon   : "6medical",
-        },
-        {
-          id     : 6,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : true,
-          bgColor: "#21004F",
-          icon   : "7medical",
-        },
-        {
-          id     : 7,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : false,
-          bgColor: "#001588",
-          icon   : "8medical",
-        },
-        {
-          id     : 8,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : false,
-          bgColor: "#00416E",
-          icon   : "1medical",
-        },
-        {
-          id     : 9,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : false,
-          much   : 2,
-          isDone : true,
-          bgColor: "#007715",
-          icon   : "2medical",
-        },
-      ],
-    },
-    {
-      id   : 3,
-      title: "00:00",
-      data : [
-        {
-          id     : 105,
-          drug   : "Impact Advanced Recovery",
-          when   : "Хоолны дараа",
-          isSkip : true,
-          much   : 2,
-          isDone : false,
-          bgColor: "#3EB900",
-          icon   : "4medical",
-        },
-      ],
-    },
-  ];
+  const strDate = format(selectedDate, "yyyy-MM-dd");
+  const { data, error } = useSWRToken(`/histories/day/${strDate}`, () => {
+    return HistoryApi.historiesDay(strDate);
+  });
   const imageData = [
     { id: "1", image: "https://images.pexels.com/photos/11987710/pexels-photo-11987710.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" },
     { id: "2", image: "https://images.pexels.com/photos/13945391/pexels-photo-13945391.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" },
     { id: "3", image: "https://images.pexels.com/photos/14792098/pexels-photo-14792098.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" },
   ];
-
+  // const sortedTime = data?.histories.sort((a: any, b: any) => {
+  //   const [aHour, aMin] = a._id.split(":");
+  //   const [bHour, bMin] = b._id.split(":");
+  //   if (aHour !== bHour) return aHour - bHour;
+  //   return aMin - bMin;
+  // });
+  
+  if (error) {
+    return null;
+  }
   return (
     <View style={styles.container}>
-      <DrugAlert />
+      {data?.invited !== 0 && <DrugAlert />}
       <HorizontalCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <FlatList
-        ListEmptyComponent={
-          <>
-            <EmptyDrug />
-          </>
-        }
+        ListEmptyComponent={!data ? <HomeLoader /> : <EmptyDrug />}
         ListFooterComponent={<Banner imageData={imageData} />}
-        data={data}
+        data={data?.histories}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate("HomeMedicalSheet", { data: item, selectedDate: selectedDate })}
+              onPress={() => navigation.navigate("HomeMedicalSheet", { data: item._id, selectedDate: selectedDate })}
               style={styles.medicalContainer}>
-              <RenderDrugHeader title={item.title} />
+              <RenderDrugHeader title={item._id} />
               <FlatList
                 data={item.data}
                 renderItem={({ item }) => {

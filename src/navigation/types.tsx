@@ -17,7 +17,7 @@ export type RootStackParamList = {
   SignUpScreen: undefined;
   OtpVerifyScreen: { phone: string };
   SetPasswordScreen: { phone: string };
-  UserDetailRegisterScreen: undefined;
+  UserDetailRegisterScreen: {phone:string, password:string};
   SearchDrugScreen: undefined;
   SearchBarcodeScreen: undefined;
   DrugDetailScreen: undefined;

@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { AuthApi } from "../../apis";
 import { authLogout } from "../../store/authSlice";
 import { useNavigation } from "@react-navigation/native";
-
 type Props = {
   isModalVisible: boolean;
   toggleModal: () => void;
@@ -17,6 +16,7 @@ const LogoutModal = memo(({ isModalVisible, toggleModal }: Props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const logout = async () => {
+    
     try {
       await AuthApi.logout();
       dispatch(authLogout());

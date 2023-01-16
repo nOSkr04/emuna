@@ -16,7 +16,7 @@ const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 
 const Banner = memo(({ imageData }: any) => {
   const [modalData, setModalData] = useState(null);
-  let flatListRef = useRef<FlatList<AdsProps> | null | undefined>();
+  let flatListRef = useRef<FlatList<AdsProps>  | null | undefined>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const onViewRef = useRef(({ changed }: { changed: any }) => {

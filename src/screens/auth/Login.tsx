@@ -6,14 +6,17 @@ import Button from "../../components/Button";
 import LoginField from "../../components/auth/LoginField";
 import { AuthApi } from "../../apis";
 import { authLogin } from "../../store/authSlice";
+import { useNotification } from "../../hooks/useNotification";
 
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
   const [phone, setPhone] = useState("97014400");
   const [password, setPassword] = useState("1234");
+  const { token, registerForPushNotificationsAsync } = useNotification();
   const onSubmit = async () => {
     try {
-      const data = await AuthApi.login(phone, password);
+      const data = await AuthApi.login(phone, password ,token);
+      registerForPushNotificationsAsync();
       dispatch(authLogin(data));
     } catch (err) {
       console.log(err);

@@ -2,9 +2,13 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 
-const SkipButton = memo(() => {
+type Props = {
+  onSubmit: () => Promise<void>
+}
+
+const SkipButton = memo(({ onSubmit } : Props) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity onPress={onSubmit} style={styles.container}>
       <Text style={styles.title}>Алгасах</Text>
     </TouchableOpacity>
   );
