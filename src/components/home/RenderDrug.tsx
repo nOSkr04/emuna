@@ -2,20 +2,18 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import Dot from "../../../assets/svg/dot.svg";
-import Xicon from "../../../assets/svg/X.svg";
 import CheckIcon from "../../../assets/svg/Check.svg";
 import MedicalIcon from "../MedicalIcon";
 type Props = {
   name?: string;
   when?: string;
   much?: number;
-  isSkip?: boolean;
-  isDone?: boolean;
   bgColor?:string;
-  icon?:string
+  icon?:string;
+  status: string
 };
 
-const RenderDrug = memo(({ name, when, much, isSkip, isDone,bgColor, icon }: Props) => {
+const RenderDrug = memo(({ name, when, much,bgColor, icon,status }: Props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
@@ -28,22 +26,19 @@ const RenderDrug = memo(({ name, when, much, isSkip, isDone,bgColor, icon }: Pro
           <Dot color={Colors.helperText} />
           <Text style={styles.when}> {much}ш</Text>
         </View>
-        {isDone && (
-          <View style={styles.infoContainer}>
-            <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
-              <CheckIcon />
-            </View>
-            <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
+        {status === "drinked" && <View style={styles.infoContainer}>
+          <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
+            <CheckIcon />
           </View>
-        )}
-        {isSkip && (
-          <View style={styles.infoContainer}>
-            <View style={styles.infoIcon}>
-              <Xicon />
-            </View>
-            <Text style={styles.infoText}> Алгассан</Text>
+          <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
+        </View>}
+        {status === "skipped" && <View style={styles.infoContainer}>
+          <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
+            <CheckIcon />
           </View>
-        )}
+          <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
+        </View>}
+    
       </View>
     </View>
   );

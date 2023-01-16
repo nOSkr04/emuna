@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<BottomSheetParamList, "HomeMedicalSheet">;
 
 const HomeMedicalSheet = memo((props: Props) => {
   const { data, selectedDate } = props.route.params;
-
+  // api/v1/histories/id
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>{data.title} </Text>

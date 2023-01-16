@@ -68,7 +68,7 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
     });
   }, [index]);
   const dates: Date[] = useMemo(() => {
-    return generateHorizontalCalendarDates(60);
+    return generateHorizontalCalendarDates(30);
   }, []);
   useEffect(() => {
     const middleIndex = Math.floor(dates.length / 2);
@@ -90,11 +90,7 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
       />
     );
   };
-  const onScrollToIndexFailed = (info: {index: number, highestMeasuredFrameIndex: number, averageItemLength: number}) => {
-    console.log(`Failed to scroll to index ${info.index}`);
-    console.log(`highestMeasuredFrameIndex: ${info.highestMeasuredFrameIndex}`);
-    console.log(`averageItemLength: ${info.averageItemLength}`);
-  };
+
   // useEffect(() => {
   //   const timer = setTimeout(() => {
   //     setIndex(14);
@@ -112,14 +108,13 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
         contentContainerStyle={styles.flatlistContainer}
         data={dates}
         getItemLayout={(data,index) => ({
-          length: 40,
-          offset: 40 * index,
+          length: 61,
+          offset: 42 * index,
           index,
         })}
         horizontal
         initialScrollIndex={index}
         keyExtractor={(item) => item.toString()}
-        onScrollToIndexFailed={onScrollToIndexFailed}
         ref={ref}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}

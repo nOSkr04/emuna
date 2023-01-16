@@ -65,7 +65,7 @@ const Banner = memo(({ imageData }: any) => {
         viewabilityConfig={viewConfigRef}
       />
       <View style={styles.dotContainer}>
-        {imageData.map((image, index: number) => {
+        {imageData.map((image: any, index: number) => {
           return (
             <TouchableOpacity
               key={image.id}
@@ -78,7 +78,6 @@ const Banner = memo(({ imageData }: any) => {
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
         <View style={styles.modalContainer}>
           <Image source={{ uri: modalData?.image }} style={styles.modalImage} />
-
           <Text style={styles.modalText}>{modalData?.text}</Text>
           <Button onPress={toggleModal} title="Hide modal" />
         </View>

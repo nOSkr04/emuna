@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet,  TouchableOpacity, View } from "react-native";
 import { Colors } from "../../constants/Colors";
 import RenderDrug from "../../components/home/RenderDrug";
 import RenderDrugHeader from "../../components/home/RenderDrugHeader";
@@ -31,13 +31,14 @@ const HomeScreen = memo(() => {
   //   if (aHour !== bHour) return aHour - bHour;
   //   return aMin - bMin;
   // });
-  
-  if (error) {
+
+  if(error){
     return null;
   }
   return (
     <View style={styles.container}>
-      {data?.invited !== 0 && <DrugAlert />}
+      {/* <Text>{ite}</Text> */}
+      {data?.invited === undefined || data?.invited === 0 ? null  : <DrugAlert />}
       <HorizontalCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <FlatList
         ListEmptyComponent={!data ? <HomeLoader /> : <EmptyDrug />}
@@ -51,16 +52,15 @@ const HomeScreen = memo(() => {
               style={styles.medicalContainer}>
               <RenderDrugHeader title={item._id} />
               <FlatList
-                data={item.data}
+                data={item.medicine }
                 renderItem={({ item }) => {
                   return (
                     <RenderDrug
-                      bgColor={item.bgColor}
-                      icon={item.icon}
-                      isDone={item.isDone}
-                      isSkip={item.isSkip}
-                      much={item.much}
-                      name={item.drug}
+                      bgColor={"red"}
+                      icon={"3medical"}
+                      much={item.quantity}
+                      name={item.medicine}
+                      status={item.status}
                       when={item.when}
                     />
                   );
