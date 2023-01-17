@@ -12,12 +12,13 @@ import { useSWRToken } from "../../hooks/useSWRToken";
 import { HistoryApi } from "../../apis";
 import { format } from "date-fns";
 import HomeLoader from "../../components/loader/HomeLoader";
+import { IHistory } from "../../interfaces/IHistory";
 
 const HomeScreen = memo(() => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigation = useNavigation();
   const strDate = format(selectedDate, "yyyy-MM-dd");
-  const { data, error } = useSWRToken(`/histories/day/${strDate}`, () => {
+  const { data, error } = useSWRToken<IHistory>(`/histories/day/${strDate}`, () => {
     return HistoryApi.historiesDay(strDate);
   });
   const imageData = [
@@ -47,26 +48,28 @@ const HomeScreen = memo(() => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("HomeMedicalSheet", { data: item._id, selectedDate: selectedDate })}
-              style={styles.medicalContainer}>
+            <View style={styles.medicalContainer}>
               <RenderDrugHeader title={item._id} />
               <FlatList
-                data={item.medicine }
+                data={item.medicine}
                 renderItem={({ item }) => {
                   return (
-                    <RenderDrug
-                      bgColor={"red"}
+                    <TouchableOpacity
+                    onPress={() => navigation.navigate("HomeMedicalSheet", { data: item._id, selectedDate: selectedDate })}
+                    >
+                      <RenderDrug
+                      color={"red"}
                       icon={"3medical"}
-                      much={item.quantity}
-                      name={item.medicine}
+                      medicine={item.medicine}
+                      quantity={item.quantity}
                       status={item.status}
                       when={item.when}
                     />
+                    </TouchableOpacity>
                   );
                 }}
               />
-            </TouchableOpacity>
+            </View>
           );
         }}
       />

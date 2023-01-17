@@ -9,17 +9,10 @@ export class User implements IUser {
   birthDate: Date | null;
   firstName: string | null;
   lastName: string | null;
-
-  constructor({
-    _id,
-    auth,
-    userType,
-    phone,
-    drugCount,
-    birthDate,
-    firstName,
-    lastName,
-  }: IUser) {
+  gender: string | null;
+  height: string | null;
+  weight: string | null
+  constructor({ _id, auth, userType, phone, drugCount, birthDate, firstName, lastName, gender, height, weight }: IUser) {
     this._id = _id;
     this.auth = auth;
     this.userType = userType;
@@ -28,6 +21,9 @@ export class User implements IUser {
     this.birthDate = birthDate;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.gender = gender;
+    this.height = height;
+    this.weight = weight;
   }
 
   static fromJson(json: IUser) {

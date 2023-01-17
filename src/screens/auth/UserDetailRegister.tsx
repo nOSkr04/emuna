@@ -17,18 +17,22 @@ import { RootStackParamList } from "../../navigation/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import SkipButton from "../../components/headers/SkipButton";
+import { useNotification } from "../../hooks/useNotification";
 
 type Props = NativeStackScreenProps<RootStackParamList, "UserDetailRegisterScreen">;
 
+
 const UserDetailScreen = memo((props : Props) => {
   const navigation = useNavigation();
+  const { token, registerForPushNotificationsAsync } = useNotification();
   const [step, setStep] = useState([1]);
   const { phone,password } = props.route.params;
   const [firstName, setFirstName] = useState("");
   const [nameInput, setNameInput] = useState(false);
   const [birthInput, setBirthInput] = useState(false);
   const [heightInput, setHeightInput] = useState(false);
-  const [gender, setGender] = useState(["Эрэгтэй", "Эмэгтэй", "Бусад"]);
+  const [genderArray, setGenderArray] = useState(["male", "female", "other"]);
+  const [gender, setGender] = useState("male");
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
@@ -40,7 +44,8 @@ const UserDetailScreen = memo((props : Props) => {
   const dispatch = useDispatch();
   const onSubmit = async () => {
     try {
-      const data = await AuthApi.register(phone, password);
+      const data = await AuthApi.register(phone, password,token, firstName && firstName, height && height, weight && weight, gender && gender,  );
+      registerForPushNotificationsAsync();
       dispatch(authLogin(data));
     } catch (err) {
       console.log(err);
@@ -75,7 +80,7 @@ const UserDetailScreen = memo((props : Props) => {
     setStep(selecting => {
       return [...selecting, id];
     });
-    setGender(oldValues => {
+    setGenderArray(oldValues => {
       return oldValues.filter((_, i) => i === index);
     });
     setBirthInput(true);
@@ -107,16 +112,11 @@ const UserDetailScreen = memo((props : Props) => {
     setTimeout(() => scrollViewRef.current?.scrollToEnd({ animated: true }), 200);
   };
 
-  // export const userDetailRegisterScreenOptions = {
-  //   headerShadowVisible: false,
-  //   headerTitle        : "",
-  //   headerRight        : () => <SkipButton/>,
-  //   headerLeft         : () => <View/>
-  // };
   useEffect(() => {
     navigation.setOptions({
-      headerLeft : () => <SkipButton onSubmit={onSubmit}  />,
-      headerRight: () => <View />,
+      headerRight: () => <SkipButton onSubmit={onSubmit}  />,
+      headerLeft : () => <View />,
+      headerTitle: ""
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
@@ -129,11 +129,11 @@ const UserDetailScreen = memo((props : Props) => {
         showsVerticalScrollIndicator={false}>
         {step.includes(1) && <StepOne step={step} stepOne={stepOne} />}
         {step.includes(2) && <StepTwo firstName={firstName} nameInput={nameInput} />}
-        {step.includes(3) && <StepThree _scrollToEnd={_scrollToEnd} gender={gender} stepThree={stepThree} />}
+        {step.includes(3) && <StepThree _scrollToEnd={_scrollToEnd} gender={genderArray} setGender={setGender} stepThree={stepThree} />}
         {step.includes(4) && <StepFour birthInput={birthInput} day={day} month={month} year={year} />}
         {step.includes(5) && <StepFive height={height} heightInput={heightInput} weight={weight} />}
         {step.includes(6) && <StepSix select={select} selectDone={selectDone} selected={selected} stepSeven={stepSeven} unselect={unselect} />}
-        {step.includes(7) && <StepSeven firstName={firstName} />}
+        {step.includes(7) && <StepSeven firstName={firstName} onSubmit={onSubmit} />}
         {nameInput && (
           <View style={styles.inputContainer}>
             <TextInput

@@ -11,8 +11,9 @@ export const login = async ( phone: string,password: string, token:string ) => {
   const res = await httpRequest.post("/users/login", { phone: phone,password: password, expoPushToken: token });
   return res;
 };
-export const register = async ( phone: string,password: string ) => {
-  const res = await httpRequest.post("/users/register", { phone: phone,password: password });
+// phone, password,token, firstName && firstName, height && height, weight && weight, gender && gender,
+export const register = async ( phone: string,password: string, token: string, firstName?: string, height?: string, weight?: string ,gender?: string, ) => {
+  const res = await httpRequest.post("/users/register", {  phone: phone,password: password, expoPushToken: token,  firstName: firstName, height: height, weight: weight,gender: gender,  });
   return res;
 };
 export const logout = async () => {

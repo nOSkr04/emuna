@@ -4,27 +4,23 @@ import { Colors } from "../../constants/Colors";
 import Dot from "../../../assets/svg/dot.svg";
 import CheckIcon from "../../../assets/svg/Check.svg";
 import MedicalIcon from "../MedicalIcon";
-type Props = {
-  name?: string;
-  when?: string;
-  much?: number;
-  bgColor?:string;
-  icon?:string;
-  status: string
-};
+import { IMedicine } from "../../interfaces/IMedicine";
 
-const RenderDrug = memo(({ name, when, much,bgColor, icon,status }: Props) => {
+
+
+
+const RenderDrug = memo(({  when,quantity, status, medicine, color, icon }: IMedicine) => {
   return (
     <View style={styles.container}>
-      <View style={[styles.iconContainer, { backgroundColor: bgColor }]}>
+      <View style={[styles.iconContainer, { backgroundColor: color }]}>
         <MedicalIcon icon={icon} />
       </View>
       <View style={styles.drugDetailContainer}>
-        <Text style={styles.drugName}>{name}</Text>
+        <Text style={styles.drugName}>{medicine}</Text>
         <View style={styles.bottomContainer}>
           <Text style={styles.when}>{when} </Text>
           <Dot color={Colors.helperText} />
-          <Text style={styles.when}> {much}ш</Text>
+          <Text style={styles.when}> {quantity}ш</Text>
         </View>
         {status === "drinked" && <View style={styles.infoContainer}>
           <View style={[styles.infoIcon, styles.checkedInfoIcon]}>

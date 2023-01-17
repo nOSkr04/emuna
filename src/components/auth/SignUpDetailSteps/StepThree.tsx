@@ -1,15 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import React, { memo } from "react";
+import React, { Dispatch, memo } from "react";
 import EmunaChats from "./EmunaChats";
 import { Colors } from "../../../constants/Colors";
 
 type Props = {
     gender:string[];
     stepThree:(id: number, index: number) => void
-    _scrollToEnd:any
+    _scrollToEnd:any;
+    setGender: Dispatch<React.SetStateAction<string>>
   }
 
-const StepThree = memo(({  gender,stepThree,_scrollToEnd  } : Props) => {
+const StepThree = memo(({  gender,stepThree,_scrollToEnd,setGender  } : Props) => {
   return (
     <>
       <EmunaChats chat1="Ойлголоо. Таны хүйс?" />
@@ -20,6 +21,7 @@ const StepThree = memo(({  gender,stepThree,_scrollToEnd  } : Props) => {
                   onPress={() => {
                     stepThree(4, index);
                     _scrollToEnd();
+                    setGender(e);
                   }}
                   style={gender.length === 1 ?styles.unUserContainer : styles.userContainer }>
                   <Text style={gender.length ===1 ? styles.unUserMessage: styles.userMessage}>{e}</Text>
