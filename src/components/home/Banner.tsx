@@ -1,13 +1,9 @@
-import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Animated,  Dimensions, Image, StyleSheet, Text, TouchableOpacity,View } from "react-native";
 import React, { memo, useRef, useState } from "react";
-import Animated from "react-native-reanimated";
 import Modal from "react-native-modal";
 import { Colors } from "../../constants/Colors";
 import Button from "../Button";
-interface AdsProps {
-  id: string;
-  image: string;
-}
+
 
 const { width, height } = Dimensions.get("screen");
 const ITEM_WIDTH = width * 0.92;
@@ -15,8 +11,8 @@ const ITEM_HEIGHT = 198;
 const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 
 const Banner = memo(({ imageData }: any) => {
-  const [modalData, setModalData] = useState(null);
-  let flatListRef = useRef<FlatList<AdsProps>  | null | undefined>();
+  const [modalData, setModalData] = useState<any>(null);
+  let flatListRef = useRef<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const onViewRef = useRef(({ changed }: { changed: any }) => {
