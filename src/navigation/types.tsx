@@ -6,8 +6,7 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { IMedical } from "../interfaces/IMedical";
-
+import { IMedicine } from "../interfaces/IMedicine";
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   SplashScreen: undefined;
@@ -26,7 +25,8 @@ export type RootStackParamList = {
   ProfileEditAllergiesScreen:undefined
   ProfileEditChronicScreen:undefined
   SavedDrugScreen:undefined
-  ProfileSettingScreen:undefined
+  ProfileSettingScreen:undefined;
+  AdsDetailScreen: { id:string}
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;
@@ -39,7 +39,7 @@ export type RootTabParamList = {
 export type BottomSheetParamList = {
   RootNavigator: undefined;
   PharmacistRequestSheet: undefined;
-  HomeMedicalSheet: { data: IMedical; selectedDate: Date };
+  HomeMedicalSheet: { data: IMedicine; selectedDate: Date };
   DeleteAlertSheet: undefined;
   DrugStyleChooseSheet: undefined;
   DosageChooseSheet: undefined;

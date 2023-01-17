@@ -55,7 +55,7 @@ const HomeScreen = memo(() => {
                 renderItem={({ item }) => {
                   return (
                     <TouchableOpacity
-                    onPress={() => navigation.navigate("HomeMedicalSheet", { data: item._id, selectedDate: selectedDate })}
+                    onPress={() => navigation.navigate("HomeMedicalSheet", { data: item, selectedDate: selectedDate })}
                     >
                       <RenderDrug
                       color={"red"}

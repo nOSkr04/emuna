@@ -1,19 +1,17 @@
-import { Animated,  Dimensions, Image, StyleSheet, Text, TouchableOpacity,View } from "react-native";
+import { Animated,  Dimensions,  StyleSheet,  TouchableOpacity,View } from "react-native";
 import React, { memo, useRef, useState } from "react";
-import Modal from "react-native-modal";
+import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/Colors";
-import Button from "../Button";
 
 
-const { width, height } = Dimensions.get("screen");
+const { width,  } = Dimensions.get("screen");
 const ITEM_WIDTH = width * 0.92;
 const ITEM_HEIGHT = 198;
 const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 
 const Banner = memo(({ imageData }: any) => {
-  const [modalData, setModalData] = useState<any>(null);
+  const navigation = useNavigation();
   let flatListRef = useRef<any>();
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const onViewRef = useRef(({ changed }: { changed: any }) => {
     if (changed[0].isViewable) {
@@ -25,10 +23,6 @@ const Banner = memo(({ imageData }: any) => {
   };
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-    setModalData(null);
-  };
   return (
     <View style={styles.contentContainer} >
       <Animated.FlatList
@@ -48,8 +42,7 @@ const Banner = memo(({ imageData }: any) => {
             <View style={styles.container}>
               <TouchableOpacity
                 onPress={() => {
-                  setIsModalVisible(true);
-                  setModalData(item);
+                  navigation.navigate("AdsDetailScreen", { id: item._id });
                 }}
                 style={styles.imageContainer}>
                 <Animated.Image source={{ uri: item.image }} style={[styles.image, { transform: [{ translateX }] }]} />
@@ -71,13 +64,13 @@ const Banner = memo(({ imageData }: any) => {
           );
         })}
       </View>
-      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
+      {/* <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
         <View style={styles.modalContainer}>
           <Image source={{ uri: modalData?.image }} style={styles.modalImage} />
           <Text style={styles.modalText}>{modalData?.text}</Text>
           <Button onPress={toggleModal} title="Hide modal" />
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 });
@@ -127,16 +120,5 @@ const styles = StyleSheet.create({
   unActiveDotColor: {
     backgroundColor: Colors.transparent,
   },
-  modalContainer: {
-    flex           : 1,
-    backgroundColor: Colors.white,
-    height,
-  },
-  modalImage: {
-    width : "100%",
-    height: "50%",
-  },
-  modalText: {
-    fontSize: 14
-  }
+
 });
