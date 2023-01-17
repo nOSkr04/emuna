@@ -2,38 +2,40 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import React, { Dispatch, SetStateAction, memo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { format } from "date-fns";
 import Modal from "react-native-modal";
+import { format } from "date-fns";
+import Button from "../Button";
+import ButtonInput from "../ButtonInput";
+import IconInput from "../IconInput";
+import { Mon700 } from "../StyledText";
 import { Colors } from "../../constants/Colors";
 import PhoneIcon from "../../../assets/svg/phone.svg";
 import RightIcon from "../../../assets/svg/CaretRight.svg";
 import CalendarIcon from "../../../assets/svg/CalendarBlank.svg";
 import GenderIcon from "../../../assets/svg/GenderMale.svg";
 import BackIcon from "../../../assets/svg/xButotn.svg";
-import IconInput from "../IconInput";
-import Button from "../Button";
-import ButtonInput from "../ButtonInput";
-import { Mon700 } from "../StyledText";
+import { AuthApi } from "../../apis";
+import { useDispatch } from "react-redux";
+import { authMe } from "../../store/authSlice";
 
 type Props = {
-  firstName: string;
-  setFirstName: Dispatch<SetStateAction<string>>;
-  phone: string;
-  setPhone: Dispatch<SetStateAction<string>>;
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-  gender: string;
-  setGender: Dispatch<SetStateAction<string>>;
-  birth: string;
-  setBirth: Dispatch<SetStateAction<string>>;
-  height: string;
-  setHeight: Dispatch<SetStateAction<string>>;
-  weight: string;
-  setWeight: Dispatch<SetStateAction<string>>;
+  firstName: string | undefined | null;
+  setFirstName: Dispatch<SetStateAction<string | null | undefined>>;
+  phone: number | null | undefined;
+  gender: string | undefined | null;
+  setGender: Dispatch<SetStateAction<"male" | "female" | "other" | null | undefined>>;
+  birth: Date | null | undefined;
+  setBirth: Dispatch<SetStateAction<Date | null | undefined>>;
+  height: string | undefined | null;
+  setHeight: Dispatch<SetStateAction<string | null | undefined>>;
+  weight: string | undefined | null;
+  setWeight: Dispatch<SetStateAction<string | null | undefined>>;
+  userId: string | undefined;
 };
 
 const ProfileField = memo(
-  ({ firstName, setFirstName, phone, setPhone, gender, setGender, birth, setBirth, height, setHeight, weight, setWeight }: Props) => {
+  ({ firstName, setFirstName, phone, gender, setGender, birth, setBirth, height, setHeight, weight, setWeight, userId }: Props) => {
+    const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -50,27 +52,50 @@ const ProfileField = memo(
     const toggleModal = () => {
       setIsModalVisible(!isModalVisible);
     };
-    const selectGender = (gender: string) => {
+    const selectGender = (gender: "male" | "female" | "other" | null | undefined) => {
       setGender(gender);
       setIsModalVisible(!isModalVisible);
+    };
+    const profileEdit = async (
+      firstName: string | null | undefined,
+      gender: string | null | undefined,
+      birth: Date | null | undefined,
+      height: string | null | undefined,
+      weight: string | null | undefined,
+    ) => {
+      try {
+        const values = {
+          firstName: firstName,
+          gender   : gender,
+          birth    : birth,
+          height   : height,
+          weight   : weight,
+        };
+        await AuthApi.edit(userId, values);
+        const res = await AuthApi.me();
+        dispatch(authMe(res));
+        navigation.goBack();
+      } catch (err) {
+        console.log(err);
+      }
     };
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Нэр</Text>
-        <TextInput onChangeText={setFirstName} style={styles.input} value={firstName} />
-        <IconInput icon={<PhoneIcon height={16} width={16} />} onChangeText={setPhone} title={"Утасны дугаар"} value={phone} />
+        <TextInput onChangeText={setFirstName} style={styles.input} value={firstName ? firstName : ""} />
+        <IconInput icon={<PhoneIcon height={16} width={16} />} title={"Утасны дугаар"} value={phone ? phone.toString() : ""} />
         <Text style={styles.inputLabel}>Хүйс</Text>
-        <ButtonInput icon={<GenderIcon />} onPress={toggleModal} text={gender ? gender : "Хүйс"} />
+        <ButtonInput icon={<GenderIcon />} onPress={toggleModal} text={gender === "male" ? "Эрэгтэй": "Эмэгтэй"} />
         <Text style={styles.inputLabel}>Төрсөн огноо</Text>
         <ButtonInput icon={<CalendarIcon />} onPress={showDatePicker} text={birth ? format(new Date(birth), "dd/MM/yyyy") : "Төрсөн огноо"} />
         <View style={styles.rowInputContainer}>
           <View style={styles.rowInput}>
             <Text style={styles.rowTitle}>Өндөр</Text>
-            <TextInput onChangeText={setHeight} style={styles.inputRow} value={height} />
+            <TextInput onChangeText={setHeight} style={styles.inputRow} value={height ? height.toString() : ""} />
           </View>
           <View style={styles.rowInput}>
             <Text style={styles.rowTitle}>Жин</Text>
-            <TextInput onChangeText={setWeight} style={styles.inputRow} value={weight} />
+            <TextInput onChangeText={setWeight} style={styles.inputRow} value={weight ? weight.toString() : ""} />
           </View>
         </View>
         <View style={styles.divider} />
@@ -115,18 +140,18 @@ const ProfileField = memo(
           <RightIcon />
         </TouchableOpacity>
         <View style={styles.border} />
-        <Button onPress={() => console.log("object")} style={styles.button} title={"Хадгалах"} />
+        <Button onPress={() => profileEdit(firstName, gender, birth, height, weight)} style={styles.button} title={"Хадгалах"} />
         <DateTimePickerModal isVisible={isDatePickerVisible} mode="date" onCancel={hideDatePicker} onConfirm={handleConfirm} />
         <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
           <View style={styles.modalContainer}>
             <TouchableOpacity onPress={toggleModal} style={styles.modalButton}>
               <BackIcon />
             </TouchableOpacity>
-            {["Эрэгтэй", "Эмэгтэй"].map((gen, index) => {
+            {["male", "female"].map((gen, index) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={() => selectGender(gen)}
+                  onPress={() => selectGender(gen as "male" | "female")}
                   style={[styles.container, gen === gender && styles.selectedContainer]}>
                   {gen === gender ? (
                     <View style={styles.radioContainer}>
@@ -139,7 +164,7 @@ const ProfileField = memo(
                       <View style={styles.radio} />
                     </View>
                   )}
-                  <Mon700 style={styles.text}>{gen}</Mon700>
+                  <Mon700 style={styles.text}>{gen === "male" ? "Эрэгтэй" : "Эмэгтэй"}</Mon700>
                 </TouchableOpacity>
               );
             })}
@@ -311,15 +336,15 @@ const styles = StyleSheet.create({
     paddingBottom    : 16,
     paddingHorizontal: 16,
     borderRadius     : 8,
-    paddingTop       : 20
+    paddingTop       : 20,
   },
   modalButton: {
     padding : 10,
     position: "absolute",
     zIndex  : 10,
     right   : 0,
-    top     : -10
-  }
+    top     : -10,
+  },
 });
 
 export default ProfileField;

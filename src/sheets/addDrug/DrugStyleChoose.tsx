@@ -5,7 +5,6 @@ import PillIcon1 from "../../../assets/svg/1.svg";
 import PillIcon2 from "../../../assets/svg/2.svg";
 import PillIcon3 from "../../../assets/svg/3.svg";
 import PillIcon6 from "../../../assets/svg/6.svg";
-import PillIcon8 from "../../../assets/svg/8.svg";
 import {  BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +18,6 @@ const DrugStyleChooseSheet = memo(() => {
     { id: 2, icon: PillIcon2, name: "Капсул" },
     { id: 3, icon: PillIcon3, name: "Түрхлэг" },
     { id: 4, icon: PillIcon6, name: "Цацлага" },
-    { id: 5, icon: PillIcon8, name: "Цацлага" },
   ];
   const colors = [
     { id: 1, color: Colors.yellowPill },

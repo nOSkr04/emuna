@@ -5,7 +5,7 @@ import Down from "../../../assets/svg/down.svg";
 
 type Props = {
   profile?: string;
-  firstName?: string;
+  firstName?: string | number | null;
 };
 
 const ProfileHeaderLeft = memo(({ profile, firstName }: Props) => {

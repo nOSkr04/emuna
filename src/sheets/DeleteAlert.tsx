@@ -4,7 +4,15 @@ import WarningIcon from "../../assets/svg/checked-checkbox.svg";
 import Button from "../components/Button";
 import { Colors } from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
-const DeleteAlertSheet = () => {
+// import { BottomSheetParamList } from "../navigation/types";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+// type Props = NativeStackScreenProps<BottomSheetParamList, "DeleteAlertSheet">;
+
+const DeleteAlertSheet = (
+  // { route }: Props
+  ) => {
+  // const { id } = route.params;
   const navigation = useNavigation();
   const onDelete = () => {
     navigation.goBack();

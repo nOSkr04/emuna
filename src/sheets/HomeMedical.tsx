@@ -1,25 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,  View } from "react-native";
 import React, { memo } from "react";
-import { BottomSheetParamList } from "../navigation/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Colors } from "../constants/Colors";
-import { format } from "date-fns";
-import { mn } from "date-fns/locale";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { BottomSheetParamList } from "../navigation/types";
 import RenderDrugDetails from "../components/home/RenderDrugDetails";
+import { Colors } from "../constants/Colors";
+import { Mon500, Mon700 } from "../components/StyledText";
 
 type Props = NativeStackScreenProps<BottomSheetParamList, "HomeMedicalSheet">;
 
 const HomeMedicalSheet = memo((props: Props) => {
-  const { data, selectedDate } = props.route.params;
-  // api/v1/histories/id
+  const { data, monDate, time } = props.route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>{data.title} </Text>
-      <Text style={styles.sectionDate}>{format(selectedDate, "eeee, M сарын d", { locale: mn })} </Text>
+      <Mon700 style={styles.sectionTitle}>{time} </Mon700>
+      <Mon500 style={styles.sectionDate}>{monDate} </Mon500>
       <BottomSheetFlatList
-        data={data.data}
-        keyExtractor={item => item.toLocaleString()}
+        data={data}
+        keyExtractor={item => item?._id}
         renderItem={({ item }) => {
           return <RenderDrugDetails item={item}  />;
         }}
@@ -40,14 +38,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize     : 16,
-    fontFamily   : "Mon700",
     lineHeight   : 28,
     letterSpacing: 0.15,
     color        : Colors.text,
   },
   sectionDate: {
     fontSize     : 14,
-    fontFamily   : "Mon500",
     lineHeight   : 20,
     letterSpacing: 0.1,
     opacity      : 0.64,

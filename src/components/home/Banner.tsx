@@ -1,7 +1,10 @@
-import { Animated,  Dimensions,  StyleSheet,  TouchableOpacity,View } from "react-native";
+import { Animated,  Dimensions,  StyleSheet,   TouchableOpacity,View } from "react-native";
 import React, { memo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/Colors";
+import { useSWRToken } from "../../hooks/useSWRToken";
+import { IAds } from "../../interfaces/IAds";
+import { AdsApi } from "../../apis";
 
 
 const { width,  } = Dimensions.get("screen");
@@ -9,7 +12,10 @@ const ITEM_WIDTH = width * 0.92;
 const ITEM_HEIGHT = 198;
 const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 
-const Banner = memo(({ imageData }: any) => {
+const Banner = memo(() => {
+  const { data } = useSWRToken<IAds[]>("/ads", () => {
+    return AdsApi.getAds();
+  });
   const navigation = useNavigation();
   let flatListRef = useRef<any>();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,7 +32,7 @@ const Banner = memo(({ imageData }: any) => {
   return (
     <View style={styles.contentContainer} >
       <Animated.FlatList
-        data={imageData}
+        data={data}
         horizontal
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
         onViewableItemsChanged={onViewRef.current}
@@ -42,10 +48,10 @@ const Banner = memo(({ imageData }: any) => {
             <View style={styles.container}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate("AdsDetailScreen", { id: item._id });
+                  navigation.navigate("AdsDetailScreen", { id: item?._id });
                 }}
                 style={styles.imageContainer}>
-                <Animated.Image source={{ uri: item.image }} style={[styles.image, { transform: [{ translateX }] }]} />
+                <Animated.Image source={{ uri: item.photo }} style={[styles.image, { transform: [{ translateX }] }]} />
               </TouchableOpacity>
             </View>
           );
@@ -54,7 +60,7 @@ const Banner = memo(({ imageData }: any) => {
         viewabilityConfig={viewConfigRef}
       />
       <View style={styles.dotContainer}>
-        {imageData.map((image: any, index: number) => {
+        {data?.map((image: any, index: number) => {
           return (
             <TouchableOpacity
               key={image.id}

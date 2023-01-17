@@ -10,7 +10,7 @@ import { useNotification } from "../../hooks/useNotification";
 
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState("80099081");
+  const [phone, setPhone] = useState("95040448");
   const [password, setPassword] = useState("1234");
   const { token, registerForPushNotificationsAsync } = useNotification();
   const onSubmit = async () => {

@@ -4,7 +4,7 @@ import { Colors } from "../constants/Colors";
 
 type Props = {
 value: string
-onChangeText: (text: string) => void
+onChangeText?: (text: string) => void
 title:string;
 icon: React.ReactElement;
 

@@ -2,15 +2,16 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import ProfileField from "../../components/profile/ProfileEditField";
+import { IAuth } from "../../interfaces/IAuth";
+import { useSelector } from "react-redux";
 
 const ProfileEditScreen = memo(() => {
-  const [firstName, setFirstName] = useState("Tselmen");
-  const [phone, setPhone] = useState("80019088");
-  const [email, setEmail] = useState("tselmen.ihelp@gmail.com");
-  const [gender, setGender] = useState("");
-  const [birth, setBirth] = useState("1999-04-01T18:39:23.097Z");
-  const [height, setHeight] = useState("175");
-  const [weight, setWeight] = useState("72");
+  const { user } = useSelector((state: { auth: IAuth }) => state.auth);
+  const [firstName, setFirstName] = useState(user?.firstName);
+  const [gender, setGender] = useState(user?.gender);
+  const [birth, setBirth] = useState(user?.birthDate);
+  const [height, setHeight] = useState(user?.height);
+  const [weight, setWeight] = useState(user?.weight);
   const width = "50%";
   return (
     <View style={styles.root}>
@@ -21,19 +22,17 @@ const ProfileEditScreen = memo(() => {
         <Text style={styles.indicatorText}>50%</Text>
       </View>
       <ProfileField
-        birth={birth}
-        email={email}
+      birth={birth}
         firstName={firstName}
         gender={gender}
         height={height}
-        phone={phone}
+        phone={user?.phone}
         setBirth={setBirth}
-        setEmail={setEmail}
         setFirstName={setFirstName}
         setGender={setGender}
         setHeight={setHeight}
-        setPhone={setPhone}
         setWeight={setWeight}
+        userId={user?._id}
         weight={weight}
       />
     </View>

@@ -14,19 +14,15 @@ import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
+import MedicalIcon from "../../components/MedicalIcon";
 type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
 const AddDrugAlertScreen = memo((props: Props) => {
   const navigation = useNavigation();
-
-  // { id: 1, icon: PillIcon1, name: "Шахмал" },
-  // { id: 2, icon: PillIcon2, name: "Капсул" },
-  // { id: 3, icon: PillIcon3, name: "Түрхлэг" },
-  // { id: 4, icon: PillIcon6, name: "Цацлага" },
-  // { id: 5, icon: PillIcon8, name: "Цацлага" },
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("DrugStyleChooseSheet")}>
         <View style={[styles.pillContainer, { backgroundColor: props.route.params ? props.route.params.bgColor : Colors.yellowPill }]}>
+          <MedicalIcon/>
           {props.route.params ? (
             props.route.params.pill === "Шахмал" ? (
               <PillIcon1 color={Colors.white} height={52} width={52} />
@@ -65,7 +61,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
       <TouchableOpacity style={styles.choosedTimeContainer}>
         <View style={styles.choosedContent}>
           <MinusIcon />
-          <Text style={styles.chooseTime}>16:00</Text>
+          <Text style={styles.chooseTime}>16:00 {props.route?.params?.time }</Text>
         </View>
         <Text style={styles.chooseCapsule}>1 капсул</Text>
       </TouchableOpacity>
@@ -73,7 +69,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
       <TouchableOpacity  onPress={() => navigation.navigate("AddTimeSheet")} style={styles.choosedTimeContainer} >
         <View style={styles.choosedContent}>
           <PlusIcon />
-          <Text style={styles.addTimeTitle}>Цаг нэмэх</Text>
+          <Text style={styles.addTimeTitle}>Цаг нэмэх </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.choosedContainer}>

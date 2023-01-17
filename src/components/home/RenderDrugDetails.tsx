@@ -1,57 +1,57 @@
-import { StyleSheet, Text, TouchableOpacity,View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { memo, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import Modal from "react-native-modal";
+import { IMedicine } from "../../interfaces/IMedicine";
+import Button from "../Button";
 import MedicalIcon from "../MedicalIcon";
 import VerticalDots from "../../../assets/svg/verticalDots.svg";
 import DotIcon from "../../../assets/svg/dot.svg";
-import { Colors } from "../../constants/Colors";
-import Button from "../Button";
 import Xicon from "../../../assets/svg/X.svg";
 import CheckIcon from "../../../assets/svg/Check.svg";
-import Modal from "react-native-modal";
 import PencilIcon from "../../../assets/svg/pencil.svg";
 import TrashIcon from "../../../assets/svg/Trash.svg";
-import { useNavigation } from "@react-navigation/native";
-const RenderDrugDetails = 
-memo(({ item }: any) => {
+import { Colors } from "../../constants/Colors";
+const RenderDrugDetails = memo(({ item }: {item: IMedicine}) => {
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
-  const onDelete = () => {
+  const onDelete = (id: string) => {
     setIsModalVisible(!isModalVisible);
-    navigation.navigate("DeleteAlertSheet");
+    navigation.navigate("DeleteAlertSheet", { id: id });
   };
   return (
     <View style={styles.root}>
       <View style={styles.contentRoot}>
         <View style={styles.container}>
-          <View style={[styles.iconContainer, { backgroundColor: item.bgColor }]}>
+          <View style={[styles.iconContainer, { backgroundColor: item.color }]}>
             <MedicalIcon icon={item.icon} />
           </View>
           <View style={styles.contentContainer}>
-            <Text style={styles.itemName}>{item.drug}</Text>
+            <Text style={styles.itemName}>{item.medicine}</Text>
             <View style={styles.textContainer}>
               <Text style={styles.itemWhen}>{item.when}</Text>
               <DotIcon color={Colors.text} style={styles.dot} />
-              <Text style={styles.itemWhen}>{item.much}</Text>
+              <Text style={styles.itemWhen}>{item.quantity}</Text>
             </View>
-            {item.isDone && (
+            {item.status === "drinked" && (
               <View style={styles.infoContainer}>
                 <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
                   <CheckIcon />
                 </View>
                 <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
               </View>
-        )}
-            {item.isSkip && (
+            )}
+            {item.status === "skipped" ? (
               <View style={styles.infoContainer}>
                 <View style={styles.infoIcon}>
                   <Xicon />
                 </View>
                 <Text style={styles.infoText}> Алгассан</Text>
               </View>
-        )}
+            ): null}
           </View>
         </View>
         <TouchableOpacity onPress={toggleModal} style={styles.buttonContainer}>
@@ -61,25 +61,25 @@ memo(({ item }: any) => {
       <View style={styles.rowButtonContainer}>
         <Button
           onPress={() => console.log("object")}
-          style={item.isSkip ? styles.activeRowButton : styles.inActiveRowButton}
-          title={item.isSkip ? "Алгссан (13:20)" :  "Алгссан"}
-          titleStyle={item.isSkip ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
+          style={item.status === "skipped" ? styles.activeRowButton : styles.inActiveRowButton}
+          title={item.status === "skipped" ? "Алгссан (13:20)" : "Алгссан"}
+          titleStyle={item.status === "skipped" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
         <Button
           onPress={() => console.log("object")}
-          style={item.isDone ? styles.activeRowButton : styles.inActiveRowButton}
-          title={item.isDone ? "Уусан (13:20)" :  "Уусан"}
-          titleStyle={item.isDone ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
+          style={item.status === "drinked" ? styles.activeRowButton : styles.inActiveRowButton}
+          title={item.status === "drinked" ? "Уусан (13:20)" : "Уусан"}
+          titleStyle={item.status === "drinked" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
       </View>
-      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down" >
+      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
         <View style={styles.modalContainer}>
           <TouchableOpacity style={styles.modalButton}>
-            <PencilIcon   />
+            <PencilIcon />
             <Text style={styles.modalText}>Сануулга засах</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={onDelete} style={styles.modalButton1}>
-            <TrashIcon   />
+          <TouchableOpacity onPress={() => onDelete(item._id)} style={styles.modalButton1}>
+            <TrashIcon />
             <Text style={styles.modalText1}>Сануулга устгах</Text>
           </TouchableOpacity>
         </View>
@@ -157,11 +157,11 @@ const styles = StyleSheet.create({
   },
   inActiveRowButtonTitle: {
     color   : Colors.text,
-    fontSize: 12
+    fontSize: 12,
   },
   activeRowButtonTitle: {
     color   : Colors.white,
-    fontSize: 12
+    fontSize: 12,
   },
   infoContainer: {
     flexDirection: "row",
@@ -181,36 +181,36 @@ const styles = StyleSheet.create({
     fontFamily   : "Mon700",
     color        : Colors.darkGrey,
     letterSpacing: 0.1,
-    lineHeight   : 16
+    lineHeight   : 16,
   },
   checkedInfoIcon: {
     backgroundColor: Colors.primary,
   },
   checkedInfoText: {
-    color: Colors.primary
+    color: Colors.primary,
   },
   modalContainer: {
     backgroundColor : Colors.white,
     marginHorizontal: 60,
     padding         : 12,
-    borderRadius    : 16
+    borderRadius    : 16,
   },
   modalButton: {
-  backgroundColor  : Colors.PrimarySoft,
-  alignItems       : "center",
-  flexDirection    : "row",
-  height           : 40,
-  borderRadius     : 8,
-  paddingHorizontal: 16
+    backgroundColor  : Colors.PrimarySoft,
+    alignItems       : "center",
+    flexDirection    : "row",
+    height           : 40,
+    borderRadius     : 8,
+    paddingHorizontal: 16,
   },
   modalButton1: {
-  backgroundColor  : Colors.danger,
-  alignItems       : "center",
-  flexDirection    : "row",
-  height           : 40,
-  borderRadius     : 8,
-  marginTop        : 16,
-  paddingHorizontal: 16
+    backgroundColor  : Colors.danger,
+    alignItems       : "center",
+    flexDirection    : "row",
+    height           : 40,
+    borderRadius     : 8,
+    marginTop        : 16,
+    paddingHorizontal: 16,
   },
   modalText: {
     fontSize     : 12,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     color        : Colors.text,
     letterSpacing: 0.1,
     lineHeight   : 16,
-    marginLeft   : 12
+    marginLeft   : 12,
   },
   modalText1: {
     fontSize     : 12,
@@ -226,6 +226,6 @@ const styles = StyleSheet.create({
     color        : Colors.white,
     letterSpacing: 0.1,
     lineHeight   : 16,
-    marginLeft   : 12
-  }
+    marginLeft   : 12,
+  },
 });

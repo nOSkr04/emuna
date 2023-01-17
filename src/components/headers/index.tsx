@@ -77,3 +77,8 @@ export const profileSettingsScreenOptions = {
   headerTitle        : "Тохиргоо",
   headerLeft         : () => <BackButton/>
 };
+export const adsDetailScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Мэдээлэл",
+  headerLeft         : () => <BackButton/>
+};

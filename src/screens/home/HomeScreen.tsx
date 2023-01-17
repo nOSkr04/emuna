@@ -1,31 +1,28 @@
 import React, { memo, useState } from "react";
 import { FlatList, StyleSheet,  TouchableOpacity, View } from "react-native";
-import { Colors } from "../../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
+import { mn } from "date-fns/locale";
 import RenderDrug from "../../components/home/RenderDrug";
 import RenderDrugHeader from "../../components/home/RenderDrugHeader";
 import EmptyDrug from "../../components/home/EmptyDrug";
 import Banner from "../../components/home/Banner";
 import HorizontalCalendar from "../../components/home/HorizontalCalendar";
 import DrugAlert from "../../components/home/DrugAlert";
-import { useNavigation } from "@react-navigation/native";
+import HomeLoader from "../../components/loader/HomeLoader";
 import { useSWRToken } from "../../hooks/useSWRToken";
 import { HistoryApi } from "../../apis";
-import { format } from "date-fns";
-import HomeLoader from "../../components/loader/HomeLoader";
 import { IHistory } from "../../interfaces/IHistory";
+import { Colors } from "../../constants/Colors";
 
 const HomeScreen = memo(() => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigation = useNavigation();
   const strDate = format(selectedDate, "yyyy-MM-dd");
+  const monDate = format(selectedDate, "eeee, M сарын d", { locale: mn });
   const { data, error } = useSWRToken<IHistory>(`/histories/day/${strDate}`, () => {
     return HistoryApi.historiesDay(strDate);
   });
-  const imageData = [
-    { id: "1", image: "https://images.pexels.com/photos/11987710/pexels-photo-11987710.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" },
-    { id: "2", image: "https://images.pexels.com/photos/13945391/pexels-photo-13945391.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" },
-    { id: "3", image: "https://images.pexels.com/photos/14792098/pexels-photo-14792098.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" },
-  ];
   // const sortedTime = data?.histories.sort((a: any, b: any) => {
   //   const [aHour, aMin] = a._id.split(":");
   //   const [bHour, bMin] = b._id.split(":");
@@ -43,21 +40,22 @@ const HomeScreen = memo(() => {
       <HorizontalCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <FlatList
         ListEmptyComponent={!data ? <HomeLoader /> : <EmptyDrug />}
-        ListFooterComponent={<Banner imageData={imageData} />}
+        ListFooterComponent={<Banner />}
         data={data?.histories}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
           return (
-            <View style={styles.medicalContainer}>
-              <RenderDrugHeader title={item._id} />
-              <FlatList
+            <TouchableOpacity
+            onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id })}
+            >
+              <View style={styles.medicalContainer}>
+                <RenderDrugHeader title={item._id} />
+                <FlatList
                 data={item.medicine}
                 renderItem={({ item }) => {
                   return (
-                    <TouchableOpacity
-                    onPress={() => navigation.navigate("HomeMedicalSheet", { data: item, selectedDate: selectedDate })}
-                    >
-                      <RenderDrug
+                    <RenderDrug
+                      _id={item._id}
                       color={"red"}
                       icon={"3medical"}
                       medicine={item.medicine}
@@ -65,11 +63,12 @@ const HomeScreen = memo(() => {
                       status={item.status}
                       when={item.when}
                     />
-                    </TouchableOpacity>
+                 
                   );
                 }}
               />
-            </View>
+              </View>
+            </TouchableOpacity>
           );
         }}
       />

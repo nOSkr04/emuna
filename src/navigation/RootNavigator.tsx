@@ -17,6 +17,7 @@ import PublicLandingScreen from "../screens/auth/PublicLanding";
 import {
   addDrugAlertOptions,
   addDrugScreenOptions,
+  adsDetailScreenOptions,
   barCodeScannerScreenOptions,
   loginScreenOptions,
   otpVerifyScreenOptions,
@@ -25,7 +26,6 @@ import {
   profileEditScreenOptions,
   profileSettingsScreenOptions,
   savedDrugScreenOptions,
-  userDetailRegisterScreenOptions,
 } from "../components/headers";
 import SignUpScreen from "../screens/auth/SignUp";
 import OtpVerifyScreen from "../screens/auth/OtpVerify";
@@ -43,6 +43,7 @@ import ProfileEditAllergiesScreen from "../screens/profile/ProfileEditAllergiesS
 import ProfileEditChronicScreen from "../screens/profile/ProfileEditChronicScreen";
 import SavedDrugScreen from "../screens/drug/SavedDrugScreen";
 import ProfileSettingScreen from "../screens/profile/ProfileSettingScreen";
+import AdsDetailScreen from "../screens/home/AdsDetailScreen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -93,6 +94,7 @@ function RootNavigator() {
           <Stack.Screen component={ProfileEditChronicScreen} name="ProfileEditChronicScreen" options={profileEditChronicScreenOptions} />
           <Stack.Screen component={SavedDrugScreen} name="SavedDrugScreen" options={savedDrugScreenOptions} />
           <Stack.Screen component={ProfileSettingScreen} name="ProfileSettingScreen" options={profileSettingsScreenOptions} />
+          <Stack.Screen component={AdsDetailScreen} name="AdsDetailScreen" options={adsDetailScreenOptions} />
         </Stack.Group>
       ) : (
         <Stack.Group
@@ -104,7 +106,7 @@ function RootNavigator() {
           <Stack.Screen component={SignUpScreen} name="SignUpScreen" options={loginScreenOptions} />
           <Stack.Screen component={OtpVerifyScreen} name="OtpVerifyScreen" options={otpVerifyScreenOptions} />
           <Stack.Screen component={SetPasswordScreen} name="SetPasswordScreen" />
-          <Stack.Screen component={UserDetailRegisterScreen} name="UserDetailRegisterScreen" options={userDetailRegisterScreenOptions} />
+          <Stack.Screen component={UserDetailRegisterScreen} name="UserDetailRegisterScreen"  />
         </Stack.Group>
       )}
     </Stack.Navigator>

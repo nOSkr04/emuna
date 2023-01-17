@@ -9,35 +9,35 @@ import Pill7 from "../../assets/svg/7.svg";
 import Pill8 from "../../assets/svg/8.svg";
 
 type Props = {
-  icon? :string
-}
+  icon?: any
+};
 
 const MedicalIcon = memo(({ icon }: Props) => {
-  if(icon === "1medical"){
+  if (icon === "1medical") {
     return <Pill1 />;
   }
-  if(icon === "2medical"){
+  if (icon === "2medical") {
     return <Pill2 />;
   }
-  if(icon === "3medical"){
+  if (icon === "3medical") {
     return <Pill3 />;
   }
-  if(icon === "4medical"){
+  if (icon === "4medical") {
     return <Pill4 />;
   }
-  if(icon === "5medical"){
+  if (icon === "5medical") {
     return <Pill5 />;
   }
-  if(icon === "6medical"){
+  if (icon === "6medical") {
     return <Pill6 />;
   }
-  if(icon === "7medical"){
+  if (icon === "7medical") {
     return <Pill7 />;
   }
-  if(icon === "8medical"){
+  if (icon === "8medical") {
     return <Pill8 />;
   }
 });
 
-MedicalIcon.displayName ="MedicalIcon";
+MedicalIcon.displayName = "MedicalIcon";
 export default MedicalIcon;

@@ -16,17 +16,17 @@ export type RootStackParamList = {
   SignUpScreen: undefined;
   OtpVerifyScreen: { phone: string };
   SetPasswordScreen: { phone: string };
-  UserDetailRegisterScreen: {phone:string, password:string};
+  UserDetailRegisterScreen: { phone: string; password: string };
   SearchDrugScreen: undefined;
   SearchBarcodeScreen: undefined;
   DrugDetailScreen: undefined;
-  AddDrugAlertScreen: { pill: string | undefined; bgColor: string | undefined };
+  AddDrugAlertScreen: { pill?: string | undefined; bgColor?: string | undefined; time?: string | undefined; capsule?: string | string };
   ProfileEditScreen: undefined;
-  ProfileEditAllergiesScreen:undefined
-  ProfileEditChronicScreen:undefined
-  SavedDrugScreen:undefined
-  ProfileSettingScreen:undefined;
-  AdsDetailScreen: { id:string}
+  ProfileEditAllergiesScreen: undefined;
+  ProfileEditChronicScreen: undefined;
+  SavedDrugScreen: undefined;
+  ProfileSettingScreen: undefined;
+  AdsDetailScreen: { id: string };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;
@@ -39,12 +39,12 @@ export type RootTabParamList = {
 export type BottomSheetParamList = {
   RootNavigator: undefined;
   PharmacistRequestSheet: undefined;
-  HomeMedicalSheet: { data: IMedicine; selectedDate: Date };
-  DeleteAlertSheet: undefined;
+  HomeMedicalSheet: { data: IMedicine[]; monDate: string; time: string };
+  DeleteAlertSheet: { id: string };
   DrugStyleChooseSheet: undefined;
   DosageChooseSheet: undefined;
   ProfileMenuSheets: undefined;
-  ProfileHealthDetailSheet: {type:number};
+  ProfileHealthDetailSheet: { type: number };
   SavedDrugMenuSheets: undefined;
   FrequencyDrugSheet: undefined;
   AddTimeSheet: undefined;

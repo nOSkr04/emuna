@@ -1,7 +1,7 @@
 import { IMedicine } from "../interfaces/IMedicine";
 
 export class Medicine implements IMedicine {
-  _id?: string;
+  _id: string;
   when?: string;
   quantity?: string;
   status?: "created" | "skipped" | "drinked";
