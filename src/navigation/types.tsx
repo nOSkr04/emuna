@@ -20,7 +20,7 @@ export type RootStackParamList = {
   SearchDrugScreen: undefined;
   SearchBarcodeScreen: undefined;
   DrugDetailScreen: undefined;
-  AddDrugAlertScreen: { pill?: string | undefined; bgColor?: string | undefined; time?: string | undefined; capsule?: string | string };
+  AddDrugAlertScreen: { pill?: string | undefined; bgColor?: string | undefined;};
   ProfileEditScreen: undefined;
   ProfileEditAllergiesScreen: undefined;
   ProfileEditChronicScreen: undefined;

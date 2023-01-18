@@ -37,10 +37,9 @@ export const logout = async () => {
   return res;
 };
 export const edit = async (
-  userId: string,
   values: { firstName?: string | null; height?: string | null; weight?: string | null; gender?: string | null },
 ) => {
-  const res = await httpRequest.put(`/users/${userId}`, values );
+  const res = await httpRequest.put("/users/edit", values );
   console.log(res);
   return res;
 };

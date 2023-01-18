@@ -30,11 +30,10 @@ type Props = {
   setHeight: Dispatch<SetStateAction<string | null | undefined>>;
   weight: string | undefined | null;
   setWeight: Dispatch<SetStateAction<string | null | undefined>>;
-  userId: string | undefined;
 };
 
 const ProfileField = memo(
-  ({ firstName, setFirstName, phone, gender, setGender, birth, setBirth, height, setHeight, weight, setWeight, userId }: Props) => {
+  ({ firstName, setFirstName, phone, gender, setGender, birth, setBirth, height, setHeight, weight, setWeight }: Props) => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
@@ -71,7 +70,7 @@ const ProfileField = memo(
           height   : height,
           weight   : weight,
         };
-        await AuthApi.edit(userId, values);
+        await AuthApi.edit(values);
         const res = await AuthApi.me();
         dispatch(authMe(res));
         navigation.goBack();

@@ -32,7 +32,6 @@ const ProfileEditScreen = memo(() => {
         setGender={setGender}
         setHeight={setHeight}
         setWeight={setWeight}
-        userId={user?._id}
         weight={weight}
       />
     </View>
