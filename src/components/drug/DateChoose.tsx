@@ -1,29 +1,37 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { Mon400, Mon600 } from "../StyledText";
 import { Colors } from "../../constants/Colors";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
-const DateChoose = memo(() => {
-  const [value, setValue] = useState("Monday");
-  const data = [
-    { id: 1, name: "Да", value: "Monday" },
-    { id: 2, name: "Мя", value: "Tuesday" },
-    { id: 3, name: "Лх", value: "Wednesday" },
-    { id: 4, name: "Пү", value: "Thursday" },
-    { id: 5, name: "Ба", value: "Friday" },
-    { id: 6, name: "Бя", value: "Saturday" },
-    { id: 7, name: "Ня", value: "Sunday" },
-  ];
+type Props = {
+  days: {
+    id: number;
+    name: string;
+    value:string
+  }[];
+  value: string[];
+  select: (value: string) => void;
+  unselect: (value: string) => void;
+};
+
+const DateChoose = memo(({ days, value, select,unselect } : Props) => {
+
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Mon600 style={styles.text}>Өдөр сонгох</Mon600>
       <BottomSheetScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.buttonRoot}>
-        {data.map(item => {
+        {days.map(item => {
           return (
             <TouchableOpacity
               key={item.id}
-              onPress={() => setValue(item.value)}
+             onPress={() => {
+              if (value.includes(item.name)) {
+                unselect(item.value);
+              } else {
+                select(item.value);
+              }
+             }}
               style={[styles.buttonContainer, value.includes(item.value) && styles.primaryBg]}>
               <Mon400 style={value.includes(item.value) ? styles.whiteColor : styles.blackColor }>{item.name}</Mon400>
             </TouchableOpacity>

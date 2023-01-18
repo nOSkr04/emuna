@@ -26,7 +26,7 @@ const ProfileEditAllergiesScreen = memo(() => {
     ];
   }, []);
   const select = (chooseId: string) => {
-    setSelected(selecting => {
+    setSelected((selecting) => {
       return [...selecting, chooseId];
     });
   };

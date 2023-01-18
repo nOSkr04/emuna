@@ -20,7 +20,7 @@ export type RootStackParamList = {
   SearchDrugScreen: undefined;
   SearchBarcodeScreen: undefined;
   DrugDetailScreen: undefined;
-  AddDrugAlertScreen: { pill?: string | undefined; bgColor?: string | undefined;};
+  AddDrugAlertScreen: { pill?: string | undefined; bgColor?: string | undefined; dose?: string | undefined; frequency: string[] | undefined; type: string | undefined};
   ProfileEditScreen: undefined;
   ProfileEditAllergiesScreen: undefined;
   ProfileEditChronicScreen: undefined;
@@ -47,7 +47,7 @@ export type BottomSheetParamList = {
   ProfileHealthDetailSheet: { type: number };
   SavedDrugMenuSheets: undefined;
   FrequencyDrugSheet: undefined;
-  AddTimeSheet: undefined;
+  DrinkConditions: undefined;
 };
 export type TopTabParamList = {
   DrugDetail: {

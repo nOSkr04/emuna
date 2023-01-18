@@ -13,7 +13,7 @@ import DeleteAlertSheet from "../sheets/DeleteAlert";
 import ProfileHealthDetailSheet from "../sheets/ProfileHealthDetail";
 import SavedDrugMenuSheets from "../sheets/SavedDrugMenu";
 import FrequencyDrugSheet from "../sheets/addDrug/FrequencyDrug";
-import AddTimeSheet from "../sheets/addDrug/AddTime";
+import DrinkConditions from "../sheets/addDrug/DrinkConditions";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -102,8 +102,8 @@ const BottomSheetNavigator = () => {
         }}
       />
       <Screen
-        component={FrequencyDrugSheet}
-        name="FrequencyDrugSheet"
+        component={DrinkConditions}
+        name="DrinkConditions"
         options={{
           backdropComponent: renderBackdrop,
           snapPoints       : ["50%"],
@@ -112,8 +112,8 @@ const BottomSheetNavigator = () => {
         }}
       />
       <Screen
-        component={AddTimeSheet}
-        name="AddTimeSheet"
+        component={FrequencyDrugSheet}
+        name="FrequencyDrugSheet"
         options={{
           backdropComponent: renderBackdrop,
           snapPoints       : ["50%"],

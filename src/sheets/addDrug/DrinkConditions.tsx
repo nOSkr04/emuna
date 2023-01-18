@@ -1,33 +1,28 @@
-import { StyleSheet,  TextInput,  TouchableOpacity,  View } from "react-native";
+import { StyleSheet,  TouchableOpacity,  View } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
-import { Mon500, Mon600, Mon700 } from "../../components/StyledText";
+import { Mon500,  Mon700 } from "../../components/StyledText";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import CheckedBox from "../../components/CheckedBox";
 import UnCheckedBox from "../../components/UnCheckedBox";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
-const DosageChooseSheet = memo(() => {
-  const [dose,setDose] = useState("мг");
-  const [doseInput, setDoseInput] = useState("");
+const DrinkConditions = memo(() => {
+  const [dose,setDose] = useState("Хоолны дараа");
   const navigation = useNavigation();
   const data = [
-    { id: 1, name: "мг" },
-    { id: 2, name: "мкг" },
-    { id: 3, name: "гр" },
-    { id: 4, name: "мл" },
-    { id: 5, name: "%" },
+    { id: 1, name: "Хоолны дараа" },
+    { id: 2, name: "Хоолны өмнө" },
+    { id: 3, name: "Хамаагүй" },
   ];
-  const onSumbit = (doseInput: string, dose: string) => {
-    navigation.navigate("AddDrugAlertScreen", { dose: `${doseInput} ${dose}` });
+  const onSumbit = () => {
+    navigation.goBack();
   };
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false} style={styles.root}  >
-      <Mon700 style={styles.title}>Тун</Mon700>
+      <Mon700 style={styles.title}>Уух нөхцөл</Mon700>
       <View style={styles.container}>
-        <Mon600 style={styles.placeHolderTitle}>Тун </Mon600>
-        <TextInput onChangeText={setDoseInput} placeholder="Эмийн хэмжээ оруулах" style={styles.textInput} value={doseInput}   />
         {data.map((item) => {
           return(
             <TouchableOpacity key={item.id} onPress={() => setDose(item.name)} >
@@ -44,14 +39,14 @@ const DosageChooseSheet = memo(() => {
           );
         })}
       </View>
-      <Button onPress={() => onSumbit(doseInput, dose)}style={styles.button} title="Хадгалах"  />
+      <Button onPress={onSumbit}style={styles.button} title="Хадгалах"  />
     </BottomSheetScrollView>
   );
 });
 
-DosageChooseSheet.displayName = "DosageChooseSheet";
+DrinkConditions.displayName = "DrinkConditions";
 
-export default DosageChooseSheet;
+export default DrinkConditions;
 
 const styles = StyleSheet.create({
   root: {
@@ -66,24 +61,6 @@ const styles = StyleSheet.create({
         lineHeight   : 28,
         letterSpacing: 0.15,
         textAlign    : "center"
-    },
-    placeHolderTitle: {
-      fontSize     : 11,
-      lineHeight   : 16,
-      letterSpacing: 0.15,
-      opacity      : 0.72,
-      color        : Colors.newText,
-      marginTop    : 30,
-      marginBottom : 8,
-      marginLeft   : 16
-    },
-    textInput: {
-      height      : 48,
-      borderWidth : 1,
-      borderColor : Colors.strokeDark,
-      borderRadius: 8,
-      paddingLeft : 16,
-      marginBottom: 16
     },
     name: {
       color: Colors.newText
