@@ -1,9 +1,10 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet,  TextInput, TouchableOpacity, View } from "react-native";
 import React, { memo } from "react";
 import Layout from "../constants/Layout";
 import SearchIcon from "../../assets/svg/search.svg";
 import { Colors } from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { Mon700 } from "./StyledText";
 const SearchField = memo(() => {
   const navigation = useNavigation();
   return (
@@ -13,7 +14,7 @@ const SearchField = memo(() => {
         <TextInput placeholder="Түлхүүр үгээр хайх" placeholderTextColor={Colors.secondaryButton} style={styles.input}  />
       </View>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backContainer} >
-        <Text style={styles.title}>Болих</Text>
+        <Mon700 style={styles.title}>Болих</Mon700>
       </TouchableOpacity>
     </View>
   );
@@ -50,15 +51,15 @@ const styles = StyleSheet.create({
     fontFamily     : "Nun400",
     lineHeight     : 24,
     letterSpacing  : 0.5,    
-    paddingLeft    : 40
+    paddingLeft    : 40,
+    borderWidth    : 1,
+    borderColor    : Colors.greyBackground
   },
   title: {
-    fontFamily   : "Mon700",
     fontSize     : 12,
     textAlign    : "center",
     letterSpacing: 0.1,
     lineHeight   : 16,
-    color        : Colors.white
   },
   backContainer: {
     width: Layout.window.width * 0.2,

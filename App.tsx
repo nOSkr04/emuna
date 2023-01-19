@@ -10,6 +10,9 @@ import useCachedResources from "./src/hooks/useCachedResources";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -58,7 +61,9 @@ export default function App() {
             }}>
             <SafeAreaProvider>
               <GestureHandlerRootView style={styles.container}>
-                <NavigationContainer />
+                <BottomSheetModalProvider>
+                  <NavigationContainer />
+                </BottomSheetModalProvider>
               </GestureHandlerRootView>
             </SafeAreaProvider>
           </SWRConfig>

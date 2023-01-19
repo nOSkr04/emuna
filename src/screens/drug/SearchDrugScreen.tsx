@@ -37,7 +37,7 @@ SearchDrugScreen.displayName = "SearchDrugScreen";
 const styles = StyleSheet.create({
   container: {
     flex           : 1,
-    backgroundColor: Colors.transparent,
+    backgroundColor: Colors.white,
   },
   
 });

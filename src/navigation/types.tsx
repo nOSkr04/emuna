@@ -49,20 +49,7 @@ export type BottomSheetParamList = {
   FrequencyDrugSheet: undefined;
   DrinkConditions: undefined;
 };
-export type TopTabParamList = {
-  DrugDetail: {
-    isTrue: boolean;
-    gradus: string;
-    description: string;
-    hemjee: string;
-  };
-  DrugSummary: {
-    buyName: string;
-    countryName: string;
-    info: string;
-    nairlaga: string;
-  };
-};
+
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,

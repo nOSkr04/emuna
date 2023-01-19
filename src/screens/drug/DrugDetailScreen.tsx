@@ -1,176 +1,133 @@
-import React, { memo } from "react";
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Layout from "../../constants/Layout";
-import { Colors } from "../../constants/Colors";
-import BackIcon from "../../../assets/svg/back.svg";
-import SaveIcon from "../../../assets/svg/save.svg";
-import RxIcon from "../../../assets/svg/rx.svg";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useRef, useState } from "react";
+import Animated from "react-native-reanimated";
 import DrugDetail from "./TopTabDetail/DrugDetail";
 import DrugSummary from "./TopTabDetail/DrugSummary";
+import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
-const DrugDetailScreen = memo(() => {
+import { Mon700 } from "../../components/StyledText";
+import { useNavigation } from "@react-navigation/native";
+import BackIcon from "../../../assets/svg/back.svg";
+import SaveIcon from "../../../assets/svg/save.svg";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+const EditPlace = () => {
+  const scrollA = useRef(new Animated.Value(0)).current;
   const insents = useSafeAreaInsets();
   const navigation = useNavigation();
-  const Tab = createMaterialTopTabNavigator();
-  const data = {
-    id         : 1,
-    name       : "Кавинтон",
-    capsule    : "Капсул,5 мг",
-    isTrue     : false,
-    isTrueText : "Эмийн найрлагад орсон үйлчлэгч болон туслах бодист харшилтай, Жирэмсэн болон хөхүүл эх Хүүхдэд хэрэглэхийг хориглоно.",
-    gradus     : "+15oC- +30oC",
-    description: "Кавинтон ба Кавинтон Фонте шахмалыг тархины цусан хангамжийн өөрчлөлтийн үед хэрэглэдэг.",
-    hemjee     :
-      "Эмчилгээний хоногийн тун Кавинтон 1-2 шахмалаар өдөрт 3 удаа уух; харин Кавинтон Форте-г 1 шахмалаар өдөр 3 удаа ууж хэрэглэнэ. Хоол хамаарахгүй.",
-    buyName    : "Нистатин",
-    countryName: "Нистатин (Nystatin).",
-    info       : "Ногоовтор туяа бүхий  цайвар шар өнгийн хальсан бүрхүүлтэй,  2 талдаа гүдгэр, дугариг хэлбэртэй шахмал.",
-    nairlaga   : "Нэг  шахмалд: Идэвхитэй бодис - нистатин - 5000000",
-  };
+  const [type, setType] = useState(1);
   return (
-    <View style={styles.container}>
-      <ImageBackground source={{ uri: "https://images.pexels.com/photos/5745225/pexels-photo-5745225.jpeg?auto=compress&cs=tinysrgb&w=1600" }} style={[styles.image, { marginTop: insents.top }]}>
-        <View style={styles.headerIconContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
-            <BackIcon color={Colors.text} height={15} width={7.5} />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.backIconContainer, styles.primaryColor]}>
-            <SaveIcon color={Colors.white} />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-      <View style={styles.contentContainer}>
-        <Text style={styles.drugName}>{data.name}</Text>
-        <Text style={styles.drugDetail}>{data.capsule}</Text>
-        <View style={styles.drugHelperContainer}>
-          <RxIcon color={data.isTrue ? Colors.drugPermision : Colors.primary} />
-          <Text style={[styles.drugPermission, data.isTrue ? styles.permissionTextColor : styles.primaryTextColor]}>
-            {data.isTrue ? "Уг эмийг заавал жороор олгодог" : "Уг эмийг жоргүй олгодог"}
-          </Text>
+    <>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
+          <BackIcon />
+        </TouchableOpacity>
+        <View style={styles.saveIcon}>
+          <SaveIcon color={Colors.white} height={20} width={20} />
         </View>
       </View>
-      <Tab.Navigator
-        initialRouteName="DrugDetail"
-        screenOptions={{
-          tabBarActiveTintColor  : Colors.primary,
-          tabBarInactiveTintColor: Colors.DarkText,
-          tabBarLabelStyle       : styles.tabBarLabelStyle,
-          tabBarIndicatorStyle   : styles.tabbarIndicator,
-        }}>
-        <Tab.Screen
-          component={DrugDetail}
-          initialParams={{
-            isTrue     : data.isTrue,
-            gradus     : data.gradus,
-            description: data.description,
-            hemjee     : data.hemjee,
-          }}
-          name="DrugDetail"
-          options={{
-            title: "Дэлгэрэнгүй",
-          }}
-        />
-        <Tab.Screen
-          component={DrugSummary}
-          initialParams={{
-            buyName    : data.buyName,
-            countryName: data.countryName,
-            info       : data.info,
-            nairlaga   : data.nairlaga,
-          }}
-          name="DrugSummary"
-          options={{
-            title: "Хурангуй",
-          }}
-        />
-      </Tab.Navigator>
-      <Button onPress={() => navigation.navigate("AddDrugAlertScreen")} style={styles.button} title="Үргэлжлүүлэх" />
-    </View>
+      <Animated.ScrollView
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollA } } }], { useNativeDriver: true })}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        style={[styles.root, { marginTop: insents.top }]}>
+        <View>
+          <Animated.Image
+            source={require("../../../assets/images/bg.jpg")}
+            style={[
+              styles.image,
+              {
+                transform: [
+                  {
+                    translateY: scrollA,
+                  },
+                ],
+              },
+            ]}
+          />
+        </View>
+        <View style={styles.container}>
+          <View style={styles.topTabs}>
+            <TouchableOpacity onPress={() => setType(1)} style={[styles.tabs, type === 1 && styles.active]}>
+              <Mon700 style={[styles.tabsTitle, type === 1 && styles.primaryColor]}>Хураангуй</Mon700>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setType(2)} style={[styles.tabs, type === 2 && styles.active]}>
+              <Mon700 style={[styles.tabsTitle, type === 2 && styles.primaryColor]}>Дэлгэрэнгүй</Mon700>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {type === 1 ? <DrugDetail /> : <DrugSummary />}
+      </Animated.ScrollView>
+      <View style={styles.button}>
+        <Button onPress={() => navigation.navigate("AddDrugAlertScreen")} title={"Үргэлжлүүлэх"} />
+      </View>
+    </>
   );
-});
+};
 
-DrugDetailScreen.displayName = "DrugDetailScreen";
-
-export default DrugDetailScreen;
+export default EditPlace;
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex           : 1,
     backgroundColor: Colors.white,
   },
   image: {
     height: 256,
-    width : Layout.window.width,
+    width : "100%",
   },
-  headerIconContainer: {
-    flexDirection   : "row",
-    justifyContent  : "space-between",
-    marginHorizontal: 16,
-    marginTop       : 8,
-  },
-  backIconContainer: {
-    height         : 40,
-    width          : 40,
-    justifyContent : "center",
-    alignItems     : "center",
+  container: {
     backgroundColor: Colors.white,
-    borderRadius   : 20,
+  },
+  topTabs: {
+    flexDirection : "row",
+    justifyContent: "space-between",
+  },
+  tabs: {
+    width         : "50%",
+    justifyContent: "center",
+    alignItems    : "center",
+    height        : 42,
+  },
+  active: {
+    borderBottomWidth: 2,
+    borderColor      : Colors.primary,
+  },
+  tabsTitle: {
+    fontSize  : 14,
+    lineHeight: 20,
   },
   primaryColor: {
-    backgroundColor: Colors.primary,
-  },
-  primaryTextColor: {
     color: Colors.primary,
   },
-  permissionTextColor: {
-    color: Colors.drugPermision,
-  },
-  drugName: {
-    fontSize     : 24,
-    fontFamily   : "Mon700",
-    lineHeight   : 32,
-    letterSpacing: 0.15,
-    color        : Colors.text,
-  },
-  drugDetail: {
-    fontSize     : 14,
-    fontFamily   : "Mon500",
-    lineHeight   : 20,
-    letterSpacing: 0.25,
-    opacity      : 0.64,
-    color        : Colors.text,
-  },
-  drugHelperContainer: {
-    flexDirection: "row",
-    marginTop    : 16,
-    alignItems   : "center",
-  },
-  drugPermission: {
-    fontFamily   : "Mon500",
-    fontSize     : 14,
-    lineHeight   : 20,
-    letterSpacing: 0.25,
-    marginLeft   : 8,
-  },
-  contentContainer: {
-    marginHorizontal: 16,
-    marginTop       : 16,
-  },
-  tabBarLabelStyle: {
-    fontSize     : 14,
-    fontFamily   : "Mon700",
-    lineHeight   : 20,
-    textTransform: "none",
-  },
-  tabbarIndicator: {
-    backgroundColor: Colors.primary,
-  },
   button: {
-    marginTop       : 8,
-    marginHorizontal: 24,
-    marginBottom    : 40,
+    backgroundColor  : Colors.white,
+    paddingBottom    : 20,
+    paddingTop       : 20,
+    paddingHorizontal: 20,
+  },
+  headerContainer: {
+    position      : "absolute",
+    top           : 50,
+    zIndex        : 999,
+    flexDirection : "row",
+    justifyContent: "space-between",
+    left          : 16,
+    right         : 16,
+  },
+  backIcon: {
+    width          : 40,
+    height         : 40,
+    backgroundColor: Colors.white,
+    borderRadius   : 100,
+    alignItems     : "center",
+    justifyContent : "center",
+  },
+  saveIcon: {
+    width          : 40,
+    height         : 40,
+    backgroundColor: Colors.primary,
+    borderRadius   : 100,
+    alignItems     : "center",
+    justifyContent : "center",
   },
 });

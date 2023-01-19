@@ -1,30 +1,28 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { TopTabParamList } from "../../../navigation/types";
+import { TopTabParamList } from "../../..//types";
 import { Colors } from "../../../constants/Colors";
 
-type PropsPage = NativeStackScreenProps<TopTabParamList, "DrugSummary">;
 
 const DrugSummary = memo((props: PropsPage) => {
-  const { buyName,countryName,info,nairlaga } = props.route.params;
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.question}>Худалдааны нэр: </Text>
-        <Text style={styles.answer}>{buyName}</Text>
+        {/* <Text style={styles.answer}>{buyName}</Text> */}
       </View>
       <View style={styles.contentContainer}>
         <Text style={styles.question}>Олон улсын нэр: </Text>
-        <Text style={styles.answer}>{countryName}</Text>
+        {/* <Text style={styles.answer}>{countryName}</Text> */}
       </View>
       <View style={styles.contentContainer}>
         <Text style={styles.question}>Ерөнхий шинж: </Text>
-        <Text style={styles.answer}>{info}</Text>
+        {/* <Text style={styles.answer}>{info}</Text> */}
       </View>
       <View style={styles.contentContainer}>
         <Text style={styles.question}>Эмийн найрлага: </Text>
-        <Text style={styles.answer}>{nairlaga}</Text>
+        {/* <Text style={styles.answer}>{nairlaga}</Text> */}
       </View>
     </View>
   );

@@ -1,8 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet,  TouchableOpacity, View } from "react-native";
 import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import Dot from "../../../assets/svg/dot.svg";
 import { useNavigation } from "@react-navigation/native";
+import { Mon500, Mon700 } from "../StyledText";
 type Props = {
   name: string;
 };
@@ -11,11 +12,11 @@ const SearchDrug = memo(({ name, }: Props) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={() => navigation.navigate("DrugDetailScreen")} style={styles.container}>
-      <Text style={styles.drugName}>{name}</Text>
+      <Mon700 style={styles.drugName}>{name}</Mon700>
       <View style={styles.detailContainer}>
-        <Text style={styles.drugDetail}>Капсул</Text>
+        <Mon500 style={styles.drugDetail}>Капсул</Mon500>
         <Dot color={Colors.white} style={styles.dot} />
-        <Text style={styles.drugWeight}>400 мг</Text>
+        <Mon500 style={styles.drugWeight}>400 мг</Mon500>
       </View>
       <View style={styles.border} />
     </TouchableOpacity>
@@ -31,11 +32,9 @@ const styles = StyleSheet.create({
   },
   drugName: {
     fontSize     : 15,
-    fontFamily   : "Mon700",
     lineHeight   : 24,
     letterSpacing: 0.15,
     marginBottom : 4,
-    color        : Colors.white
   },
   detailContainer: {
     flexDirection: "row",
@@ -44,17 +43,13 @@ const styles = StyleSheet.create({
   },
   drugDetail: {
     fontSize     : 14,
-    fontFamily   : "Mon500",
     lineHeight   : 20,
     letterSpacing: 0.1,
-    color        : Colors.white
   },
   drugWeight: {
     fontSize     : 14,
-    fontFamily   : "Mon500",
     lineHeight   : 20,
     letterSpacing: 0.1,
-    color        : Colors.white
   },
   dot: {
     marginHorizontal: 4
@@ -62,7 +57,7 @@ const styles = StyleSheet.create({
   border: {
     borderWidth: 1,
     opacity    : 0.24,
-    borderColor: Colors.unActive
+    borderColor: Colors.greyBackground
   }
 });
 

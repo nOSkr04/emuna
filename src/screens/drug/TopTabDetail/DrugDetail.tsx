@@ -1,17 +1,13 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { TopTabParamList } from "../../../navigation/types";
 import { Colors } from "../../../constants/Colors";
-import WarningIcon from "../../../../assets/svg/WarningCircle.svg";
+// import WarningIcon from "../../../../assets/svg/WarningCircle.svg";
 import SnowIcon from "../../../../assets/svg/Snowflake.svg";
-type PropsPage = NativeStackScreenProps<TopTabParamList, "DrugDetail">;
 
-const DrugDetail = memo((props: PropsPage) => {
-  const { gradus, description, hemjee, isTrue } = props.route.params;
+const DrugDetail = memo(() => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {isTrue && (
+      {/* {isTrue && (
         <View style={styles.warningContainer}>
           <View style={styles.warningHeaderContainer}>
             <Text style={styles.warningHeaderTitle}>Хориглох заалт</Text>
@@ -21,19 +17,41 @@ const DrugDetail = memo((props: PropsPage) => {
             Эмийн найрлагад орсон үйлчлэгч болон туслах бодист харшилтай, Жирэмсэн болон хөхүүл эх Хүүхдэд хэрэглэхийг хориглоно.
           </Text>
         </View>
-      )}
-      <View style={styles.border} />
+      )} */}
+      {/* <View style={styles.border} /> */}
       <Text style={styles.contentTitle}>Хадгалах нөхцөл</Text>
       <View style={styles.rowContent}>
         <SnowIcon />
-        <Text style={styles.gradusText}>{gradus}</Text>
+        {/* <Text style={styles.gradusText}>{gradus}</Text> */}
       </View>
       <View style={styles.border} />
       <Text style={styles.contentTitle}>Хэрэглэх заалт</Text>
-      <Text style={styles.description} >{description}</Text>
+      {/* <Text style={styles.description} >{description}</Text> */}
       <View style={styles.border} />
       <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
-      <Text style={styles.description} >{hemjee}</Text>
+      {/* <Text style={styles.description} >{hemjee}</Text> */}
+      <>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+        <View style={styles.border} />
+        <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
+      </>
     </ScrollView>
   );
 });
