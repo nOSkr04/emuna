@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import Pill1 from "../../assets/svg/1.svg";
 import Pill2 from "../../assets/svg/2.svg";
 import Pill3 from "../../assets/svg/3.svg";
@@ -9,10 +9,10 @@ import Pill7 from "../../assets/svg/7.svg";
 import Pill8 from "../../assets/svg/8.svg";
 
 type Props = {
-  icon?: any
+  icon?: string | undefined
 };
 
-const MedicalIcon = memo(({ icon }: Props) => {
+const MedicalIcon = ({ icon }: Props) => {
   if (icon === "1medical") {
     return <Pill1 />;
   }
@@ -37,7 +37,9 @@ const MedicalIcon = memo(({ icon }: Props) => {
   if (icon === "8medical") {
     return <Pill8 />;
   }
-});
+  if(!icon){
+    return <Pill1 />;
+  }
+};
 
-MedicalIcon.displayName = "MedicalIcon";
 export default MedicalIcon;

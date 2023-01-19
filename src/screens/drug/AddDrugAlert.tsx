@@ -7,8 +7,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import Animated, { Layout, LightSpeedInRight, LightSpeedOutRight } from "react-native-reanimated";
 import { differenceInDays, format } from "date-fns";
 import Button from "../../components/Button";
-import MedicalIcon from "../../components/MedicalIcon";
 import { Mon400, Mon500, Mon700 } from "../../components/StyledText";
+import UnCheckedBox from "../../components/UnCheckedBox";
+import CheckedBox from "../../components/CheckedBox";
 import { RootStackParamList } from "../../navigation/types";
 import PillIcon1 from "../../../assets/svg/1.svg";
 import PillIcon2 from "../../../assets/svg/2.svg";
@@ -21,23 +22,38 @@ import PlusIcon from "../../../assets/svg/PlusCirclePrimary.svg";
 import ArrowLeft from "../../../assets/svg/back.svg";
 import ArrowRight from "../../../assets/svg/CaretRight.svg";
 import { Colors } from "../../constants/Colors";
-import UnCheckedBox from "../../components/UnCheckedBox";
-import CheckedBox from "../../components/CheckedBox";
+
 type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
 
 const AddDrugAlertScreen = memo((props: Props) => {
+  // 1.title 
+  // 2.image
+  // 3.categoryName
+  // 4.medicineName
+  // 5.category
+  // 6.medicine
+  // 7. icon
+  // 8.color
+  // 9. time
+  const [timeArray, setTimeArray] = useState<string[]>([]);
+  // 10.day
+  // 11.quantity
+  // 12.when
+  // 13.
+  const [endDate, setEndDate] = useState(new Date());
+  // 14.
+  const [startDate, setStartDate] = useState(new Date());
+
   const navigation = useNavigation();
   const [capsuleCount, setCapsuleCount] = useState(1);
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
   const [isStartDatePickerVisible, setIsStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setIsEndDatePickerVisible] = useState(false);
-  const [timeArray, setTimeArray] = useState<string[]>([]);
   const [times, setTimes] = useState(new Date());
   const [androidTime, setAndroidTime] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
   const [androidStartDate, setAndroidStartDate] = useState(false);
   const [infinity, setInfinity] = useState(false);
-  const [endDate, setEndDate] = useState(new Date());
+
   const [androidEndDate, setAndroidEndDate] = useState(false);
 
   const timePickerToggleModal = () => {
@@ -67,7 +83,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
     setAndroidTime(false);
   };
 
-  const onSubmit = (startDate, endDate, timeArray) => {
+  const onSubmit = (startDate: Date, endDate: Date, timeArray: string[]) => {
     console.log(startDate, endDate, timeArray);
   };
   return (
@@ -75,7 +91,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
       <Animated.ScrollView layout={Layout.springify()} showsVerticalScrollIndicator={false} style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate("DrugStyleChooseSheet")} style={styles.header}>
           <View style={[styles.pillContainer, { backgroundColor: props.route.params ? props.route.params.bgColor : Colors.yellowPill }]}>
-            <MedicalIcon />
+            {/* <MedicalIcon /> */}
             {props.route.params ? (
               props.route.params.pill === "Шахмал" ? (
                 <PillIcon1 color={Colors.white} height={52} width={52} />
@@ -152,45 +168,46 @@ const AddDrugAlertScreen = memo((props: Props) => {
             <RightIcon />
           </View>
         </TouchableOpacity>
-        <Button onPress={() => onSubmit(timeArray, startDate, endDate)} style={styles.button} title="Хадгалах" />
+        <Button onPress={() => onSubmit(startDate, endDate, timeArray)} style={styles.button} title="Хадгалах" />
       </Animated.ScrollView>
+      {/* time modals */}
       <>
         {/* time modal */}
         <Modal
-        isVisible={isTimePickerVisible}
-        onBackdropPress={timePickerToggleModal}
-        onSwipeComplete={timePickerToggleModal}
-        swipeDirection={["down", "up"]}>
+          isVisible={isTimePickerVisible}
+          onBackdropPress={timePickerToggleModal}
+          onSwipeComplete={timePickerToggleModal}
+          swipeDirection={["down", "up"]}>
           <View style={styles.modalContainer}>
             <Mon700 style={styles.headerTitle}>Цаг тохируулах</Mon700>
             {/* date */}
             {Platform.OS === "ios" && (
               <DateTimePicker
-              display={"spinner"}
-              is24Hour={true}
-              locale="mn"
-              maximumDate={new Date(2023, 15, 20)}
-              mode={"time"}
-              onChange={changeTime}
-              value={times}
-            />
-          )}
+                display={"spinner"}
+                is24Hour={true}
+                locale="mn"
+                maximumDate={new Date(2023, 15, 20)}
+                mode={"time"}
+                onChange={changeTime}
+                value={times}
+              />
+            )}
 
             {Platform.OS === "android" && (
               <Button onPress={() => setAndroidTime(!androidTime)} style={styles.button} title={`Эмийн цаг сонгох: ${format(times, "HH:mm")}`} />
-          )}
+            )}
 
             {androidTime && (
               <DateTimePicker
-              display={"default"}
-              is24Hour={true}
-              locale="mn"
-              maximumDate={new Date(2023, 15, 20)}
-              mode={"time"}
-              onChange={changeTime}
-              value={times}
-            />
-          )}
+                display={"default"}
+                is24Hour={true}
+                locale="mn"
+                maximumDate={new Date(2023, 15, 20)}
+                mode={"time"}
+                onChange={changeTime}
+                value={times}
+              />
+            )}
             <Mon500 style={styles.modalTitle}>Хэмжээ</Mon500>
             <View style={styles.capsuleContainer}>
               <TouchableOpacity onPress={() => setCapsuleCount(capsuleCount - 1)} style={styles.iconButton}>
@@ -206,68 +223,62 @@ const AddDrugAlertScreen = memo((props: Props) => {
         </Modal>
         {/* firstDate modal */}
         <Modal
-        isVisible={isStartDatePickerVisible}
-        onBackdropPress={startDatePickerToggleModal}
-        onSwipeComplete={startDatePickerToggleModal}
-        swipeDirection={["down", "up"]}>
+          isVisible={isStartDatePickerVisible}
+          onBackdropPress={startDatePickerToggleModal}
+          onSwipeComplete={startDatePickerToggleModal}
+          swipeDirection={["down", "up"]}>
           <View style={styles.modalContainer}>
             <Mon700 style={styles.headerTitle}>Эхлэх хугацаа</Mon700>
 
             {/* date */}
             {Platform.OS === "ios" && (
               <DateTimePicker
-              display={"inline"}
-              mode={"date"}
-              onChange={(event: any, date: any) => {
-                setStartDate(date);
-              }}
-              testID="startDatePicker"
-              value={startDate}
-            />
-          )}
+                display={"inline"}
+                mode={"date"}
+                onChange={(event: any, date: any) => {
+                  setStartDate(date);
+                }}
+                testID="startDatePicker"
+                value={startDate}
+              />
+            )}
 
             {Platform.OS === "android" && (
               <Button
-              onPress={() => setAndroidStartDate(!androidStartDate)}
-              style={styles.button}
-              title={`Эмийн цаг сонгох: ${format(startDate, "yyyy.MM.dd")}`}
-            />
-          )}
+                onPress={() => setAndroidStartDate(!androidStartDate)}
+                style={styles.button}
+                title={`Эмийн цаг сонгох: ${format(startDate, "yyyy.MM.dd")}`}
+              />
+            )}
 
             {androidStartDate && (
               <DateTimePicker
-              display={"default"}
-              mode={"date"}
-              negativeButtonLabel="Буцах"
-              onChange={(event: any, date: any) => {
-                setStartDate(date);
-                setAndroidStartDate(false);
-              }}
-              positiveButtonLabel="Болсон"
-              testID="startDatePicker"
-              value={startDate}
-            />
-          )}
+                display={"default"}
+                mode={"date"}
+                negativeButtonLabel="Буцах"
+                onChange={(event: any, date: any) => {
+                  setStartDate(date);
+                  setAndroidStartDate(false);
+                }}
+                positiveButtonLabel="Болсон"
+                testID="startDatePicker"
+                value={startDate}
+              />
+            )}
             <Button onPress={startDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
           </View>
         </Modal>
         {/* endDate modal */}
         <Modal
-        isVisible={isEndDatePickerVisible}
-        onBackdropPress={endDatePickerToggleModal}
-        onSwipeComplete={endDatePickerToggleModal}
-        swipeDirection={["down", "up"]}>
+          isVisible={isEndDatePickerVisible}
+          onBackdropPress={endDatePickerToggleModal}
+          onSwipeComplete={endDatePickerToggleModal}
+          swipeDirection={["down", "up"]}>
           <View style={styles.modalContainer}>
             <Mon700 style={styles.headerTitle}>Дуусах хугацаа</Mon700>
             <TouchableOpacity onPress={() => setInfinity(!infinity)} style={styles.statusContainer}>
-              <Mon500 style={styles.infityText}  >Хязгааргүй уух</Mon500>
-              <View >
-                {infinity ? 
-                  <UnCheckedBox/>
-              :
-                  <CheckedBox/>
-            }
-              </View>
+              <Mon500 style={styles.infityText}>Хязгааргүй уух</Mon500>
+              <View>{infinity ? <UnCheckedBox /> : <CheckedBox />}</View>
             </TouchableOpacity>
             {!infinity && (
               <>
@@ -277,41 +288,46 @@ const AddDrugAlertScreen = memo((props: Props) => {
                 </TouchableOpacity>
                 {Platform.OS === "ios" && (
                   <DateTimePicker
-                  display={"inline"}
-                  mode={"date"}
-                  onChange={(event: any, date: any) => {
-                    setEndDate(date);
-                  }}
-                  testID="endDatePicker"
-                  value={endDate}
-                />
-              )}
+                    display={"inline"}
+                    mode={"date"}
+                    onChange={(event: any, date: any) => {
+                      setEndDate(date);
+                    }}
+                    testID="endDatePicker"
+                    value={endDate}
+                  />
+                )}
 
                 {Platform.OS === "android" && (
-                  <Button onPress={() => setAndroidEndDate(!androidEndDate)} style={styles.saveButton} title={`Эмийн цаг сонгох: ${format(endDate, "yyyy.MM.dd")}`} />
-              )}
+                  <Button
+                    onPress={() => setAndroidEndDate(!androidEndDate)}
+                    style={styles.saveButton}
+                    title={`Эмийн цаг сонгох: ${format(endDate, "yyyy.MM.dd")}`}
+                  />
+                )}
 
                 {androidEndDate && (
                   <DateTimePicker
-                  display={"default"}
-                  minimumDate={startDate}
-                  mode={"date"}
-                  negativeButtonLabel="Буцах"
-                  onChange={(event: any, date: any) => {
-                    setEndDate(date);
-                    setAndroidEndDate(false);
-                  }}
-                  positiveButtonLabel="Болсон"
-                  testID="endDatePicker"
-                  value={endDate}
-                />
-              )}
+                    display={"default"}
+                    minimumDate={startDate}
+                    mode={"date"}
+                    negativeButtonLabel="Буцах"
+                    onChange={(event: any, date: any) => {
+                      setEndDate(date);
+                      setAndroidEndDate(false);
+                    }}
+                    positiveButtonLabel="Болсон"
+                    testID="endDatePicker"
+                    value={endDate}
+                  />
+                )}
               </>
-          )}
+            )}
             <Button onPress={endDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
           </View>
         </Modal>
       </>
+      {/* sheets */}
     </>
   );
 });
@@ -500,12 +516,12 @@ const styles = StyleSheet.create({
     fontSize     : 14,
     lineHeight   : 20,
     letterSpacing: 0.25,
-    color        : Colors.newText
+    color        : Colors.newText,
   },
   endDateStr: {
     lineHeight   : 16,
     fontSize     : 12,
     letterSpacing: 0.25,
-    color        : Colors.texts
-  }
+    color        : Colors.texts,
+  },
 });

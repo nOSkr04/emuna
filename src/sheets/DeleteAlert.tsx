@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import WarningIcon from "../../assets/svg/checked-checkbox.svg";
 import Button from "../components/Button";
 import { Colors } from "../constants/Colors";
@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 
 // type Props = NativeStackScreenProps<BottomSheetParamList, "DeleteAlertSheet">;
 
-const DeleteAlertSheet = (
+const DeleteAlertSheet = memo((
   // { route }: Props
   ) => {
   // const { id } = route.params;
@@ -27,7 +27,9 @@ const DeleteAlertSheet = (
       </View>
     </View>
   );
-};
+});
+
+DeleteAlertSheet.displayName = "DeleteAlertSheet";
 
 export default DeleteAlertSheet;
 

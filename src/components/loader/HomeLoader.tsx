@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { StyleSheet, View } from "react-native";
 import { Colors } from "../../constants/Colors";
 
-const HomeLoader = () => {
+const HomeLoader = memo(() => {
   return (
     <View style={styles.container}>
       <ContentLoader backgroundColor={Colors.strokeDark} foregroundColor={Colors.primary} height={600} speed={4} viewBox="0 0 350 600" width={350}>
@@ -36,7 +36,9 @@ const HomeLoader = () => {
       </ContentLoader>
     </View>
   );
-};
+});
+
+HomeLoader.displayName = "HomeLoader";
 
 export default HomeLoader;
 

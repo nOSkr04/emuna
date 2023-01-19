@@ -1,27 +1,25 @@
 import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { ReactElement } from "react";
+import React, { ReactElement, memo } from "react";
 import { Colors } from "../constants/Colors";
 
 import { Mon500 } from "./StyledText";
 
 type Props = {
   onPress: (event: GestureResponderEvent) => void;
-  text:string;
-  icon?:ReactElement
+  text: string;
+  icon?: ReactElement;
 };
 
-const ButtonInput = ({ onPress,text,icon }: Props) => {
+const ButtonInput = memo(({ onPress, text, icon }: Props) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      {icon && 
-        <View style={styles.icon}>
-          {icon}
-        </View>
-      }
+      {icon && <View style={styles.icon}>{icon}</View>}
       <Mon500 style={styles.text}>{text}</Mon500>
     </TouchableOpacity>
   );
-};
+});
+
+ButtonInput.displayName = "ButtonInput";
 
 export default ButtonInput;
 

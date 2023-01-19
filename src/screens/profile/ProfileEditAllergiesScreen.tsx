@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 const ProfileEditAllergiesScreen = memo(() => {
   const [isAllergie, setIsAllergie] = useState(false);
   const navigation = useNavigation();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const info = useMemo(() => {
     return [
       { id: 1, name: "Сүү" },

@@ -1,5 +1,5 @@
 import { AccessibilityState, GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { ReactElement, memo, useEffect, useRef } from "react";
+import React, {  ReactElement, memo, useEffect, useRef,  } from "react";
 import * as Animatable from "react-native-animatable";
 import { Colors } from "../constants/Colors";
 
@@ -7,18 +7,18 @@ type MyTabBarProps = {
   activeIcon: ReactElement;
   inActiveIcon: ReactElement;
   label: string;
-  onPress: (event: GestureResponderEvent) => void;
-  accessibilityState: AccessibilityState;
+  onPress: (e: GestureResponderEvent) => void
+  accessibilityState: AccessibilityState | undefined;
 };
 
 const MyTabBar = memo(({ activeIcon, onPress, accessibilityState, label, inActiveIcon }: MyTabBarProps) => {
-  const focused = accessibilityState.selected;
-  const viewRef = useRef(null);
+  const focused = accessibilityState?.selected;
+  const viewRef = useRef<View | null>(null);
   const textViewRef = useRef<any | null>(null);
   useEffect(() => {
     if (focused) {
-      viewRef?.current?.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
-      textViewRef?.current?.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
+      viewRef.current?.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
+      textViewRef.current?.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
     } else {
       viewRef.current?.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
       textViewRef.current?.animate({ 0: { scale: 1 }, 1: { scale: 0 } });

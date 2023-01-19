@@ -19,7 +19,7 @@ const DosageChooseSheet = memo(() => {
     { id: 4, name: "мл" },
     { id: 5, name: "%" },
   ];
-  const onSumbit = (doseInput: string, dose: string) => {
+  const onSumbit = (doseInput: string, dose: string ) => {
     navigation.navigate("AddDrugAlertScreen", { dose: `${doseInput} ${dose}` });
   };
   return (
