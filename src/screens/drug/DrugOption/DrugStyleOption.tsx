@@ -12,16 +12,15 @@ import Icon5 from "../../../../assets/svg/5.svg";
 import Icon6 from "../../../../assets/svg/6.svg";
 import Icon7 from "../../../../assets/svg/7.svg";
 import Icon8 from "../../../../assets/svg/8.svg";
-import Button from "../../../components/Button";
+
 type Props = {
   icon?: string;
   color?: string;
   setIcon: Dispatch<SetStateAction<string>>;
   setColor: Dispatch<SetStateAction<string>>;
-  close: () => void
 };
 
-const DrugStyleOption = memo(({ icon, color, setIcon, setColor,close }: Props) => {
+const DrugStyleOption = memo(({ icon, color, setIcon, setColor }: Props) => {
   const iconDummy = [
     { id: 1, name: "shamal", value: "1medical", jsxIcon: Icon1 },
     { id: 2, name: "shamal", value: "2medical", jsxIcon: Icon2 },
@@ -83,11 +82,6 @@ const DrugStyleOption = memo(({ icon, color, setIcon, setColor,close }: Props) =
           );
         })}
       </View>
-      <Button
-        onPress={close}
-        style={styles.button}
-        title="Хадгалах"
-      />
     </BottomSheetScrollView>
   );
 });
