@@ -1,15 +1,22 @@
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { memo, useState } from "react";
+import React, { memo,  useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Animated, { Layout, LightSpeedInRight, LightSpeedOutRight } from "react-native-reanimated";
+import BottomSheetModal, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { differenceInDays, format } from "date-fns";
+import { RootStackParamList } from "../../navigation/types";
+import DrugStyleOption from "./DrugOption/DrugStyleOption";
+import DosageChooseOption from "./DrugOption/DosageChooseOption";
+import DrinkConditionOption from "./DrugOption/DrinkConditionOption";
+import FrequencyDrugOption from "./DrugOption/FrequencyDrugOption";
 import Button from "../../components/Button";
 // import MedicalIcon from "../../components/MedicalIcon";
 import { Mon400, Mon500, Mon700 } from "../../components/StyledText";
-import { RootStackParamList } from "../../navigation/types";
+import UnCheckedBox from "../../components/UnCheckedBox";
+import CheckedBox from "../../components/CheckedBox";
 import PillIcon1 from "../../../assets/svg/1.svg";
 import PillIcon2 from "../../../assets/svg/2.svg";
 import PillIcon3 from "../../../assets/svg/3.svg";
@@ -21,23 +28,52 @@ import PlusIcon from "../../../assets/svg/PlusCirclePrimary.svg";
 import ArrowLeft from "../../../assets/svg/back.svg";
 import ArrowRight from "../../../assets/svg/CaretRight.svg";
 import { Colors } from "../../constants/Colors";
-import UnCheckedBox from "../../components/UnCheckedBox";
-import CheckedBox from "../../components/CheckedBox";
+
+
 type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
 
 const AddDrugAlertScreen = memo((props: Props) => {
+  const [drugStyleVisible,setDrugStyleVisible] = useState(-1);
+  const [drinkConditionVisible,setDrinkConditionVisible] = useState(-1);
+  const [dosageChooseVisible,setDosageChooseVisible] = useState(-1);
+  const [frequencyDrugVisible,setFrequencyDrugVisible] = useState(-1);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const snapPoint = useMemo(() => ["80%"], []);
+
+  // 1.title 
+  const [title,setTitle] = useState("");
+  // 2.categoryName
+  // 3.medicineName
+  const [medicineName,setMedicineName] = useState("");
+  // 4.category
+  // 5.medicine
+  // 6.icon
+  const [icon,setIcon] = useState("1medical");
+  // 7.color
+  const [color,setColor] = useState("#FCC314");
+  // 8.time
+  const [timeArray, setTimeArray] = useState<string[]>([]);
+  // 9.day - array
+  // 10.quanity
+  const [quantity,setQuantity] = useState(0);
+  // 11.when
+  const [when,setWhen] = useState("");
+  // 12.endDate
+  const [endDate, setEndDate] = useState(new Date());
+  // 13.startDate
+  const [startDate, setStartDate] = useState(new Date());
+  // 
   const navigation = useNavigation();
   const [capsuleCount, setCapsuleCount] = useState(1);
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
   const [isStartDatePickerVisible, setIsStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setIsEndDatePickerVisible] = useState(false);
-  const [timeArray, setTimeArray] = useState<string[]>([]);
   const [times, setTimes] = useState(new Date());
   const [androidTime, setAndroidTime] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  
   const [androidStartDate, setAndroidStartDate] = useState(false);
   const [infinity, setInfinity] = useState(false);
-  const [endDate, setEndDate] = useState(new Date());
+  
   const [androidEndDate, setAndroidEndDate] = useState(false);
 
   const timePickerToggleModal = () => {
@@ -70,10 +106,21 @@ const AddDrugAlertScreen = memo((props: Props) => {
   const onSubmit = (startDate: Date, endDate: Date, timeArray: string[]) => {
     console.log(startDate, endDate, timeArray);
   };
+  const renderBackdrop = React.useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        pressBehavior={"close"}
+      />
+    ),
+    [],
+  );
   return (
     <>
       <Animated.ScrollView layout={Layout.springify()} showsVerticalScrollIndicator={false} style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate("DrugStyleChooseSheet")} style={styles.header}>
+        <TouchableOpacity onPress={() => setDrugStyleVisible(0)} style={styles.header}>
           <View style={[styles.pillContainer, { backgroundColor: props.route.params ? props.route.params.bgColor : Colors.yellowPill }]}>
             {/* <MedicalIcon /> */}
             {props.route.params ? (
@@ -311,6 +358,51 @@ const AddDrugAlertScreen = memo((props: Props) => {
             <Button onPress={endDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
           </View>
         </Modal>
+      </>
+      <>
+        <BottomSheetModal
+        backdropComponent={renderBackdrop}
+        bottomInset={0}
+        enablePanDownToClose={true}
+        index={drugStyleVisible}
+        onClose={() => setDrugStyleVisible(-1)}
+        ref={bottomSheetRef}
+        snapPoints={snapPoint}>
+          <DrugStyleOption close={() => setDrugStyleVisible(-1)} color={color} icon={icon} setColor={setColor} setIcon={setIcon}  />
+        </BottomSheetModal>
+        <BottomSheetModal
+        backdropComponent={renderBackdrop}
+        bottomInset={0}
+        enablePanDownToClose={true}
+        index={dosageChooseVisible}
+        onClose={() => setDosageChooseVisible(-1)}
+        ref={bottomSheetRef}
+        snapPoints={snapPoint}>
+          {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
+          <DosageChooseOption/>
+        </BottomSheetModal>
+        <BottomSheetModal
+        backdropComponent={renderBackdrop}
+        bottomInset={0}
+        enablePanDownToClose={true}
+        index={drinkConditionVisible}
+        onClose={() => setDrinkConditionVisible(-1)}
+        ref={bottomSheetRef}
+        snapPoints={snapPoint}>
+          {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
+          <DrinkConditionOption/>
+        </BottomSheetModal>
+        <BottomSheetModal
+        backdropComponent={renderBackdrop}
+        bottomInset={0}
+        enablePanDownToClose={true}
+        index={frequencyDrugVisible}
+        onClose={() => setFrequencyDrugVisible(-1)}
+        ref={bottomSheetRef}
+        snapPoints={snapPoint}>
+          {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
+          <FrequencyDrugOption/>
+        </BottomSheetModal>
       </>
     </>
   );

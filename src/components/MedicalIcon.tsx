@@ -9,37 +9,39 @@ import Pill7 from "../../assets/svg/7.svg";
 import Pill8 from "../../assets/svg/8.svg";
 
 type Props = {
-  icon?: string | undefined
+  icon?:  string
+  width?:number
+  height?:number
 };
 
-const MedicalIcon = ({ icon }: Props) => {
+const MedicalIcon = ({ icon, height, width }: Props) => {
   if (icon === "1medical") {
-    return <Pill1 />;
+    return <Pill1 height={height} width={width} />;
   }
   if (icon === "2medical") {
-    return <Pill2 />;
+    return <Pill2 height={height} width={width}/>;
   }
   if (icon === "3medical") {
-    return <Pill3 />;
+    return <Pill3 height={height} width={width}/>;
   }
   if (icon === "4medical") {
-    return <Pill4 />;
+    return <Pill4 height={height} width={width}/>;
   }
   if (icon === "5medical") {
-    return <Pill5 />;
+    return <Pill5 height={height} width={width}/>;
   }
   if (icon === "6medical") {
-    return <Pill6 />;
+    return <Pill6 height={height} width={width}/>;
   }
   if (icon === "7medical") {
-    return <Pill7 />;
+    return <Pill7 height={height} width={width}/>;
   }
   if (icon === "8medical") {
-    return <Pill8 />;
+    return <Pill8 height={height} width={width}/>;
   }
-  if(!icon){
-    return <Pill1 />;
-  }
+  return(
+    <Pill1 height={height} width={width}/>
+  );
 };
 
 export default MedicalIcon;
