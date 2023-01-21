@@ -1,6 +1,7 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet,  TextInput, View } from "react-native";
 import React, { Dispatch, SetStateAction, memo } from "react";
 import { Colors } from "../../constants/Colors";
+import { Mon600 } from "../StyledText";
 
 type Props = {
   password: string,
@@ -12,9 +13,9 @@ type Props = {
 const LoginField = memo(({ password, setPassword, phone, setPhone }: Props) => {
   return (
     <View>
-      <Text style={styles.inputLabel}>Утасны дугаар</Text>
+      <Mon600 style={styles.inputLabel}>Утасны дугаар</Mon600>
       <TextInput onChangeText={setPhone} style={styles.input} value={phone}   />
-      <Text style={styles.inputLabel}>Нууц үг</Text>
+      <Mon600 style={styles.inputLabel}>Нууц үг</Mon600>
       <TextInput onChangeText={setPassword} style={styles.input} value={password}    />
     </View>
   );
@@ -25,7 +26,6 @@ LoginField.displayName="LoginField";
 const styles = StyleSheet.create({
   inputLabel: {
     fontSize        : 11,
-    fontFamily      : "Mon600",
     color           : Colors.texts,
     opacity         : 0.72,
     marginHorizontal: 32,

@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
     borderRadius   : 16,
     marginTop      : 24,
     backgroundColor: Colors.primary,
+    marginBottom   : 40
+
   },
 
   userMessage: {

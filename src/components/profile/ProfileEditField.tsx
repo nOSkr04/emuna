@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Modal from "react-native-modal";
 import { format } from "date-fns";
-import Button from "../Button";
 import ButtonInput from "../ButtonInput";
 import IconInput from "../IconInput";
 import { Mon700 } from "../StyledText";
@@ -14,9 +13,6 @@ import RightIcon from "../../../assets/svg/CaretRight.svg";
 import CalendarIcon from "../../../assets/svg/CalendarBlank.svg";
 import GenderIcon from "../../../assets/svg/GenderMale.svg";
 import BackIcon from "../../../assets/svg/xButotn.svg";
-import { AuthApi } from "../../apis";
-import { useDispatch } from "react-redux";
-import { authMe } from "../../store/authSlice";
 
 type Props = {
   firstName: string | undefined | null;
@@ -34,7 +30,6 @@ type Props = {
 
 const ProfileField = memo(
   ({ firstName, setFirstName, phone, gender, setGender, birth, setBirth, height, setHeight, weight, setWeight }: Props) => {
-    const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -55,29 +50,7 @@ const ProfileField = memo(
       setGender(gender);
       setIsModalVisible(!isModalVisible);
     };
-    const profileEdit = async (
-      firstName: string | null | undefined,
-      gender: string | null | undefined,
-      birth: Date | null | undefined,
-      height: string | null | undefined,
-      weight: string | null | undefined,
-    ) => {
-      try {
-        const values = {
-          firstName: firstName,
-          gender   : gender,
-          birth    : birth,
-          height   : height,
-          weight   : weight,
-        };
-        await AuthApi.edit(values);
-        const res = await AuthApi.me();
-        dispatch(authMe(res));
-        navigation.goBack();
-      } catch (err) {
-        console.log(err);
-      }
-    };
+   
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Нэр</Text>
@@ -139,7 +112,7 @@ const ProfileField = memo(
           <RightIcon />
         </TouchableOpacity>
         <View style={styles.border} />
-        <Button onPress={() => profileEdit(firstName, gender, birth, height, weight)} style={styles.button} title={"Хадгалах"} />
+        
         <DateTimePickerModal isVisible={isDatePickerVisible} mode="date" onCancel={hideDatePicker} onConfirm={handleConfirm} />
         <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
           <View style={styles.modalContainer}>
@@ -278,11 +251,7 @@ const styles = StyleSheet.create({
     borderColor     : Colors.strokeDark,
     opacity         : 0.4,
   },
-  button: {
-    marginHorizontal: 16,
-    marginBottom    : 40,
-    marginTop       : 80,
-  },
+
   container: {
     height       : 48,
     flexDirection: "row",

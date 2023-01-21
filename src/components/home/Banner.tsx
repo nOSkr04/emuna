@@ -70,13 +70,7 @@ const Banner = memo(() => {
           );
         })}
       </View>
-      {/* <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
-        <View style={styles.modalContainer}>
-          <Image source={{ uri: modalData?.image }} style={styles.modalImage} />
-          <Text style={styles.modalText}>{modalData?.text}</Text>
-          <Button onPress={toggleModal} title="Hide modal" />
-        </View>
-      </Modal> */}
+  
     </View>
   );
 });
@@ -104,9 +98,10 @@ const styles = StyleSheet.create({
     borderColor : Colors.white,
   },
   image: {
-    width     : ITEM_WIDTH,
-    height    : ITEM_HEIGHT,
+    width     : width * 0.92,
+    height    : 200,
     resizeMode: "cover",
+    zIndex    : 2
   },
   dotContainer: {
     flexDirection: "row",

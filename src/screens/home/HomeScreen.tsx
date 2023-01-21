@@ -14,7 +14,6 @@ import { useSWRToken } from "../../hooks/useSWRToken";
 import { HistoryApi } from "../../apis";
 import { IHistory } from "../../interfaces/IHistory";
 import { Colors } from "../../constants/Colors";
-import { Mon700 } from "../../components/StyledText";
 
 const HomeScreen = memo(() => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -36,7 +35,6 @@ const HomeScreen = memo(() => {
   }
   return (
     <View style={styles.container}>
-      <Mon700>{JSON.stringify(data)}</Mon700>
       {data?.invited === undefined || data?.invited === 0 ? null  : <DrugAlert />}
       <HorizontalCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <FlatList

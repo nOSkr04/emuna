@@ -346,6 +346,7 @@ const AddDrugAlertScreen = memo(() => {
                   <DateTimePicker
                     display={"inline"}
                     locale="mn_MN"
+                    minimumDate={startDate}
                     mode={"date"}
                     onChange={(event: any, date: any) => {
                       setEndDate(date);

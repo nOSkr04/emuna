@@ -1,17 +1,18 @@
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
-
+import { useHeaderHeight } from "@react-navigation/elements";
 const SignUpScreen = memo(() => {
-  const [phone, setPhone] = useState("80099088");
+  const [phone, setPhone] = useState("12345678");
   const navigation = useNavigation();
   const onSubmit = async () => {
     navigation.navigate("OtpVerifyScreen", { phone: phone });
   };
+  const height = useHeaderHeight();
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={height}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Утасны дугаар</Text>
         <TextInput onChangeText={setPhone} style={styles.input} value={phone} />

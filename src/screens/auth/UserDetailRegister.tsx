@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import React, { memo, useEffect, useRef, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import BirthDayField from "../../components/auth/BirthDayField";
@@ -18,12 +18,13 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import SkipButton from "../../components/headers/SkipButton";
 import { useNotification } from "../../hooks/useNotification";
-
+import { useHeaderHeight } from "@react-navigation/elements";
 type Props = NativeStackScreenProps<RootStackParamList, "UserDetailRegisterScreen">;
 
 
 const UserDetailScreen = memo((props : Props) => {
   const navigation = useNavigation();
+  const keyboardHeight = useHeaderHeight();
   const { token, registerForPushNotificationsAsync } = useNotification();
   const [step, setStep] = useState([1]);
   const { phone,password } = props.route.params;
@@ -121,7 +122,7 @@ const UserDetailScreen = memo((props : Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={keyboardHeight}>
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
@@ -131,8 +132,8 @@ const UserDetailScreen = memo((props : Props) => {
         {step.includes(2) && <StepTwo firstName={firstName} nameInput={nameInput} />}
         {step.includes(3) && <StepThree _scrollToEnd={_scrollToEnd} gender={genderArray} setGender={setGender} stepThree={stepThree} />}
         {step.includes(4) && <StepFour birthInput={birthInput} day={day} month={month} year={year} />}
-        {step.includes(5) && <StepFive height={height} heightInput={heightInput} weight={weight} />}
-        {step.includes(6) && <StepSix select={select} selectDone={selectDone} selected={selected} stepSeven={stepSeven} unselect={unselect} />}
+        {step.includes(5) && <StepFive height={height} heightInput={heightInput} weight={weight}  />}
+        {step.includes(6) && <StepSix _scrollToEnd={_scrollToEnd} select={select} selectDone={selectDone} selected={selected} stepSeven={stepSeven}  unselect={unselect} />}
         {step.includes(7) && <StepSeven firstName={firstName} onSubmit={onSubmit} />}
         {nameInput && (
           <View style={styles.inputContainer}>
@@ -214,6 +215,7 @@ const UserDetailScreen = memo((props : Props) => {
             <TouchableOpacity
               onPress={() => {
                 stepSix(6);
+                _scrollToEnd();
               }}
               style={styles.iconButton}>
               <IconButton />

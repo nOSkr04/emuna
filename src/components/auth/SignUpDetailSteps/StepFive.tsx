@@ -9,7 +9,7 @@ type Props = {
   weight:string;
   }
 
-const StepFive = memo(({ heightInput, height, weight } : Props) => {
+const StepFive = memo(({ heightInput, height, weight, } : Props) => {
   return (
     <>
       <EmunaChats chat1="Таны биеийн өндөр, жин хэд вэ?" />

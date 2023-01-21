@@ -9,9 +9,10 @@ type Props = {
   selected: any[];
   select: (chooseId: string) => void;
   unselect: (chooseId: string) => void;
+  _scrollToEnd:any
 };
 
-const StepSix = memo(({ stepSeven, selectDone, selected, select, unselect }: Props) => {
+const StepSix = memo(({ stepSeven, selectDone, selected, select, unselect,_scrollToEnd }: Props) => {
   const info = useMemo(() => {
     return [
       { id: 1, name: "Харшилтай эсэх" },
@@ -49,6 +50,7 @@ const StepSix = memo(({ stepSeven, selectDone, selected, select, unselect }: Pro
             disabled={selected.length > 0 ? false : true}
             onPress={() => {
               stepSeven(7);
+              _scrollToEnd();
             }}>
             <Text style={styles.sendButton}>Илгээх </Text>
           </TouchableOpacity>
