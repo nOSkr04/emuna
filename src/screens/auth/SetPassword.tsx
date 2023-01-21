@@ -12,8 +12,8 @@ const SetPasswordScreen = memo((props: Props) => {
   const navigation = useNavigation();
   const height = useHeaderHeight();
   const { phone } = props.route.params; 
-  const [password, setPassword] = useState("1234");
-  const [password1, setPassword1] = useState("1234");
+  const [password, setPassword] = useState("");
+  const [password1, setPassword1] = useState("");
   const onSubmit =  () => {
     if(password === password1){
       navigation.navigate("UserDetailRegisterScreen", { phone: phone, password: password });
@@ -24,9 +24,9 @@ const SetPasswordScreen = memo((props: Props) => {
     <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={height}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Нууц үг</Text>
-        <TextInput onChangeText={setPassword} style={styles.input} value={password} />
+        <TextInput onChangeText={setPassword} secureTextEntry style={styles.input} value={password} />
         <Text style={styles.inputLabel}>Нууц үгээ давтана уу</Text>
-        <TextInput onChangeText={setPassword1} style={styles.input} value={password1} />
+        <TextInput onChangeText={setPassword1} secureTextEntry style={styles.input} value={password1}/>
       </ScrollView>
       <Button
         onPress={onSubmit}

@@ -12,9 +12,18 @@ import CheckIcon from "../../../assets/svg/Check.svg";
 import PencilIcon from "../../../assets/svg/pencil.svg";
 import TrashIcon from "../../../assets/svg/Trash.svg";
 import { Colors } from "../../constants/Colors";
-const RenderDrugDetails = memo(({ item }: {item: IMedicine}) => {
+import { HistoryApi } from "../../apis";
+const RenderDrugDetails = memo(({ item }: { item: IMedicine }) => {
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const changeStatus = async (id:string, status:string) => {
+    try {
+      const data = await HistoryApi.editStatusHistory(id,status);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
@@ -26,8 +35,8 @@ const RenderDrugDetails = memo(({ item }: {item: IMedicine}) => {
     <View style={styles.root}>
       <View style={styles.contentRoot}>
         <View style={styles.container}>
-          <View style={[styles.iconContainer, { backgroundColor: item.color }]}>
-            <MedicalIcon icon={item.icon} />
+          <View style={[styles.iconContainer, { backgroundColor: item.color ? item.color : Colors.yellowPill }]}>
+            <MedicalIcon height={28} icon={item.icon ? item.icon : "1medical"} width={28} />
           </View>
           <View style={styles.contentContainer}>
             <Text style={styles.itemName}>{item.medicine}</Text>
@@ -51,7 +60,7 @@ const RenderDrugDetails = memo(({ item }: {item: IMedicine}) => {
                 </View>
                 <Text style={styles.infoText}> Алгассан</Text>
               </View>
-            ): null}
+            ) : null}
           </View>
         </View>
         <TouchableOpacity onPress={toggleModal} style={styles.buttonContainer}>
@@ -60,13 +69,13 @@ const RenderDrugDetails = memo(({ item }: {item: IMedicine}) => {
       </View>
       <View style={styles.rowButtonContainer}>
         <Button
-          onPress={() => console.log("object")}
+          onPress={() => changeStatus(item._id,"skipped")}
           style={item.status === "skipped" ? styles.activeRowButton : styles.inActiveRowButton}
           title={item.status === "skipped" ? "Алгссан (13:20)" : "Алгссан"}
           titleStyle={item.status === "skipped" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
         <Button
-          onPress={() => console.log("object")}
+          onPress={() => changeStatus(item._id,"drinked")}
           style={item.status === "drinked" ? styles.activeRowButton : styles.inActiveRowButton}
           title={item.status === "drinked" ? "Уусан (13:20)" : "Уусан"}
           titleStyle={item.status === "drinked" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}

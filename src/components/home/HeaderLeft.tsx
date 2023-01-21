@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Colors } from "../../constants/Colors";
 import Logo from "../../../assets/svg/logo.svg";
-import Down from "../../../assets/svg/down.svg";
+// import Down from "../../../assets/svg/down.svg";
 import { IAuth } from "../../interfaces/IAuth";
 import { useSelector } from "react-redux";
 const HeaderLeft = memo(() => {
@@ -12,7 +12,7 @@ const HeaderLeft = memo(() => {
       <Logo  color={Colors.white} height={32}  width={32} />
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{user?.firstName ? user.firstName : user?.phone}</Text>
-        <Down height={5} width={10} />
+        {/* <Down height={5} width={10} /> */}
       </View>
     </View>
   );

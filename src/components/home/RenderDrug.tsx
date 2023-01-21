@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,  View } from "react-native";
 import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
 import Dot from "../../../assets/svg/dot.svg";
 import CheckIcon from "../../../assets/svg/Check.svg";
+import XIcon from "../../../assets/svg/X.svg";
 import MedicalIcon from "../MedicalIcon";
 import { IMedicine } from "../../interfaces/IMedicine";
+import { Mon500, Mon700 } from "../StyledText";
 
 
 
@@ -13,26 +15,26 @@ const RenderDrug = memo(({  when,quantity, status, medicine, color, icon }: IMed
   return (
     <View style={styles.container}>
       <View style={[styles.iconContainer, { backgroundColor: color }]}>
-        <MedicalIcon icon={icon} />
+        <MedicalIcon height={28} icon={icon} width={28} />
       </View>
       <View style={styles.drugDetailContainer}>
-        <Text style={styles.drugName}>{medicine}</Text>
+        <Mon700 style={styles.drugName}>{medicine}</Mon700>
         <View style={styles.bottomContainer}>
-          <Text style={styles.when}>{when} </Text>
+          <Mon500 style={styles.when}>{when} </Mon500>
           <Dot color={Colors.helperText} />
-          <Text style={styles.when}> {quantity}ш</Text>
+          <Mon500 style={styles.when}> {quantity}ш</Mon500>
         </View>
         {status === "drinked" && <View style={styles.infoContainer}>
           <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
             <CheckIcon />
           </View>
-          <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
+          <Mon700 style={[styles.infoText, styles.checkedInfoText]}> Уусан</Mon700>
         </View>}
         {status === "skipped" && <View style={styles.infoContainer}>
-          <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
-            <CheckIcon />
+          <View style={[styles.infoIcon, styles.skippedInfoBg]}>
+            <XIcon />
           </View>
-          <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
+          <Mon700 style={[styles.infoText, styles.skippedInfoText]}> Алгассан</Mon700>
         </View>}
     
       </View>
@@ -59,13 +61,11 @@ const styles = StyleSheet.create({
   },
   drugName: {
     fontSize  : 15,
-    fontFamily: "Mon700",
     color     : Colors.text,
     lineHeight: 24
   },
   when: {
     fontSize     : 12,
-    fontFamily   : "Mon500",
     color        : Colors.text,
     opacity      : 0.64,
     lineHeight   : 16,
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize     : 12,
-    fontFamily   : "Mon700",
     color        : Colors.darkGrey,
     letterSpacing: 0.1,
     lineHeight   : 16
@@ -103,6 +102,12 @@ const styles = StyleSheet.create({
   },
   checkedInfoText: {
     color: Colors.primary
+  },
+  skippedInfoText: {
+    color: Colors.darkGrey,
+  },
+  skippedInfoBg: {
+    backgroundColor: Colors.darkGrey
   }
 });
 

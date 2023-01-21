@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 const SignUpScreen = memo(() => {
-  const [phone, setPhone] = useState("12345678");
+  const [phone, setPhone] = useState("");
   const navigation = useNavigation();
   const onSubmit = async () => {
     navigation.navigate("OtpVerifyScreen", { phone: phone });

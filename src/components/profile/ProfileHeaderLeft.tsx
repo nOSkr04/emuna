@@ -1,20 +1,20 @@
 import React, { memo } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {  StyleSheet, Text, View } from "react-native";
 import { Colors } from "../../constants/Colors";
-import Down from "../../../assets/svg/down.svg";
+import EmunaLogo from "../../../assets/svg/logo.svg";
+// import Down from "../../../assets/svg/down.svg";
 
 type Props = {
-  profile?: string;
   firstName?: string | number | null;
 };
 
-const ProfileHeaderLeft = memo(({ profile, firstName }: Props) => {
+const ProfileHeaderLeft = memo(({  firstName }: Props) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: profile }} style={styles.avatar} />
+      <EmunaLogo color={Colors.white} />
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{firstName}</Text>
-        <Down height={5} width={10} />
+        {/* <Down height={5} width={10} /> */}
       </View>
     </View>
   );

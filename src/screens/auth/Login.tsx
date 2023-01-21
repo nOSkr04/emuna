@@ -10,8 +10,8 @@ import { useNotification } from "../../hooks/useNotification";
 import { useHeaderHeight } from "@react-navigation/elements";
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState("95040448");
-  const [password, setPassword] = useState("1234");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
   const { token, registerForPushNotificationsAsync } = useNotification();
   const onSubmit = async () => {
     try {
@@ -25,7 +25,7 @@ const LoginScreen = memo(() => {
   const height = useHeaderHeight();
   return (
     <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={height}>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.contentContainer}>
+      <ScrollView showsVerticalScrollIndicator={false} >
         <LoginField password={password} phone={phone} setPassword={setPassword} setPhone={setPhone} />
       </ScrollView>
       <Button onPress={onSubmit} secondary={password.length > 3 ? false : true} style={styles.button} title="Үргэлжлүүлэх" />
@@ -40,9 +40,7 @@ const styles = StyleSheet.create({
     flex           : 1,
     backgroundColor: Colors.white,
   },
-  contentContainer: {
-marginTop: 50
-  },
+
   button: {
     bottom          : 20,
     marginHorizontal: 24,

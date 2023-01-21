@@ -33,7 +33,7 @@ const UserDetailScreen = memo((props : Props) => {
   const [birthInput, setBirthInput] = useState(false);
   const [heightInput, setHeightInput] = useState(false);
   const [genderArray, setGenderArray] = useState(["male", "female", "other"]);
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState("other");
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");

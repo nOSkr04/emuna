@@ -25,7 +25,6 @@ const ProfileScreen = memo(() => {
       headerLeft: () => (
         <ProfileHeaderLeft
           firstName={user?.firstName ? user.firstName : user?.phone}
-          profile={"https://images.pexels.com/photos/14792109/pexels-photo-14792109.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
         />
       ),
       headerRight: () => <ProfileHeaderRight />,

@@ -24,7 +24,7 @@ const StepThree = memo(({  gender,stepThree,_scrollToEnd,setGender  } : Props) =
                     setGender(e);
                   }}
                   style={gender.length === 1 ?styles.unUserContainer : styles.userContainer }>
-                  <Text style={gender.length ===1 ? styles.unUserMessage: styles.userMessage}>{e}</Text>
+                  <Text style={gender.length ===1 ? styles.unUserMessage: styles.userMessage}>{e === "male" ? "Эрэгтэй" : e === "female" ? "Эмэгтэй" : "Бусад"}</Text>
                   {/* <Text style={[styles.userMessage, { color: gender.length === 1 ? Colors.white : Colors.black }]}>{e}</Text> */}
                 </TouchableOpacity>
               );

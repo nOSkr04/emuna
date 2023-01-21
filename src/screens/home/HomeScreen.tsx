@@ -43,16 +43,17 @@ const HomeScreen = memo(() => {
         data={data?.histories}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
-
           return (
             <TouchableOpacity
             onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id })}
             >
               <View style={styles.medicalContainer}>
                 <RenderDrugHeader title={item._id} />
+                
                 <FlatList
                 data={item.medicine}
                 renderItem={({ item }) => {
+                  
                   return (
                     <RenderDrug
                       _id={item._id}

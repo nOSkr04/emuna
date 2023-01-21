@@ -15,6 +15,7 @@ const ProfileEditScreen = memo(() => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
+  console.log(user, "aaa");
   const [firstName, setFirstName] = useState(user?.firstName);
   const [gender, setGender] = useState(user?.gender);
   const [birth, setBirth] = useState(user?.birthDate);
