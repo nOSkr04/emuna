@@ -14,6 +14,7 @@ import { useSWRToken } from "../../hooks/useSWRToken";
 import { HistoryApi } from "../../apis";
 import { IHistory } from "../../interfaces/IHistory";
 import { Colors } from "../../constants/Colors";
+import { Mon700 } from "../../components/StyledText";
 
 const HomeScreen = memo(() => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -35,7 +36,7 @@ const HomeScreen = memo(() => {
   }
   return (
     <View style={styles.container}>
-      {/* <Text>{ite}</Text> */}
+      <Mon700>{JSON.stringify(data)}</Mon700>
       {data?.invited === undefined || data?.invited === 0 ? null  : <DrugAlert />}
       <HorizontalCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <FlatList
@@ -44,6 +45,7 @@ const HomeScreen = memo(() => {
         data={data?.histories}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
+
           return (
             <TouchableOpacity
             onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id })}

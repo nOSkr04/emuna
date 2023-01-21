@@ -16,7 +16,6 @@ type Props = {
 };
 
 const DateChoose = memo(({ days, value, select,unselect } : Props) => {
-
   return (
     <BottomSheetScrollView showsVerticalScrollIndicator={false}>
       <Mon600 style={styles.text}>Өдөр сонгох</Mon600>
@@ -26,7 +25,7 @@ const DateChoose = memo(({ days, value, select,unselect } : Props) => {
             <TouchableOpacity
               key={item.id}
              onPress={() => {
-              if (value.includes(item.name)) {
+              if (value.includes(item.value)) {
                 unselect(item.value);
               } else {
                 select(item.value);

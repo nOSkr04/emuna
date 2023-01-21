@@ -1,4 +1,5 @@
 import * as AuthApi from "./Auth";
 import * as HistoryApi from "./History";
 import * as AdsApi from "./Ads";
-export { AuthApi,   HistoryApi,AdsApi };
+import * as ScheduleApi from "./Schedule";
+export { AuthApi,   HistoryApi,AdsApi,ScheduleApi };

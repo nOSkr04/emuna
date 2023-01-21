@@ -1,22 +1,19 @@
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { memo, useCallback, useMemo, useRef, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { useNavigation } from "@react-navigation/native";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { RootStackParamList } from "../../navigation/types";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Animated, { Layout, LightSpeedInRight, LightSpeedOutRight } from "react-native-reanimated";
-import BottomSheetModal, {
-  BottomSheetBackdrop,
-  BottomSheetBackdropProps,
-} from "@gorhom/bottom-sheet";
+import BottomSheetModal, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { differenceInDays, format } from "date-fns";
-import { RootStackParamList } from "../../navigation/types";
 import DrugStyleOption from "./DrugOption/DrugStyleOption";
 import DosageChooseOption from "./DrugOption/DosageChooseOption";
 import DrinkConditionOption from "./DrugOption/DrinkConditionOption";
 import FrequencyDrugOption from "./DrugOption/FrequencyDrugOption";
 import Button from "../../components/Button";
-// import MedicalIcon from "../../components/MedicalIcon";
+import MedicalIcon from "../../components/MedicalIcon";
 import { Mon400, Mon500, Mon700 } from "../../components/StyledText";
 import UnCheckedBox from "../../components/UnCheckedBox";
 import CheckedBox from "../../components/CheckedBox";
@@ -27,11 +24,11 @@ import PlusIcon from "../../../assets/svg/PlusCirclePrimary.svg";
 import ArrowLeft from "../../../assets/svg/back.svg";
 import ArrowRight from "../../../assets/svg/CaretRight.svg";
 import { Colors } from "../../constants/Colors";
-import MedicalIcon from "../../components/MedicalIcon";
+import { ScheduleApi } from "../../apis";
 
-type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
+// type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
 
-const AddDrugAlertScreen = memo((props: Props) => {
+const AddDrugAlertScreen = memo(() => {
   const styleSheetRef = useRef<BottomSheetModal>(null);
   const drinkSheetRef = useRef<BottomSheetModal>(null);
   const dosageSheetRef = useRef<BottomSheetModal>(null);
@@ -40,26 +37,17 @@ const AddDrugAlertScreen = memo((props: Props) => {
   const [drinkConditionVisible, setDrinkConditionVisible] = useState(-1);
   const [dosageChooseVisible, setDosageChooseVisible] = useState(-1);
   const [frequencyDrugVisible, setFrequencyDrugVisible] = useState(-1);
+  // dose
+  const [dose, setDose] = useState("мг");
+  const [doseInput, setDoseInput] = useState("");
+
   const snapPoint = useMemo(() => ["80%"], []);
-  const handleStyleSheet = useCallback((index: number) => {
-    setDrugStyleVisible(index);
-  }, []);
-  const handleDrinkSheet = useCallback((index: number) => {
-    setDrinkConditionVisible(index);
-  }, []);
-  const handleDosageSheet = useCallback((index: number) => {
-    setDosageChooseVisible(index);
-  }, []);
-  const handleFrequencySheet = useCallback((index: number) => {
-    setFrequencyDrugVisible(index);
-  }, []);
-  // 1.titles
-  const [title, setTitle] = useState("");
-  // 2.categoryName
+  const snapFreqPoint = useMemo(() => ["50%"], []);
+
   // 3.medicineName
-  const [medicineName, setMedicineName] = useState("Ибупрофен");
-  // 4.category
+  const medicineName = "Ибупрофен";
   // 5.medicine
+  const medicine = "63c2a0d00092c0e645e5f8a4";
   // 6.icon
   const [icon, setIcon] = useState("1medical");
   // 7.color
@@ -67,8 +55,9 @@ const AddDrugAlertScreen = memo((props: Props) => {
   // 8.time
   const [timeArray, setTimeArray] = useState<string[]>([]);
   // 9.day - array
+  const [days, setDays] = useState<string[]>([]);
   // 10.quanity
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState<string[]>([]);
   // 11.when
   const [when, setWhen] = useState("");
   // 12.endDate
@@ -76,7 +65,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
   // 13.startDate
   const [startDate, setStartDate] = useState(new Date());
   //
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [capsuleCount, setCapsuleCount] = useState(1);
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
   const [isStartDatePickerVisible, setIsStartDatePickerVisible] = useState(false);
@@ -101,14 +90,16 @@ const AddDrugAlertScreen = memo((props: Props) => {
     setIsEndDatePickerVisible(!isEndDatePickerVisible);
   };
 
-  const addTime = (date: Date) => {
+  const addTime = (date: Date, capsuleCount: number) => {
     const formatingTime = format(date, "HH:mm");
     setTimeArray(data => [...data, formatingTime]);
+    setQuantity(data => [...data, `${capsuleCount}`]);
     setIsTimePickerVisible(false);
   };
 
   const removeTime = (index: number) => {
     setTimeArray(timeArray.filter((_, i) => i !== index));
+    setQuantity(quantity.filter((_, i) => i !== index));
   };
 
   const changeTime = (event: any, selectedTime: any) => {
@@ -116,13 +107,35 @@ const AddDrugAlertScreen = memo((props: Props) => {
     setAndroidTime(false);
   };
 
-  const onSubmit = (startDate: Date, endDate: Date, timeArray: string[]) => {
-    console.log(startDate, endDate, timeArray);
-  };
   const renderBackdrop = React.useCallback(
     (props: BottomSheetBackdropProps) => <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior={"close"} />,
     [],
   );
+
+  const handleStyleSheet = useCallback((index: number) => {
+    setDrugStyleVisible(index);
+  }, []);
+
+  const handleDrinkSheet = useCallback((index: number) => {
+    setDrinkConditionVisible(index);
+  }, []);
+
+  const handleDosageSheet = useCallback((index: number) => {
+    setDosageChooseVisible(index);
+  }, []);
+
+  const handleFrequencySheet = useCallback((index: number) => {
+    setFrequencyDrugVisible(index);
+  }, []);
+  
+  const onSubmit = async (  medicineName: string, medicine: string, icon: string, color:string, timeArray: string[], days: string[], quantity: string[], when:string, endDate:Date, startDate:Date) => {
+    try {
+      const data = await ScheduleApi.postSchedule(medicineName, medicine ,icon,color, timeArray, days, quantity, when, endDate, startDate);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Animated.ScrollView layout={Layout.springify()} showsVerticalScrollIndicator={false} style={styles.container}>
@@ -140,14 +153,14 @@ const AddDrugAlertScreen = memo((props: Props) => {
         <TouchableOpacity onPress={() => setDosageChooseVisible(0)} style={styles.choosedContainer}>
           <Text style={styles.chooseTitle}>Тун</Text>
           <View style={styles.choosedContent}>
-            <Text style={styles.chooseDescription}>{props?.route?.params?.dose ? props.route.params?.dose : "Сонгох"}</Text>
+            <Text style={styles.chooseDescription}>{!doseInput || !dose ? "Сонгох" : `${doseInput} ${dose}`}</Text>
             <RightIcon />
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setFrequencyDrugVisible(0)} style={styles.choosedContainer}>
           <Text style={styles.chooseTitle}>Давтамж</Text>
           <View style={styles.choosedContent}>
-            <Text style={styles.chooseDescription}>{props.route.params?.type ? props.route.params?.type : "Сонгох"}</Text>
+            <Text style={styles.chooseDescription}>{days.length === 0 ? "Сонгох" : days.length === 7 ? "Өдөр бүр" : "Сонгогдсон өдрүүдэд"}</Text>
             <RightIcon />
           </View>
         </TouchableOpacity>
@@ -160,7 +173,20 @@ const AddDrugAlertScreen = memo((props: Props) => {
                   <MinusIcon />
                   <Text style={styles.chooseTime}>{time}</Text>
                 </TouchableOpacity>
-                <Text style={styles.chooseCapsule}>1 капсул</Text>
+                <Text style={styles.chooseCapsule}>
+                  {index === 0
+                    ? quantity[0]
+                    : index === 1
+                    ? quantity[1]
+                    : index === 2
+                    ? quantity[2]
+                    : index === 3
+                    ? quantity[3]
+                    : index === 4
+                    ? quantity[4]
+                    : 1}{" "}
+                  капсул
+                </Text>
               </Animated.View>
             );
           })}
@@ -174,7 +200,7 @@ const AddDrugAlertScreen = memo((props: Props) => {
         <TouchableOpacity onPress={() => setDrinkConditionVisible(0)} style={styles.choosedContainer}>
           <Text style={styles.chooseTitle}>Уух нөхцөл</Text>
           <View style={styles.choosedContent}>
-            <Text style={styles.chooseDescription}>Хоолны дараа</Text>
+            <Text style={styles.chooseDescription}>{when ? when : "Сонгох"}</Text>
             <RightIcon />
           </View>
         </TouchableOpacity>
@@ -192,35 +218,41 @@ const AddDrugAlertScreen = memo((props: Props) => {
             <RightIcon />
           </View>
         </TouchableOpacity>
-        <Button onPress={() => onSubmit(startDate, endDate, timeArray)} style={styles.button} title="Хадгалах" />
-        <>
-          {/* time modal */}
-          <Modal
+        <Button
+          onPress={() => onSubmit(medicineName, medicine, icon, color, timeArray, days, quantity, when, endDate, startDate)}
+          style={styles.button}
+          title="Хадгалах"
+        />
+      </Animated.ScrollView>
+      <>
+        {/* time modal */}
+        <Modal
           isVisible={isTimePickerVisible}
           onBackdropPress={timePickerToggleModal}
           onSwipeComplete={timePickerToggleModal}
           swipeDirection={["down", "up"]}>
-            <View style={styles.modalContainer}>
-              <Mon700 style={styles.headerTitle}>Цаг тохируулах</Mon700>
-              {/* date */}
-              {Platform.OS === "ios" && (
-                <DateTimePicker
+          <View style={styles.modalContainer}>
+            <Mon700 style={styles.headerTitle}>Цаг тохируулах</Mon700>
+            {/* date */}
+            {Platform.OS === "ios" && (
+              <DateTimePicker
                 display={"spinner"}
                 is24Hour={true}
-                locale="mn"
+                locale="mn_MN"
                 maximumDate={new Date(2023, 15, 20)}
                 mode={"time"}
                 onChange={changeTime}
+                themeVariant="light"
                 value={times}
               />
             )}
 
-              {Platform.OS === "android" && (
-                <Button onPress={() => setAndroidTime(!androidTime)} style={styles.button} title={`Эмийн цаг сонгох: ${format(times, "HH:mm")}`} />
+            {Platform.OS === "android" && (
+              <Button onPress={() => setAndroidTime(!androidTime)} style={styles.button} title={`Эмийн цаг сонгох: ${format(times, "HH:mm")}`} />
             )}
 
-              {androidTime && (
-                <DateTimePicker
+            {androidTime && (
+              <DateTimePicker
                 display={"default"}
                 is24Hour={true}
                 locale="mn"
@@ -230,51 +262,53 @@ const AddDrugAlertScreen = memo((props: Props) => {
                 value={times}
               />
             )}
-              <Mon500 style={styles.modalTitle}>Хэмжээ</Mon500>
-              <View style={styles.capsuleContainer}>
-                <TouchableOpacity onPress={() => setCapsuleCount(capsuleCount - 1)} style={styles.iconButton}>
-                  <ArrowLeft />
-                </TouchableOpacity>
-                <Mon400 style={styles.capsuleText}>{capsuleCount} капсул</Mon400>
-                <TouchableOpacity onPress={() => setCapsuleCount(capsuleCount + 1)} style={styles.iconButton}>
-                  <ArrowRight />
-                </TouchableOpacity>
-              </View>
-              <Button onPress={() => addTime(times)} style={styles.saveButton} title="Хадгалах" />
+            <Mon500 style={styles.modalTitle}>Хэмжээ</Mon500>
+            <View style={styles.capsuleContainer}>
+              <TouchableOpacity onPress={() => setCapsuleCount(capsuleCount - 1)} style={styles.iconButton}>
+                <ArrowLeft />
+              </TouchableOpacity>
+              <Mon400 style={styles.capsuleText}>{capsuleCount} капсул</Mon400>
+              <TouchableOpacity onPress={() => setCapsuleCount(capsuleCount + 1)} style={styles.iconButton}>
+                <ArrowRight />
+              </TouchableOpacity>
             </View>
-          </Modal>
-          {/* firstDate modal */}
-          <Modal
+            <Button onPress={() => addTime(times, capsuleCount)} style={styles.saveButton} title="Хадгалах" />
+          </View>
+        </Modal>
+        {/* firstDate modal */}
+        <Modal
           isVisible={isStartDatePickerVisible}
           onBackdropPress={startDatePickerToggleModal}
           onSwipeComplete={startDatePickerToggleModal}
           swipeDirection={["down", "up"]}>
-            <View style={styles.modalContainer}>
-              <Mon700 style={styles.headerTitle}>Эхлэх хугацаа</Mon700>
+          <View style={styles.modalContainer}>
+            <Mon700 style={styles.headerTitle}>Эхлэх хугацаа</Mon700>
 
-              {/* date */}
-              {Platform.OS === "ios" && (
-                <DateTimePicker
+            {/* date */}
+            {Platform.OS === "ios" && (
+              <DateTimePicker
                 display={"inline"}
+                locale="mn_MN"
                 mode={"date"}
                 onChange={(event: any, date: any) => {
                   setStartDate(date);
                 }}
                 testID="startDatePicker"
+                themeVariant="light"
                 value={startDate}
               />
             )}
 
-              {Platform.OS === "android" && (
-                <Button
+            {Platform.OS === "android" && (
+              <Button
                 onPress={() => setAndroidStartDate(!androidStartDate)}
                 style={styles.button}
                 title={`Эмийн цаг сонгох: ${format(startDate, "yyyy.MM.dd")}`}
               />
             )}
 
-              {androidStartDate && (
-                <DateTimePicker
+            {androidStartDate && (
+              <DateTimePicker
                 display={"default"}
                 mode={"date"}
                 negativeButtonLabel="Буцах"
@@ -287,49 +321,51 @@ const AddDrugAlertScreen = memo((props: Props) => {
                 value={startDate}
               />
             )}
-              <Button onPress={startDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
-            </View>
-          </Modal>
-          {/* endDate modal */}
-          <Modal
+            <Button onPress={startDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
+          </View>
+        </Modal>
+        {/* endDate modal */}
+        <Modal
           isVisible={isEndDatePickerVisible}
           onBackdropPress={endDatePickerToggleModal}
           onSwipeComplete={endDatePickerToggleModal}
           swipeDirection={["down", "up"]}>
-            <View style={styles.modalContainer}>
-              <Mon700 style={styles.headerTitle}>Дуусах хугацаа</Mon700>
-              <TouchableOpacity onPress={() => setInfinity(!infinity)} style={styles.statusContainer}>
-                <Mon500 style={styles.infityText}>Хязгааргүй уух</Mon500>
-                <View>{infinity ? <UnCheckedBox /> : <CheckedBox />}</View>
-              </TouchableOpacity>
-              {!infinity && (
-                <>
-                  <TouchableOpacity style={styles.statusContainer}>
-                    <Mon500 style={styles.infityText}>Нийт</Mon500>
-                    <Mon500 style={styles.endDateStr}>{differenceInDays(endDate, startDate)} хоног</Mon500>
-                  </TouchableOpacity>
-                  {Platform.OS === "ios" && (
-                    <DateTimePicker
+          <View style={styles.modalContainer}>
+            <Mon700 style={styles.headerTitle}>Дуусах хугацаа</Mon700>
+            <TouchableOpacity onPress={() => setInfinity(!infinity)} style={styles.statusContainer}>
+              <Mon500 style={styles.infityText}>Хязгааргүй уух</Mon500>
+              <View>{infinity ? <UnCheckedBox /> : <CheckedBox />}</View>
+            </TouchableOpacity>
+            {!infinity && (
+              <>
+                <TouchableOpacity style={styles.statusContainer}>
+                  <Mon500 style={styles.infityText}>Нийт</Mon500>
+                  <Mon500 style={styles.endDateStr}>{differenceInDays(endDate, startDate)} хоног</Mon500>
+                </TouchableOpacity>
+                {Platform.OS === "ios" && (
+                  <DateTimePicker
                     display={"inline"}
+                    locale="mn_MN"
                     mode={"date"}
                     onChange={(event: any, date: any) => {
                       setEndDate(date);
                     }}
                     testID="endDatePicker"
+                    themeVariant="light"
                     value={endDate}
                   />
                 )}
 
-                  {Platform.OS === "android" && (
-                    <Button
+                {Platform.OS === "android" && (
+                  <Button
                     onPress={() => setAndroidEndDate(!androidEndDate)}
                     style={styles.saveButton}
                     title={`Эмийн цаг сонгох: ${format(endDate, "yyyy.MM.dd")}`}
                   />
                 )}
 
-                  {androidEndDate && (
-                    <DateTimePicker
+                {androidEndDate && (
+                  <DateTimePicker
                     display={"default"}
                     minimumDate={startDate}
                     mode={"date"}
@@ -343,14 +379,14 @@ const AddDrugAlertScreen = memo((props: Props) => {
                     value={endDate}
                   />
                 )}
-                </>
+              </>
             )}
-              <Button onPress={endDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
-            </View>
-          </Modal>
-        </>
-        <>
-          <BottomSheetModal
+            <Button onPress={endDatePickerToggleModal} style={styles.saveButton} title="Хадгалах" />
+          </View>
+        </Modal>
+      </>
+      <>
+        <BottomSheetModal
           backdropComponent={renderBackdrop}
           enablePanDownToClose={true}
           index={drugStyleVisible}
@@ -358,8 +394,8 @@ const AddDrugAlertScreen = memo((props: Props) => {
           onClose={() => setDrugStyleVisible(-1)}
           ref={styleSheetRef}
           snapPoints={snapPoint}>
-            <DrugStyleOption color={color} icon={icon} setColor={setColor} setIcon={setIcon} />
-            <Button
+          <DrugStyleOption color={color} icon={icon} setColor={setColor} setIcon={setIcon} />
+          <Button
             onPress={() => {
               styleSheetRef.current?.snapToPosition(0);
               setDrugStyleVisible(-1);
@@ -367,8 +403,8 @@ const AddDrugAlertScreen = memo((props: Props) => {
             style={styles.button}
             title="Хадгалах"
           />
-          </BottomSheetModal>
-          <BottomSheetModal
+        </BottomSheetModal>
+        <BottomSheetModal
           backdropComponent={renderBackdrop}
           enablePanDownToClose={true}
           index={dosageChooseVisible}
@@ -376,9 +412,9 @@ const AddDrugAlertScreen = memo((props: Props) => {
           onClose={() => setDosageChooseVisible(-1)}
           ref={dosageSheetRef}
           snapPoints={snapPoint}>
-            {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
-            <DosageChooseOption />
-            <Button
+          {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
+          <DosageChooseOption dose={dose} doseInput={doseInput} setDose={setDose} setDoseInput={setDoseInput} />
+          <Button
             onPress={() => {
               dosageSheetRef.current?.snapToPosition(0);
               setDosageChooseVisible(-1);
@@ -386,28 +422,8 @@ const AddDrugAlertScreen = memo((props: Props) => {
             style={styles.button}
             title="Хадгалах"
           />
-          </BottomSheetModal>
-          <BottomSheetModal
-          backdropComponent={renderBackdrop}
-          bottomInset={0}
-          enablePanDownToClose={true}
-          index={drinkConditionVisible}
-          onChange={handleDrinkSheet}
-          onClose={() => setDrinkConditionVisible(-1)}
-          ref={drinkSheetRef}
-          snapPoints={snapPoint}>
-            {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
-            <DrinkConditionOption />
-            <Button
-            onPress={() => {
-              drinkSheetRef.current?.snapToPosition(0);
-              setDrinkConditionVisible(-1);
-            }}
-            style={styles.button}
-            title="Хадгалах"
-          />
-          </BottomSheetModal>
-          <BottomSheetModal
+        </BottomSheetModal>
+        <BottomSheetModal
           backdropComponent={renderBackdrop}
           bottomInset={0}
           enablePanDownToClose={true}
@@ -415,10 +431,9 @@ const AddDrugAlertScreen = memo((props: Props) => {
           onChange={handleFrequencySheet}
           onClose={() => setFrequencyDrugVisible(-1)}
           ref={frequencySheetRef}
-          snapPoints={snapPoint}>
-            {/* <MapMenu setTabs={setTabs} setVisible={setVisible} tabs={tabs} /> */}
-            <FrequencyDrugOption />
-            <Button
+          snapPoints={snapFreqPoint}>
+          <FrequencyDrugOption days={days} setDays={setDays} />
+          <Button
             onPress={() => {
               frequencySheetRef.current?.snapToPosition(0);
               setFrequencyDrugVisible(-1);
@@ -426,9 +441,27 @@ const AddDrugAlertScreen = memo((props: Props) => {
             style={styles.button}
             title="Хадгалах"
           />
-          </BottomSheetModal>
-        </>
-      </Animated.ScrollView>
+        </BottomSheetModal>
+        <BottomSheetModal
+          backdropComponent={renderBackdrop}
+          bottomInset={0}
+          enablePanDownToClose={true}
+          index={drinkConditionVisible}
+          onChange={handleDrinkSheet}
+          onClose={() => setDrinkConditionVisible(-1)}
+          ref={drinkSheetRef}
+          snapPoints={snapFreqPoint}>
+          <DrinkConditionOption setWhen={setWhen} when={when} />
+          <Button
+            onPress={() => {
+              drinkSheetRef.current?.snapToPosition(0);
+              setDrinkConditionVisible(-1);
+            }}
+            style={styles.button}
+            title="Хадгалах"
+          />
+        </BottomSheetModal>
+      </>
     </>
   );
 });
