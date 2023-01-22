@@ -1,17 +1,18 @@
 import React, { memo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,  View } from "react-native";
 import { Colors } from "../../constants/Colors";
 import Logo from "../../../assets/svg/logo.svg";
 // import Down from "../../../assets/svg/down.svg";
 import { IAuth } from "../../interfaces/IAuth";
 import { useSelector } from "react-redux";
+import { Mon700 } from "../StyledText";
 const HeaderLeft = memo(() => {
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
   return (
     <View style={styles.container}>
       <Logo  color={Colors.white} height={32}  width={32} />
       <View style={styles.nameContainer}>
-        <Text style={styles.name}>{user?.firstName ? user.firstName : user?.phone}</Text>
+        <Mon700 style={styles.name}>{user?.firstName ? user.firstName : user?.phone}</Mon700>
         {/* <Down height={5} width={10} /> */}
       </View>
     </View>
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize        : 16,
-    fontFamily      : "bold",
     color           : Colors.white,
     marginHorizontal: 9
   }

@@ -15,7 +15,6 @@ const ProfileEditScreen = memo(() => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
-  console.log(user, "aaa");
   const [firstName, setFirstName] = useState(user?.firstName);
   const [gender, setGender] = useState(user?.gender);
   const [birth, setBirth] = useState(user?.birthDate);
@@ -58,6 +57,11 @@ const ProfileEditScreen = memo(() => {
         firstName={firstName}
         gender={gender}
         height={height}
+        isAllergy={user?.isAllergy}
+        isChronicDesease={user?.isChronicDesease}
+        isInjury={user?.isInjury}
+        isRegularMedicine={user?.isRegularMedicine}
+        isSurgery={user?.isSurgery}
         phone={user?.phone}
         setBirth={setBirth}
         setFirstName={setFirstName}

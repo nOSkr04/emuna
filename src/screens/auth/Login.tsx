@@ -6,17 +6,16 @@ import Button from "../../components/Button";
 import LoginField from "../../components/auth/LoginField";
 import { AuthApi } from "../../apis";
 import { authLogin } from "../../store/authSlice";
-import { useNotification } from "../../hooks/useNotification";
 import { useHeaderHeight } from "@react-navigation/elements";
+import * as Notifications from "expo-notifications";
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const { token, registerForPushNotificationsAsync } = useNotification();
+  const [phone, setPhone] = useState("99110523");
+  const [password, setPassword] = useState("Dadamn04");
   const onSubmit = async () => {
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
     try {
       const data = await AuthApi.login(phone, password ,token);
-      registerForPushNotificationsAsync();
       dispatch(authLogin(data));
     } catch (err) {
       console.log(err);

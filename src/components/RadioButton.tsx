@@ -5,20 +5,60 @@ import { Colors } from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import CheckedRadio from "./CheckedRadio";
 import UnCheckedRadio from "./UnCheckedRadio";
+import { AuthApi } from "../apis";
+import { authMe } from "../store/authSlice";
+import { useDispatch } from "react-redux";
 
 type Props = {
-  selected: boolean;
-  setSelected: Dispatch<SetStateAction<boolean>>;
+  selected: boolean | undefined | null;
+  setSelected: Dispatch<SetStateAction<boolean | null | undefined>>;
   isGoBack?: boolean;
+  type?: number;
 };
 
-const RadioButton = memo(({ selected, setSelected, isGoBack }: Props) => {
+const RadioButton = memo(({ selected, setSelected, isGoBack, type }: Props) => {
   const navigation = useNavigation();
-  const onPress = (bool: boolean) => {
+  const dispatch = useDispatch();
+  const onPress = async (bool: boolean) => {
     setSelected(bool);
-    if (isGoBack) {
-      navigation.goBack();
+    navigation.goBack();
+    if (isGoBack && type === 1) {
+      try {
+        const values = {
+          isRegularMedicine: bool,
+        };
+        await AuthApi.editRegularMedicine(values);
+        const res = await AuthApi.me();
+        dispatch(authMe(res));
+      } catch (err) {
+        console.log(err);
+      }
     }
+    if (isGoBack && type === 2) {
+      try {
+        const values = {
+          isInjury: bool,
+        };
+        await AuthApi.editInjury(values);
+        const res = await AuthApi.me();
+        dispatch(authMe(res));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (isGoBack && type === 3) {
+      try {
+        const values = {
+          isSurgery: bool,
+        };
+        await AuthApi.editSurgery(values);
+        const res = await AuthApi.me();
+        dispatch(authMe(res));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+   
   };
   return (
     <View>
@@ -27,11 +67,7 @@ const RadioButton = memo(({ selected, setSelected, isGoBack }: Props) => {
           onPress(true);
         }}
         style={[styles.container, selected && styles.selectedContainer]}>
-        {selected ? (
-          <CheckedRadio/>
-        ) : (
-          <UnCheckedRadio/>
-        )}
+        {selected ? <CheckedRadio /> : <UnCheckedRadio />}
         <Mon700 style={styles.text}>Байгаа</Mon700>
       </TouchableOpacity>
       <TouchableOpacity
@@ -39,11 +75,7 @@ const RadioButton = memo(({ selected, setSelected, isGoBack }: Props) => {
           onPress(false);
         }}
         style={[styles.container, !selected && styles.selectedContainer]}>
-        {!selected ? (
-          <CheckedRadio/>
-        ) : (
-          <UnCheckedRadio/>
-        )}
+        {!selected ? <CheckedRadio /> : <UnCheckedRadio />}
         <Mon700 style={styles.text}>Байхгүй</Mon700>
       </TouchableOpacity>
     </View>
@@ -74,5 +106,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginLeft: 16,
   },
- 
 });

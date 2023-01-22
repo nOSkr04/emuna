@@ -20,15 +20,16 @@ const HomeScreen = memo(() => {
   const navigation = useNavigation();
   const strDate = format(selectedDate, "yyyy-MM-dd");
   const monDate = format(selectedDate, "eeee, M сарын d", { locale: mn });
-  const { data, error } = useSWRToken<IHistory>(`/histories/day/${strDate}`, () => {
+  const { data, error, mutate } = useSWRToken<IHistory>(`/histories/day/${strDate}`, () => {
     return HistoryApi.historiesDay(strDate);
   });
-  // const sortedTime = data?.histories.sort((a: any, b: any) => {
-  //   const [aHour, aMin] = a._id.split(":");
-  //   const [bHour, bMin] = b._id.split(":");
-  //   if (aHour !== bHour) return aHour - bHour;
-  //   return aMin - bMin;
-  // });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  const sortedTime = data?.histories.sort((a: any, b: any) => {
+    const [aHour, aMin] = a._id.split(":");
+    const [bHour, bMin] = b._id.split(":");
+    if (aHour !== bHour) return aHour - bHour;
+    return aMin - bMin;
+  });
 
   if(error){
     return null;
@@ -45,7 +46,7 @@ const HomeScreen = memo(() => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-            onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id })}
+            onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id, mutate: mutate })}
             >
               <View style={styles.medicalContainer}>
                 <RenderDrugHeader title={item._id} />

@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 
 const ProfileEditChronicScreen = memo(() => {
-  const [isAllergie, setIsAllergie] = useState(false);
+  const [isAllergie, setIsAllergie] = useState<boolean | null | undefined>(false);
   const navigation = useNavigation();
   const [selected, setSelected] = useState<string[]>([]);
   const info = useMemo(() => {

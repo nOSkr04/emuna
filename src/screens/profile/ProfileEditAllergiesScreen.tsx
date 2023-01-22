@@ -6,9 +6,15 @@ import RadioButton from "../../components/RadioButton";
 import CheckBox from "../../components/CheckBox";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { IAuth } from "../../interfaces/IAuth";
+import { AuthApi } from "../../apis";
+import { authMe } from "../../store/authSlice";
 
 const ProfileEditAllergiesScreen = memo(() => {
-  const [isAllergie, setIsAllergie] = useState(false);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: { auth: IAuth }) => state.auth);
+  const [isAllergie, setIsAllergie] = useState<boolean | undefined | null>(user?.isAllergy);
   const navigation = useNavigation();
   const [selected, setSelected] = useState<string[]>([]);
   const info = useMemo(() => {
@@ -20,11 +26,26 @@ const ProfileEditAllergiesScreen = memo(() => {
       { id: 5, name: "Диадис" },
       { id: 6, name: "Фэдөк" },
       { id: 7, name: "Угралц" },
-      { id: 8, name: "Угралц" },
-      { id: 9, name: "Угралц" },
-      { id: 10, name: "Угралц" },
     ];
   }, []);
+  const profileEdit = async (
+   isAllergy: boolean,
+   health: string[]
+  ) => {
+    try {
+      const values = {
+        isAllergy: isAllergy,
+        health   : health
+      };
+      console.log(values);
+      await AuthApi.editAllergy(values);
+      const res = await AuthApi.me();
+      dispatch(authMe(res));
+      navigation.goBack();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const select = (chooseId: string) => {
     setSelected((selecting) => {
       return [...selecting, chooseId];
@@ -48,7 +69,7 @@ const ProfileEditAllergiesScreen = memo(() => {
             <Mon700 style={styles.title}>Та ямар харшилтай вэ?</Mon700>
             <CheckBox data={info} select={select} selected={selected} unselect={unselect} />
           </View>
-          <Button onPress={() => navigation.goBack()} style={styles.button} title="Хадгалах" />
+          <Button onPress={() => profileEdit(isAllergie, selected)} style={styles.button} title="Хадгалах" />
         </>
       )}
     </ScrollView>

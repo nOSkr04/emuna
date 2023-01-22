@@ -10,8 +10,7 @@ import { Mon500, Mon700 } from "../components/StyledText";
 type Props = NativeStackScreenProps<BottomSheetParamList, "HomeMedicalSheet">;
 
 const HomeMedicalSheet = memo((props: Props) => {
-  const { data, monDate, time } = props.route.params;
-  console.log(data);
+  const { data, monDate, time, mutate } = props.route.params;
   return (
     <View style={styles.container}>
       <Mon700 style={styles.sectionTitle}>{time} </Mon700>
@@ -20,7 +19,7 @@ const HomeMedicalSheet = memo((props: Props) => {
         data={data}
         keyExtractor={item => item?._id}
         renderItem={({ item }) => {
-          return <RenderDrugDetails item={item}  />;
+          return <RenderDrugDetails item={item} mutate={mutate}  />;
         }}
         showsVerticalScrollIndicator={false}
       />

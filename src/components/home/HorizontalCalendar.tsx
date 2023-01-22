@@ -1,8 +1,9 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import React, { Dispatch, SetStateAction, memo, useEffect, useMemo, useRef, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import { addDays, format, isToday, subDays } from "date-fns";
 import { mn } from "date-fns/locale";
+import { Mon400, Mon500, Mon700 } from "../StyledText";
 
 interface Props {
   selectedDate: Date;
@@ -26,9 +27,9 @@ const MyPureComponent = memo(({ isActive, item, setSelectedDate, setIndex, fInde
   };
   return (
     <Pressable onPress={() => onPressDate(item, fIndex)} style={styles.contentContainer}>
-      <Text style={styles.dayStyle}>{dayString.slice(0, 2)}</Text>
+      <Mon500 style={styles.dayStyle}>{dayString.slice(0, 2)}</Mon500>
       <View style={isActive ? styles.activeBg : styles.unActiveBg}>
-        <Text style={isActive ? styles.activeDateStr : styles.unActiveDateStr}>{dayNumber}</Text>
+        <Mon400 style={isActive ? styles.activeDateStr : styles.unActiveDateStr}>{dayNumber}</Mon400>
       </View>
     </Pressable>
   );
@@ -101,8 +102,8 @@ const HorizontalCalendar = memo(({ selectedDate, setSelectedDate }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerText}>
-        <Text style={styles.text}>{isTodays(selectedDate) ? "Өнөөдөр" : getDayString(selectedDate)}</Text>
-        <Text style={styles.text}>{format(selectedDate, ", MM-р сарын d")}</Text>
+        <Mon700 style={styles.text}>{isTodays(selectedDate) ? "Өнөөдөр" : getDayString(selectedDate)}</Mon700>
+        <Mon700 style={styles.text}>{format(selectedDate, ", MM-р сарын d")}</Mon700>
       </View>
       <FlatList
         contentContainerStyle={styles.flatlistContainer}
@@ -128,8 +129,12 @@ HorizontalCalendar.displayName = "HorizontalCalendar";
 
 const styles = StyleSheet.create({
   dayStyle: {
-    color   : Colors.white,
-    fontSize: 12,
+    color        : Colors.white,
+    fontSize     : 12,
+    lineHeight   : 16,
+    letterSpacing: 0.25,
+    marginBottom : 2,
+    marginTop    : 8
   },
   container: {
     backgroundColor        : Colors.primary,
@@ -143,9 +148,10 @@ const styles = StyleSheet.create({
     paddingBottom   : 10,
   },
   text: {
-    fontSize  : 16,
-    fontFamily: "semibold",
-    color     : Colors.white,
+    fontSize     : 16,
+    color        : Colors.white,
+    lineHeight   : 28,
+    letterSpacing: 0.15
   },
   contentContainer: {
     alignItems: "center",

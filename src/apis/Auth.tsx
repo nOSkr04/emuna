@@ -36,18 +36,26 @@ export const logout = async () => {
   const res = await httpRequest.get("/users/logout");
   return res;
 };
-export const edit = async (
-  values: { firstName?: string | null; height?: string | null; weight?: string | null; gender?: string | null },
-) => {
-  const res = await httpRequest.put("/users/edit", values );
-  console.log(res);
+
+export const edit = async (values: { firstName?: string | null; height?: string | null; weight?: string | null; gender?: string | null }) => {
+  const res = await httpRequest.put("/users/edit", values);
   return res;
 };
 
-export const editAllergy = async (
-  values: { firstName?: string | null; height?: string | null; weight?: string | null; gender?: string | null },
-) => {
-  const res = await httpRequest.put("/users/edit", values );
-  console.log(res);
+export const editAllergy = async (values: { isAllergy: boolean, health: string[]  }) => {
+  const res = await httpRequest.put("/users/edit", values);
+  return res;
+};
+
+export const editRegularMedicine = async (values: { isRegularMedicine: boolean, }) => {
+  const res = await httpRequest.put("/users/edit", values);
+  return res;
+};
+export const editInjury = async (values: { isInjury: boolean, }) => {
+  const res = await httpRequest.put("/users/edit", values);
+  return res;
+};
+export const editSurgery = async (values: { isSurgery: boolean, }) => {
+  const res = await httpRequest.put("/users/edit", values);
   return res;
 };

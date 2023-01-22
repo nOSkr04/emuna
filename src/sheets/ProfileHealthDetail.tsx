@@ -8,12 +8,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<BottomSheetParamList, "ProfileHealthDetailSheet">;
 
 const ProfileHealthDetailSheet = memo((props: Props) => {
-  const { type } = props.route.params;
-  const [isType, setIsType] = useState(false);
+  const { type, dataType } = props.route.params;
+  const [isType, setIsType] = useState<boolean | null | undefined>(dataType);
   return (
     <View style={styles.container}>
       <Mon700 style={styles.title}>{type === 1 ? "Байнгын хэрэглэдэг эм" : type === 2 ? "Гэмтэл бэртэл" :  "Хагалгаа, мэс ажилбар"}</Mon700>
-      <RadioButton isGoBack={true} selected={isType} setSelected={setIsType} />
+      <RadioButton isGoBack={true} selected={isType} setSelected={setIsType} type={type} />
     </View>
   );
 });

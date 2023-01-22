@@ -16,7 +16,7 @@ const LoginField = memo(({ password, setPassword, phone, setPhone }: Props) => {
       <Mon600 style={styles.inputLabel}>Утасны дугаар</Mon600>
       <TextInput onChangeText={setPhone} style={styles.input} value={phone}   />
       <Mon600 style={styles.inputLabel}>Нууц үг</Mon600>
-      <TextInput onChangeText={setPassword} style={styles.input} value={password}    />
+      <TextInput onChangeText={setPassword} secureTextEntry style={styles.input} value={password}   />
     </View>
   );
 });

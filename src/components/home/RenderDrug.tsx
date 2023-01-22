@@ -8,9 +8,6 @@ import MedicalIcon from "../MedicalIcon";
 import { IMedicine } from "../../interfaces/IMedicine";
 import { Mon500, Mon700 } from "../StyledText";
 
-
-
-
 const RenderDrug = memo(({  when,quantity, status, medicine, color, icon }: IMedicine) => {
   return (
     <View style={styles.container}>

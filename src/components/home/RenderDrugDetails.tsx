@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { memo, useState } from "react";
+import React, {  memo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Modal from "react-native-modal";
 import { IMedicine } from "../../interfaces/IMedicine";
@@ -13,15 +13,23 @@ import PencilIcon from "../../../assets/svg/pencil.svg";
 import TrashIcon from "../../../assets/svg/Trash.svg";
 import { Colors } from "../../constants/Colors";
 import { HistoryApi } from "../../apis";
-const RenderDrugDetails = memo(({ item }: { item: IMedicine }) => {
+import { KeyedMutator } from "swr";
+import { History } from "../../models/History";
+import { format } from "date-fns";
+const RenderDrugDetails = memo(({ item, mutate }: { item: IMedicine, mutate:KeyedMutator<History> }) => {
   const navigation = useNavigation();
+  const [dataStatus,setDataStatus] = useState<string>(`${item.status}`);
+  const [statusDate,setStatusDate] = useState<Date>(new Date());
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const changeStatus = async (id:string, status:string) => {
+  const changeStatus = async (id:string, status:string, ) => {
     try {
-      const data = await HistoryApi.editStatusHistory(id,status);
-      console.log(data);
+      await HistoryApi.editStatusHistory(id,status);
+      setDataStatus(status);
+      setStatusDate(new Date());
     } catch (err) {
       console.log(err);
+    } finally{
+      mutate();
     }
   };
   const toggleModal = () => {
@@ -45,7 +53,7 @@ const RenderDrugDetails = memo(({ item }: { item: IMedicine }) => {
               <DotIcon color={Colors.text} style={styles.dot} />
               <Text style={styles.itemWhen}>{item.quantity}</Text>
             </View>
-            {item.status === "drinked" && (
+            {dataStatus === "drinked" && (
               <View style={styles.infoContainer}>
                 <View style={[styles.infoIcon, styles.checkedInfoIcon]}>
                   <CheckIcon />
@@ -53,7 +61,7 @@ const RenderDrugDetails = memo(({ item }: { item: IMedicine }) => {
                 <Text style={[styles.infoText, styles.checkedInfoText]}> Уусан</Text>
               </View>
             )}
-            {item.status === "skipped" ? (
+            {dataStatus === "skipped" ? (
               <View style={styles.infoContainer}>
                 <View style={styles.infoIcon}>
                   <Xicon />
@@ -69,16 +77,16 @@ const RenderDrugDetails = memo(({ item }: { item: IMedicine }) => {
       </View>
       <View style={styles.rowButtonContainer}>
         <Button
-          onPress={() => changeStatus(item._id,"skipped")}
-          style={item.status === "skipped" ? styles.activeRowButton : styles.inActiveRowButton}
-          title={item.status === "skipped" ? "Алгссан (13:20)" : "Алгссан"}
-          titleStyle={item.status === "skipped" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
+          onPress={() => changeStatus(item._id,"skipped",)}
+          style={dataStatus === "skipped" ? styles.activeRowButton : styles.inActiveRowButton}
+          title={dataStatus === "skipped" ? format(statusDate, "(HH:mm)") : "Алгссан"}
+          titleStyle={dataStatus === "skipped" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
         <Button
           onPress={() => changeStatus(item._id,"drinked")}
-          style={item.status === "drinked" ? styles.activeRowButton : styles.inActiveRowButton}
-          title={item.status === "drinked" ? "Уусан (13:20)" : "Уусан"}
-          titleStyle={item.status === "drinked" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
+          style={dataStatus === "drinked" ? styles.activeRowButton : styles.inActiveRowButton}
+          title={dataStatus === "drinked" ? format(statusDate, "(HH:mm)") : "Уусан"}
+          titleStyle={dataStatus === "drinked" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
       </View>
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">

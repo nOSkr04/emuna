@@ -16,11 +16,6 @@ export default function useCachedResources() {
           "Mon500"   : require("../../assets/fonts/Montserrat-Medium.ttf"),
           "Mon400"   : require("../../assets/fonts/Montserrat-Regular.ttf"),
           "Nun400"   : require("../../assets/fonts/Nunito-Regular.ttf"),
-          // 
-          "medium"   : require("../../assets/fonts/Medium.ttf"),
-          "regular"  : require("../../assets/fonts/Regular.ttf"),
-          "semibold" : require("../../assets/fonts/SemiBold.ttf"),
-          "bold"     : require("../../assets/fonts/bold.ttf"),
         });
       } catch (e) {
         console.warn(e);

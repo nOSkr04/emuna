@@ -17,15 +17,14 @@ import { RootStackParamList } from "../../navigation/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import SkipButton from "../../components/headers/SkipButton";
-import { useNotification } from "../../hooks/useNotification";
 import { useHeaderHeight } from "@react-navigation/elements";
+import * as Notifications from "expo-notifications";
 type Props = NativeStackScreenProps<RootStackParamList, "UserDetailRegisterScreen">;
 
 
 const UserDetailScreen = memo((props : Props) => {
   const navigation = useNavigation();
   const keyboardHeight = useHeaderHeight();
-  const { token, registerForPushNotificationsAsync } = useNotification();
   const [step, setStep] = useState([1]);
   const { phone,password } = props.route.params;
   const [firstName, setFirstName] = useState("");
@@ -44,9 +43,9 @@ const UserDetailScreen = memo((props : Props) => {
   const scrollViewRef = useRef<ScrollView>(null);
   const dispatch = useDispatch();
   const onSubmit = async () => {
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
     try {
       const data = await AuthApi.register(phone, password,token, firstName && firstName, height && height, weight && weight, gender && gender,  );
-      registerForPushNotificationsAsync();
       dispatch(authLogin(data));
     } catch (err) {
       console.log(err);

@@ -11,8 +11,31 @@ export class User implements IUser {
   lastName?: string | null;
   gender?: "male" | "female" | "other" | null;
   height?: string | null;
-  weight?: string | null
-  constructor({ _id, auth, userType, phone, drugCount, birthDate, firstName, lastName, gender, height, weight }: IUser) {
+  weight?: string | null;
+  isAllergy?: boolean | null;
+  isChronicDesease?: boolean | null;
+  isRegularMedicine?: boolean | null;
+  isInjury?: boolean | null;
+  isSurgery?: boolean | null;
+  health?: string[] | undefined
+  constructor({
+    _id,
+    auth,
+    userType,
+    phone,
+    drugCount,
+    birthDate,
+    firstName,
+    lastName,
+    gender,
+    height,
+    weight,
+    isAllergy,
+    isChronicDesease,
+    isRegularMedicine,
+    isInjury,
+    isSurgery,
+  }: IUser) {
     this._id = _id;
     this.auth = auth;
     this.userType = userType;
@@ -24,6 +47,11 @@ export class User implements IUser {
     this.gender = gender;
     this.height = height;
     this.weight = weight;
+    this.isAllergy = isAllergy;
+    this.isChronicDesease = isChronicDesease;
+    this.isRegularMedicine = isRegularMedicine;
+    this.isInjury = isInjury;
+    this.isSurgery = isSurgery;
   }
 
   static fromJson(json: IUser) {

@@ -26,10 +26,32 @@ type Props = {
   setHeight: Dispatch<SetStateAction<string | null | undefined>>;
   weight: string | undefined | null;
   setWeight: Dispatch<SetStateAction<string | null | undefined>>;
+  isAllergy: boolean | null | undefined;
+  isChronicDesease: boolean | null | undefined;
+  isRegularMedicine: boolean | null | undefined;
+  isInjury: boolean | null | undefined;
+  isSurgery: boolean | null | undefined;
 };
 
 const ProfileField = memo(
-  ({ firstName, setFirstName, phone, gender, setGender, birth, setBirth, height, setHeight, weight, setWeight }: Props) => {
+  ({
+    firstName,
+    setFirstName,
+    phone,
+    gender,
+    setGender,
+    birth,
+    setBirth,
+    height,
+    setHeight,
+    weight,
+    setWeight,
+    isAllergy,
+    isChronicDesease,
+    isRegularMedicine,
+    isInjury,
+    isSurgery,
+  }: Props) => {
     const navigation = useNavigation();
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -50,14 +72,14 @@ const ProfileField = memo(
       setGender(gender);
       setIsModalVisible(!isModalVisible);
     };
-   
+
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.inputLabel}>Нэр</Text>
         <TextInput onChangeText={setFirstName} style={styles.input} value={firstName ? firstName : ""} />
         <IconInput icon={<PhoneIcon height={16} width={16} />} title={"Утасны дугаар"} value={phone ? phone.toString() : ""} />
         <Text style={styles.inputLabel}>Хүйс</Text>
-        <ButtonInput icon={<GenderIcon />} onPress={toggleModal} text={gender === "male" ? "Эрэгтэй": "Эмэгтэй"} />
+        <ButtonInput icon={<GenderIcon />} onPress={toggleModal} text={gender === "male" ? "Эрэгтэй" : "Эмэгтэй"} />
         <Text style={styles.inputLabel}>Төрсөн огноо</Text>
         <ButtonInput icon={<CalendarIcon />} onPress={showDatePicker} text={birth ? format(new Date(birth), "dd/MM/yyyy") : "Төрсөн огноо"} />
         <View style={styles.rowInputContainer}>
@@ -75,7 +97,7 @@ const ProfileField = memo(
         <TouchableOpacity onPress={() => navigation.navigate("ProfileEditAllergiesScreen")} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Харшил</Text>
-            <Text style={styles.chooseType}>Өндөг, Сүү, Алим</Text>
+            <Text style={styles.chooseType}>{isAllergy ? "Өндөг, Сүү, Алим" : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>
@@ -83,36 +105,36 @@ const ProfileField = memo(
         <TouchableOpacity onPress={() => navigation.navigate("ProfileEditChronicScreen")} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Архаг хууч өвчин</Text>
-            <Text style={styles.chooseType}>Чихойн шижин</Text>
+            <Text style={styles.chooseType}>{isChronicDesease ? "Чихойн шижин" : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>
         <View style={styles.border} />
-        <TouchableOpacity onPress={() => navigation.navigate("ProfileHealthDetailSheet", { type: 1 })} style={styles.chooseButtonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("ProfileHealthDetailSheet", { type: 1, dataType: isRegularMedicine })} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Байнгын хэрэглэдэг эм</Text>
-            <Text style={styles.chooseType}>Байхгүй</Text>
+            <Text style={styles.chooseType}>{isRegularMedicine ? "Байгаа" : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>
         <View style={styles.border} />
-        <TouchableOpacity onPress={() => navigation.navigate("ProfileHealthDetailSheet", { type: 2 })} style={styles.chooseButtonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("ProfileHealthDetailSheet", { type: 2, dataType: isInjury })} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Гэмтэл бэртэл</Text>
-            <Text style={styles.chooseType}>Байхгүй</Text>
+            <Text style={styles.chooseType}>{isInjury ? "Байгаа" : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>
         <View style={styles.border} />
-        <TouchableOpacity onPress={() => navigation.navigate("ProfileHealthDetailSheet", { type: 3 })} style={styles.chooseButtonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("ProfileHealthDetailSheet", { type: 3, dataType: isSurgery })} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Хагалгаа, мэс ажилбар</Text>
-            <Text style={styles.chooseType}>Байхгүй</Text>
+            <Text style={styles.chooseType}>{isSurgery ? "Байгаа" : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>
         <View style={styles.border} />
-        
+
         <DateTimePickerModal isVisible={isDatePickerVisible} mode="date" onCancel={hideDatePicker} onConfirm={handleConfirm} />
         <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} onSwipeComplete={toggleModal} swipeDirection="down">
           <View style={styles.modalContainer}>

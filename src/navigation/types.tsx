@@ -7,6 +7,8 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { IMedicine } from "../interfaces/IMedicine";
+import { KeyedMutator } from "swr";
+import { History } from "../models/History";
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   SplashScreen: undefined;
@@ -39,12 +41,12 @@ export type RootTabParamList = {
 export type BottomSheetParamList = {
   RootNavigator: undefined;
   PharmacistRequestSheet: undefined;
-  HomeMedicalSheet: { data: IMedicine[]; monDate: string; time: string };
+  HomeMedicalSheet: { data: IMedicine[]; monDate: string; time: string,mutate: KeyedMutator<History> };
   DeleteAlertSheet: { id: string };
   DrugStyleChooseSheet: undefined;
   DosageChooseSheet: undefined;
   ProfileMenuSheets: undefined;
-  ProfileHealthDetailSheet: { type: number };
+  ProfileHealthDetailSheet: { type: number, dataType:boolean | null | undefined };
   SavedDrugMenuSheets: undefined;
   FrequencyDrugSheet: undefined;
   DrinkConditions: undefined;
