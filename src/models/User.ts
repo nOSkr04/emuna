@@ -19,6 +19,7 @@ export class User implements IUser {
   isSurgery?: boolean | null;
   allergy?: string[] | undefined;
   chronicDisease?: string[] | undefined;
+  score: string | null
   constructor({
     _id,
     auth,
@@ -38,6 +39,7 @@ export class User implements IUser {
     isSurgery,
     allergy,
     chronicDisease,
+    score
   }: IUser) {
     this._id = _id;
     this.auth = auth;
@@ -57,6 +59,7 @@ export class User implements IUser {
     this.isSurgery = isSurgery;
     this.allergy = allergy;
     this.chronicDisease = chronicDisease;
+    this.score = score;
   }
 
   static fromJson(json: IUser) {

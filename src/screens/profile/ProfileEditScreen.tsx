@@ -20,7 +20,6 @@ const ProfileEditScreen = memo(() => {
   const [birth, setBirth] = useState(user?.birthDate);
   const [height, setHeight] = useState(user?.height);
   const [weight, setWeight] = useState(user?.weight);
-  const width = "50%";
   const profileEdit = async (
     firstName: string | null | undefined,
     gender: string | null | undefined,
@@ -48,9 +47,9 @@ const ProfileEditScreen = memo(() => {
     <KeyboardAvoidingView style={styles.root} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={keyboardHeight}>
       <View style={styles.indicatorContainer}>
         <View style={styles.inactiveIndicator}>
-          <View style={[styles.activeIndicator, { width: width }]} />
+          <View style={[styles.activeIndicator, { width: `${user?.score}%` }]} />
         </View>
-        <Text style={styles.indicatorText}>50%</Text>
+        <Text style={styles.indicatorText}>{user?.score}%</Text>
       </View>
       <ProfileField
       allergy={user?.allergy}
