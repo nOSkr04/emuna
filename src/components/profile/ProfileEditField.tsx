@@ -31,6 +31,8 @@ type Props = {
   isRegularMedicine: boolean | null | undefined;
   isInjury: boolean | null | undefined;
   isSurgery: boolean | null | undefined;
+  chronicDisease: string[]  | undefined
+  allergy: string[] |  undefined
 };
 
 const ProfileField = memo(
@@ -51,6 +53,8 @@ const ProfileField = memo(
     isRegularMedicine,
     isInjury,
     isSurgery,
+    chronicDisease,
+    allergy
   }: Props) => {
     const navigation = useNavigation();
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
@@ -97,7 +101,7 @@ const ProfileField = memo(
         <TouchableOpacity onPress={() => navigation.navigate("ProfileEditAllergiesScreen")} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Харшил</Text>
-            <Text style={styles.chooseType}>{isAllergy ? "Өндөг, Сүү, Алим" : "Байхгүй"}</Text>
+            <Text style={styles.chooseType}>{isAllergy ? allergy?.map((aller) => {return aller;} ) : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>
@@ -105,7 +109,7 @@ const ProfileField = memo(
         <TouchableOpacity onPress={() => navigation.navigate("ProfileEditChronicScreen")} style={styles.chooseButtonContainer}>
           <View>
             <Text style={styles.chooseTitle}>Архаг хууч өвчин</Text>
-            <Text style={styles.chooseType}>{isChronicDesease ? "Чихойн шижин" : "Байхгүй"}</Text>
+            <Text style={styles.chooseType}>{isChronicDesease ? chronicDisease?.map((aller) => {return aller;} ) : "Байхгүй"}</Text>
           </View>
           <RightIcon />
         </TouchableOpacity>

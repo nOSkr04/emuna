@@ -17,7 +17,7 @@ type Props = {
 const CheckBox = memo(({ data, select, selected, unselect }: Props) => {
   return (
     <>
-      {data.map(item => {
+      {data?.map(item => {
         return (
           <TouchableOpacity
             key={item.id}

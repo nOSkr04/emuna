@@ -42,7 +42,12 @@ export const edit = async (values: { firstName?: string | null; height?: string 
   return res;
 };
 
-export const editAllergy = async (values: { isAllergy: boolean, health: string[]  }) => {
+export const editAllergy = async (values: { isAllergy: boolean, allergy: string[]  }) => {
+  const res = await httpRequest.put("/users/edit", values);
+  return res;
+};
+
+export const editChronicDesease = async (values: { isChronicDesease: boolean, chronicDisease: string[]  }) => {
   const res = await httpRequest.put("/users/edit", values);
   return res;
 };

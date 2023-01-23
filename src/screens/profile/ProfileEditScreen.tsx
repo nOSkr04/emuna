@@ -53,7 +53,9 @@ const ProfileEditScreen = memo(() => {
         <Text style={styles.indicatorText}>50%</Text>
       </View>
       <ProfileField
-      birth={birth}
+      allergy={user?.allergy}
+        birth={birth}
+        chronicDisease={user?.chronicDisease}
         firstName={firstName}
         gender={gender}
         height={height}

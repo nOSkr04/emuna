@@ -10,8 +10,8 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import * as Notifications from "expo-notifications";
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState("99110523");
-  const [password, setPassword] = useState("Dadamn04");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
   const onSubmit = async () => {
     const token = (await Notifications.getExpoPushTokenAsync()).data;
     try {

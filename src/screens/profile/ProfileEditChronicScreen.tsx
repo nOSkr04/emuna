@@ -1,30 +1,44 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { memo, useMemo, useState } from "react";
+import React, { memo,  useState } from "react";
 import { Mon700 } from "../../components/StyledText";
 import { Colors } from "../../constants/Colors";
 import RadioButton from "../../components/RadioButton";
 import CheckBox from "../../components/CheckBox";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useSWRToken } from "../../hooks/useSWRToken";
+import { AuthApi, ChronicDeasesApi } from "../../apis";
+import { authMe } from "../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { IAuth } from "../../interfaces/IAuth";
 
 const ProfileEditChronicScreen = memo(() => {
-  const [isAllergie, setIsAllergie] = useState<boolean | null | undefined>(false);
   const navigation = useNavigation();
-  const [selected, setSelected] = useState<string[]>([]);
-  const info = useMemo(() => {
-    return [
-      { id: 1, name: "Сүү" },
-      { id: 2, name: "Талх" },
-      { id: 3, name: "Инсулин" },
-      { id: 4, name: "Бонго" },
-      { id: 5, name: "Диадис" },
-      { id: 6, name: "Фэдөк" },
-      { id: 7, name: "Угралц" },
-      { id: 8, name: "Угралц" },
-      { id: 9, name: "Угралц" },
-      { id: 10, name: "Угралц" },
-    ];
-  }, []);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: { auth: IAuth }) => state.auth);
+
+  const [isDeases, setIsDeases] = useState<boolean | null | undefined>(user?.isChronicDesease);
+  const [selected, setSelected] = useState<string[]>(user?.chronicDisease);
+  const { data,  } = useSWRToken("/allergies", () => {
+    return ChronicDeasesApi.getChronicDeases();
+  });
+  const profileEdit = async (
+    isDeases: boolean,
+    health: string[]
+   ) => {
+     try {
+       const values = {
+        isChronicDesease: isDeases,
+         chronicDisease  : health
+       };
+       await AuthApi.editChronicDesease(values);
+       const res = await AuthApi.me();
+       dispatch(authMe(res));
+       navigation.goBack();
+     } catch (err) {
+       console.log(err);
+     }
+   };
   const select = (chooseId: string) => {
     setSelected(selecting => {
       return [...selecting, chooseId];
@@ -39,18 +53,18 @@ const ProfileEditChronicScreen = memo(() => {
     <ScrollView style={styles.root}>
       <View style={styles.container}>
         <Mon700 style={styles.title}>Та архаг хууч өвчинтэй юу</Mon700>
-        <RadioButton selected={isAllergie} setSelected={setIsAllergie} />
+        <RadioButton selected={isDeases} setSelected={setIsDeases} />
       </View>
-      {isAllergie && (
+      {isDeases && (
         <>
           <View style={styles.divider} />
           <View style={styles.checkBoxContainer}>
             <Mon700 style={styles.title}>Та архаг хууч өвчинтэй вэ?</Mon700>
-            <CheckBox data={info} select={select} selected={selected} unselect={unselect} />
+            <CheckBox data={data} select={select} selected={selected} unselect={unselect} />
           </View>
-          <Button onPress={() => navigation.goBack()} style={styles.button} title="Хадгалах" />
         </>
       )}
+      <Button onPress={() => profileEdit(isDeases, selected)} style={styles.button} title="Хадгалах" />
     </ScrollView>
   );
 });

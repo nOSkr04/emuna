@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { memo, useMemo, useState } from "react";
+import React, { memo,  useState } from "react";
 import { Mon700 } from "../../components/StyledText";
 import { Colors } from "../../constants/Colors";
 import RadioButton from "../../components/RadioButton";
@@ -8,26 +8,19 @@ import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { IAuth } from "../../interfaces/IAuth";
-import { AuthApi } from "../../apis";
+import { AllergyApi, AuthApi } from "../../apis";
 import { authMe } from "../../store/authSlice";
+import { useSWRToken } from "../../hooks/useSWRToken";
 
 const ProfileEditAllergiesScreen = memo(() => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: { auth: IAuth }) => state.auth);
   const [isAllergie, setIsAllergie] = useState<boolean | undefined | null>(user?.isAllergy);
   const navigation = useNavigation();
-  const [selected, setSelected] = useState<string[]>([]);
-  const info = useMemo(() => {
-    return [
-      { id: 1, name: "Сүү" },
-      { id: 2, name: "Талх" },
-      { id: 3, name: "Инсулин" },
-      { id: 4, name: "Бонго" },
-      { id: 5, name: "Диадис" },
-      { id: 6, name: "Фэдөк" },
-      { id: 7, name: "Угралц" },
-    ];
-  }, []);
+  const [selected, setSelected] = useState<string[]>(user?.allergy);
+  const { data,  } = useSWRToken("/allergies", () => {
+    return AllergyApi.getAllergy();
+  });
   const profileEdit = async (
    isAllergy: boolean,
    health: string[]
@@ -35,7 +28,7 @@ const ProfileEditAllergiesScreen = memo(() => {
     try {
       const values = {
         isAllergy: isAllergy,
-        health   : health
+        allergy  : health
       };
       console.log(values);
       await AuthApi.editAllergy(values);
@@ -67,11 +60,11 @@ const ProfileEditAllergiesScreen = memo(() => {
           <View style={styles.divider} />
           <View style={styles.checkBoxContainer}>
             <Mon700 style={styles.title}>Та ямар харшилтай вэ?</Mon700>
-            <CheckBox data={info} select={select} selected={selected} unselect={unselect} />
+            <CheckBox data={data} select={select} selected={selected} unselect={unselect} />
           </View>
-          <Button onPress={() => profileEdit(isAllergie, selected)} style={styles.button} title="Хадгалах" />
         </>
       )}
+      <Button onPress={() => profileEdit(isAllergie, selected)} style={styles.button} title="Хадгалах" />
     </ScrollView>
   );
 });
