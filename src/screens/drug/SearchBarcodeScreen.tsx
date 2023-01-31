@@ -1,15 +1,19 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { memo, useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Button from "../../components/Button";
 import Layout from "../../constants/Layout";
 import { useNavigation } from "@react-navigation/native";
-
+import datas from "../../../assets/datay23h.json";
 const SearchBarcodeScreen = memo( () => {
-  const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState<boolean | string | null>(null);
   const [scanned, setScanned] = useState(false);
   const [barcode, setBarcode] = useState("");
+  const [size,setSize] = useState<string|null>("");
+  // const [size,setSize] = useState("")
+  const [filteredData, setFilteredData] = useState(datas);
+ 
   const navigation = useNavigation();
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -19,13 +23,15 @@ const SearchBarcodeScreen = memo( () => {
 
     getBarCodeScannerPermissions();
   }, []);
-
-  const handleBarCodeScanned = ({  data }: {data:string}) => {
-    setScanned(true);
-    Alert.alert(`${data}`);
-    setBarcode(data);
+  const handleBarCodeScanned = async({  data }: {data:string}) => {
+      setFilteredData(
+        datas.filter((item) => item.barcode?.toLowerCase().includes(data.toLowerCase()))
+      );
+          setScanned(true);
+          setBarcode(filteredData[0].name);
+          setSize(filteredData[0].size);
   };
-
+console.log(filteredData.length);
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
@@ -37,8 +43,8 @@ const SearchBarcodeScreen = memo( () => {
       <View style={styles.barcodeContainer}>
         <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={styles.barcode} />
       </View>
-      {scanned ? <Text style={styles.scannedTitle}>{barcode}</Text> : <Text style={styles.title}>Та эмийнхээ баркодыг уншуулна уу?</Text>}
-      <Button disabled={scanned ? false: true} onPress={() => navigation.navigate("DrugDetailScreen")} secondary={scanned ? false : true} style={styles.button} title="Үргэлжлүүлэх"  />
+      {scanned ? <><Text style={styles.scannedTitle}>{barcode}</Text><Text style={styles.scannedTitle}>{size && size}</Text></> : <Text style={styles.title}>Та эмийнхээ баркодыг уншуулна уу?</Text>}
+      <Button disabled={scanned ? false: true} onPress={() => navigation.navigate("DrugDetailScreen", { data: filteredData[0] })} secondary={scanned ? false : true} style={styles.button} title="Үргэлжлүүлэх"  />
     </View>
   );
 });

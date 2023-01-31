@@ -5,13 +5,19 @@ import SearchIcon from "../../assets/svg/search.svg";
 import { Colors } from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { Mon700 } from "./StyledText";
-const SearchField = memo(() => {
+
+type Props = {
+  value: string
+  onChange:(text: string) => void
+}
+
+const SearchField = memo(({ value,onChange } : Props) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <SearchIcon color={Colors.black}  height={20} style={styles.icon} width={20} />
-        <TextInput placeholder="Түлхүүр үгээр хайх" placeholderTextColor={Colors.secondaryButton} style={styles.input}  />
+        <TextInput onChangeText={onChange} placeholder="Түлхүүр үгээр хайх" placeholderTextColor={Colors.secondaryButton} style={styles.input} value={value}  />
       </View>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backContainer} >
         <Mon700 style={styles.title}>Болих</Mon700>

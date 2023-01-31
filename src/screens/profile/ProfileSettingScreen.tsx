@@ -2,7 +2,7 @@ import { StyleSheet,  Switch,TouchableOpacity,View } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import BellIcon from "../../../assets/svg/Bell.svg";
-import PhoneIcon from "../../../assets/svg/phone.svg";
+// import PhoneIcon from "../../../assets/svg/phone.svg";
 import TrashIcon from "../../../assets/svg/UserCircle.svg";
 import ArrowRight from "../../../assets/svg/CaretRight.svg";
 import DangerArrowRight from "../../../assets/svg/DangerRight.svg";
@@ -33,14 +33,14 @@ const ProfileSettingScreen = memo(() => {
       />
       </View>
       <View style={styles.border} />
-      <View style={styles.contentContainer}>
+      {/* <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
           <PhoneIcon height={17.22} width={25} />
           <Mon500 style={styles.title}>Дугаар солих</Mon500>
         </View>
         <ArrowRight/>
-      </View>
-      <View style={styles.border} />
+      </View> */}
+      {/* <View style={styles.border} /> */}
       <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
           <TrashIcon  />

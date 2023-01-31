@@ -4,7 +4,7 @@ import { Colors } from "../../../constants/Colors";
 // import WarningIcon from "../../../../assets/svg/WarningCircle.svg";
 import SnowIcon from "../../../../assets/svg/Snowflake.svg";
 
-const DrugDetail = memo(() => {
+const DrugDetail = memo(({ data }:any) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* {isTrue && (
@@ -19,14 +19,14 @@ const DrugDetail = memo(() => {
         </View>
       )} */}
       {/* <View style={styles.border} /> */}
-      <Text style={styles.contentTitle}>Хадгалах нөхцөл</Text>
+      {/* <Text style={styles.contentTitle}>Хадгалах нөхцөл</Text>
       <View style={styles.rowContent}>
-        <SnowIcon />
-        {/* <Text style={styles.gradusText}>{gradus}</Text> */}
-      </View>
-      <View style={styles.border} />
-      <Text style={styles.contentTitle}>Хэрэглэх заалт</Text>
-      {/* <Text style={styles.description} >{description}</Text> */}
+        <SnowIcon /> */}
+      {/* <Text style={styles.gradusText}>{gradus}</Text> */}
+      {/* </View> */}
+      {/* <View style={styles.border} /> */}
+      <Text style={styles.contentTitle}>Үйлдвэрлэсэн улс</Text>
+      <Text style={styles.description} >{data.createdCountry}</Text>
       <View style={styles.border} />
       <Text style={styles.contentTitle}>Хэрэглэх арга, тун</Text>
       {/* <Text style={styles.description} >{hemjee}</Text> */}

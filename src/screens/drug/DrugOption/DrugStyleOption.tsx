@@ -18,18 +18,19 @@ type Props = {
   color?: string;
   setIcon: Dispatch<SetStateAction<string>>;
   setColor: Dispatch<SetStateAction<string>>;
+  name:string;
 };
 
-const DrugStyleOption = memo(({ icon, color, setIcon, setColor }: Props) => {
+const DrugStyleOption = memo(({ icon, color, setIcon, setColor,name, }: Props) => {
   const iconDummy = [
-    { id: 1, name: "shamal", value: "1medical", jsxIcon: Icon1 },
-    { id: 2, name: "shamal", value: "2medical", jsxIcon: Icon2 },
-    { id: 3, name: "shamal", value: "3medical" , jsxIcon: Icon3 },
-    { id: 4, name: "shamal", value: "4medical" , jsxIcon: Icon4 },
-    { id: 5, name: "shamal", value: "5medical" , jsxIcon: Icon5 },
-    { id: 6, name: "shamal", value: "6medical" , jsxIcon: Icon6 },
-    { id: 7, name: "shamal", value: "7medical" , jsxIcon: Icon7 },
-    { id: 8, name: "shamal", value: "8medical" , jsxIcon: Icon8 },
+    { id: 1, name: "капсул", value: "1medical", jsxIcon: Icon1 },
+    { id: 2, name: "Эликсир", value: "2medical", jsxIcon: Icon2 },
+    { id: 3, name: "Ампул", value: "3medical" , jsxIcon: Icon3 },
+    { id: 4, name: "Уусмал", value: "4medical" , jsxIcon: Icon4 },
+    { id: 5, name: "Шахмал", value: "5medical" , jsxIcon: Icon5 },
+    { id: 6, name: "Cироп", value: "6medical" , jsxIcon: Icon6 },
+    { id: 7, name: "Kапсул", value: "7medical" , jsxIcon: Icon7 },
+    { id: 8, name: "Kапсул", value: "8medical" , jsxIcon: Icon8 },
   ];
 
   const colorDummy = [
@@ -52,7 +53,7 @@ const DrugStyleOption = memo(({ icon, color, setIcon, setColor }: Props) => {
       <View style={[styles.pillContainer, { backgroundColor: color }]}>
         <MedicalIcon icon={icon} />
       </View>
-      <Mon700 style={styles.title}>Ибупрофен</Mon700>
+      <Mon700 style={styles.title}>{name}</Mon700>
       <Mon500 style={styles.description}>Эмийн хэлбэр</Mon500>
       <BottomSheetScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.horizontalPills}>
         {iconDummy.map(item => {

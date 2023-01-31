@@ -1,27 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
 import { Colors } from "../../constants/Colors";
-import CapsuleIcon from "../../../assets/svg/1.svg";
-import DotIcon from "../../../assets/svg/dot.svg";
+// import DotIcon from "../../../assets/svg/dot.svg";
+import { ISchedule } from "../../interfaces/ISchedule";
+import MedicalIcon from "../MedicalIcon";
 type Props = {
-  bg: string;
-  name: string;
-  capsule: string;
-  when: string;
+  item:ISchedule
 };
 
-const MyDrug = memo(({ bg, name, capsule, when }: Props) => {
+const MyDrug = memo(({ item }: Props) => {
   return (
     <View style={styles.root}>
-      <View style={[styles.capsuleContainer, { backgroundColor: bg }]}>
-        <CapsuleIcon color={Colors.white} />
+      <View style={[styles.capsuleContainer, { backgroundColor: item.color }]}>
+        <MedicalIcon height={28}  icon={item.icon} width={28}/>
       </View>
       <View>
-        <Text style={styles.contentTitle}>{name}</Text>
+        <Text style={styles.contentTitle}>{item.medicineName}</Text>
         <View style={styles.detailContainer}>
-          <Text style={styles.contentDescription}>{capsule}</Text>
-          <DotIcon color={Colors.helperText} height={5} style={styles.dot} width={5} />
-          <Text style={styles.contentDescription}>{when}</Text>
+          {/* <Text style={styles.contentDescription}>{capsule}</Text>
+          <DotIcon color={Colors.helperText} height={5} style={styles.dot} width={5} /> */}
+          <Text style={styles.contentDescription}>{item.when}</Text>
         </View>
       </View>
     </View>

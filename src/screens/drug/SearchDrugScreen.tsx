@@ -1,30 +1,33 @@
 import {  StyleSheet, View } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
 import SearchDrug from "../../components/drug/SearchDrug";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SearchField from "../../components/SearchField";
 import { Colors } from "../../constants/Colors";
+import data from "../../../assets/datay23h.json";
 // import EmptyResultDrug from "../../components/drug/EmptyResultDrug";
 const SearchDrugScreen = memo(() => {
   const insents = useSafeAreaInsets();
-  const data = [
-    { id: 1, name: "Jargal" },
-    { id: 2, name: "Jargal" },
-    { id: 3, name: "Jargal" },
-    { id: 4, name: "Jargal" },
-    { id: 5, name: "Jargal" },
-  ];
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
+
+  const handleSearch = (text: string) => {
+    setSearchTerm(text);
+    setFilteredData(
+      data.filter((item) => item.name.toLowerCase().includes(text.toLowerCase()))
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={{ paddingTop: insents.top }}>
-        <SearchField />
+        <SearchField onChange={handleSearch} value={searchTerm} />
       </View>
       <FlashList
-      data={data}
+      data={filteredData}
       estimatedItemSize={66}
       renderItem={({ item }) => {
-        return <SearchDrug name={item.name} />;
+        return <SearchDrug data={item} />;
       }}
       />
       {/* <EmptyResultDrug/> */}

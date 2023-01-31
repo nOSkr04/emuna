@@ -5,7 +5,7 @@ import Modal from "react-native-modal";
 import { IMedicine } from "../../interfaces/IMedicine";
 import Button from "../Button";
 import MedicalIcon from "../MedicalIcon";
-import VerticalDots from "../../../assets/svg/verticalDots.svg";
+// import VerticalDots from "../../../assets/svg/verticalDots.svg";
 import DotIcon from "../../../assets/svg/dot.svg";
 import Xicon from "../../../assets/svg/X.svg";
 import CheckIcon from "../../../assets/svg/Check.svg";
@@ -13,11 +13,11 @@ import PencilIcon from "../../../assets/svg/pencil.svg";
 import TrashIcon from "../../../assets/svg/Trash.svg";
 import { Colors } from "../../constants/Colors";
 import { HistoryApi } from "../../apis";
-import { KeyedMutator } from "swr";
-import { History } from "../../models/History";
 import { format } from "date-fns";
-const RenderDrugDetails = memo(({ item, mutate }: { item: IMedicine, mutate:KeyedMutator<History> }) => {
+import { useMutate } from "../../hooks/useMutate";
+const RenderDrugDetails = memo(({ item,strDate }: { item: IMedicine, strDate:string }) => {
   const navigation = useNavigation();
+  const mutate = useMutate();
   const [dataStatus,setDataStatus] = useState<string>(`${item.status}`);
   const [statusDate,setStatusDate] = useState<Date>(new Date());
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,7 +29,7 @@ const RenderDrugDetails = memo(({ item, mutate }: { item: IMedicine, mutate:Keye
     } catch (err) {
       console.log(err);
     } finally{
-      mutate();
+      mutate(`/histories/day/${strDate}`);
     }
   };
   const toggleModal = () => {
@@ -71,21 +71,23 @@ const RenderDrugDetails = memo(({ item, mutate }: { item: IMedicine, mutate:Keye
             ) : null}
           </View>
         </View>
-        <TouchableOpacity onPress={toggleModal} style={styles.buttonContainer}>
+        {/* <TouchableOpacity onPress={toggleModal} style={styles.buttonContainer}>
           <VerticalDots />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.rowButtonContainer}>
         <Button
           onPress={() => changeStatus(item._id,"skipped",)}
           style={dataStatus === "skipped" ? styles.activeRowButton : styles.inActiveRowButton}
-          title={dataStatus === "skipped" ? format(statusDate, "(HH:mm)") : "Алгссан"}
+          title={"Алгссан"}
+          // title={dataStatus === "skipped" ? format(statusDate, "(HH:mm)") : "Алгссан"}
           titleStyle={dataStatus === "skipped" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
         <Button
           onPress={() => changeStatus(item._id,"drinked")}
           style={dataStatus === "drinked" ? styles.activeRowButton : styles.inActiveRowButton}
-          title={dataStatus === "drinked" ? format(statusDate, "(HH:mm)") : "Уусан"}
+          // title={dataStatus === "drinked" ? format(statusDate, "(HH:mm)") : "Уусан"}
+          title={"Уусан"}
           titleStyle={dataStatus === "drinked" ? styles.activeRowButtonTitle : styles.inActiveRowButtonTitle}
         />
       </View>

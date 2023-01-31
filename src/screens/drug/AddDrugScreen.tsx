@@ -28,7 +28,7 @@ const AddDrugScreen = memo(() => {
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.bottomTitle}>Эм зүйчээр сануулга үүсгүүлэх</Text>
-          <Text style={styles.bottomDescription}>Доорх QR кодыг эм зүйчдээ уншуулж сануулга үүсгэх боломжтой. {user?._id}</Text>
+          <Text style={styles.bottomDescription}>Доорх QR кодыг эм зүйчдээ уншуулж сануулга үүсгэх боломжтой.</Text>
           <View style={styles.barcode}>
             <QRCode logo={logo} logoBackgroundColor={Colors.white} size={144} value={user?._id}  />
           </View>

@@ -5,18 +5,18 @@ import Dot from "../../../assets/svg/dot.svg";
 import { useNavigation } from "@react-navigation/native";
 import { Mon500, Mon700 } from "../StyledText";
 type Props = {
-  name: string;
+  data: any
 };
 
-const SearchDrug = memo(({ name, }: Props) => {
+const SearchDrug = memo(({ data }: Props) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("DrugDetailScreen")} style={styles.container}>
-      <Mon700 style={styles.drugName}>{name}</Mon700>
+    <TouchableOpacity onPress={() => navigation.navigate("DrugDetailScreen", { data: data })} style={styles.container}>
+      <Mon700 style={styles.drugName}>{data.name}</Mon700>
       <View style={styles.detailContainer}>
-        <Mon500 style={styles.drugDetail}>Капсул</Mon500>
-        <Dot color={Colors.white} style={styles.dot} />
-        <Mon500 style={styles.drugWeight}>400 мг</Mon500>
+        <Mon500 style={styles.drugDetail}>{data.shape}</Mon500>
+        <Dot color={Colors.black} style={styles.dot}  />
+        <Mon500 style={styles.drugWeight}>{data.size}</Mon500>
       </View>
       <View style={styles.border} />
     </TouchableOpacity>
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   },
   border: {
     borderWidth: 1,
-    opacity    : 0.24,
-    borderColor: Colors.greyBackground
+    opacity    : 0.54,
+    borderColor: Colors.strokeDark
   }
 });
 

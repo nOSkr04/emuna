@@ -20,7 +20,7 @@ const HomeScreen = memo(() => {
   const navigation = useNavigation();
   const strDate = format(selectedDate, "yyyy-MM-dd");
   const monDate = format(selectedDate, "eeee, M сарын d", { locale: mn });
-  const { data, error, mutate } = useSWRToken<IHistory>(`/histories/day/${strDate}`, () => {
+  const { data, error } = useSWRToken<IHistory>(`/histories/day/${strDate}`, () => {
     return HistoryApi.historiesDay(strDate);
   });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
@@ -46,7 +46,7 @@ const HomeScreen = memo(() => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-            onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id, mutate: mutate })}
+            onPress={() => navigation.navigate("HomeMedicalSheet", { data: item.medicine, monDate: monDate, time: item._id,strDate: strDate })}
             >
               <View style={styles.medicalContainer}>
                 <RenderDrugHeader title={item._id} />

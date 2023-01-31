@@ -21,10 +21,13 @@ import PlusIcon from "../../../assets/svg/PlusCirclePrimary.svg";
 import { ScheduleApi } from "../../apis";
 import { Colors } from "../../constants/Colors";
 import AlertModal from "../../components/drug/AlertModal";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../navigation/types";
 
-// type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
+type Props = NativeStackScreenProps<RootStackParamList, "AddDrugAlertScreen">;
 
-const AddDrugAlertScreen = memo(() => {
+const AddDrugAlertScreen = memo(({ route }: Props) => {
+  const { name, size, shape } = route.params;
   const styleSheetRef = useRef<BottomSheetModal>(null);
   const drinkSheetRef = useRef<BottomSheetModal>(null);
   const dosageSheetRef = useRef<BottomSheetModal>(null);
@@ -41,8 +44,8 @@ const AddDrugAlertScreen = memo(() => {
   const snapPoint = useMemo(() => ["80%"], []);
   const snapFreqPoint = useMemo(() => ["50%"], []);
 
-  // 3.medicineName
-  const medicineName = "Ибупрофен";
+  // // 3.medicineName
+  // const medicineName = "Ибупрофен";
   // 5.medicine
   const medicine = "63c2a0d00092c0e645e5f8a4";
   // 6.icon
@@ -102,7 +105,7 @@ const AddDrugAlertScreen = memo(() => {
   }, []);
 
   const onSubmit = async (
-    medicineName: string,
+    name: string,
     medicine: string,
     icon: string,
     color: string,
@@ -114,7 +117,7 @@ const AddDrugAlertScreen = memo(() => {
     startDate: Date,
   ) => {
     try {
-      await ScheduleApi.postSchedule(medicineName, medicine ,icon,color, timeArray, days, quantity, when, endDate, startDate);
+      await ScheduleApi.postSchedule(name, medicine ,icon,color, timeArray, days, quantity, when, endDate, startDate);
       setAlertVisible(true);
     } catch (err) {
       console.log(err);
@@ -132,8 +135,8 @@ const AddDrugAlertScreen = memo(() => {
             <Text style={styles.editTitle}>Харагдац өөрчлөх</Text>
           </View>
         </TouchableOpacity>
-        <Text style={styles.drugName}>{medicineName}</Text>
-        <Text style={styles.drugDescription}>Капсул, 400mg</Text>
+        <Text style={styles.drugName}>{name}</Text>
+        <Text style={styles.drugDescription}>{shape}, {size}</Text>
         <TouchableOpacity onPress={() => setDosageChooseVisible(0)} style={styles.choosedContainer}>
           <Text style={styles.chooseTitle}>Тун</Text>
           <View style={styles.choosedContent}>
@@ -203,7 +206,7 @@ const AddDrugAlertScreen = memo(() => {
           </View>
         </TouchableOpacity>
         <Button
-          onPress={() => onSubmit(medicineName, medicine, icon, color, timeArray, days, quantity, when, endDate, startDate)}
+          onPress={() => onSubmit(name, medicine, icon, color, timeArray, days, quantity, when, endDate, startDate)}
           style={styles.button}
           title="Хадгалах"
         />
@@ -250,7 +253,7 @@ const AddDrugAlertScreen = memo(() => {
           onClose={() => setDrugStyleVisible(-1)}
           ref={styleSheetRef}
           snapPoints={snapPoint}>
-          <DrugStyleOption color={color} icon={icon} setColor={setColor} setIcon={setIcon} />
+          <DrugStyleOption color={color} icon={icon} name={name} setColor={setColor} setIcon={setIcon}  />
           <Button
             onPress={() => {
               styleSheetRef.current?.snapToPosition(0);

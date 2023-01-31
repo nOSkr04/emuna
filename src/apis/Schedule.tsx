@@ -14,7 +14,6 @@ export const postSchedule = async (
   endDate: Date,
   startDate: Date,
 ) => {
-  console.log( days,  );
   const res = await httpRequest.post("/schedules", {
     medicineName: medicineName,
     medicine    : medicine,
@@ -28,4 +27,9 @@ export const postSchedule = async (
     startDate   : startDate,
   });
   return res;
+};
+
+export const getSchedule = async () => {
+  const res = await httpRequest.get("/schedules/user");
+  return res.data;
 };

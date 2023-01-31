@@ -6,9 +6,9 @@ const DrugHeaderContent = memo(() => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Миний эм</Text>
-      <TouchableOpacity style={styles.iconContainer}>
+      {/* <TouchableOpacity style={styles.iconContainer}>
         <ClocIcon/>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 });

@@ -13,6 +13,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
+import { RootSiblingParent } from "react-native-root-siblings";
+
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -61,9 +64,11 @@ export default function App() {
             }}>
             <SafeAreaProvider>
               <GestureHandlerRootView style={styles.container}>
-                <BottomSheetModalProvider>
-                  <NavigationContainer />
-                </BottomSheetModalProvider>
+                <RootSiblingParent>
+                  <BottomSheetModalProvider>
+                    <NavigationContainer />
+                  </BottomSheetModalProvider>
+                </RootSiblingParent>
               </GestureHandlerRootView>
             </SafeAreaProvider>
           </SWRConfig>

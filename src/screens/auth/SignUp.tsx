@@ -4,11 +4,17 @@ import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { AuthApi } from "../../apis";
 const SignUpScreen = memo(() => {
   const [phone, setPhone] = useState("");
   const navigation = useNavigation();
-  const onSubmit = async () => {
-    navigation.navigate("OtpVerifyScreen", { phone: phone });
+  const onSubmit = async (phone: string) => {
+    try{
+      await AuthApi.otpVerify(phone);
+      navigation.navigate("OtpVerifyScreen", { phone: phone });
+    } catch (err){
+      console.log(err);
+    }
   };
   const height = useHeaderHeight();
   return (
@@ -17,7 +23,7 @@ const SignUpScreen = memo(() => {
         <Text style={styles.inputLabel}>Утасны дугаар</Text>
         <TextInput onChangeText={setPhone} style={styles.input} value={phone} />
       </ScrollView>
-      <Button onPress={onSubmit} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх" />
+      <Button onPress={() => onSubmit(phone)} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх" />
     </KeyboardAvoidingView>
   );
 });

@@ -7,8 +7,6 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { IMedicine } from "../interfaces/IMedicine";
-import { KeyedMutator } from "swr";
-import { History } from "../models/History";
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   SplashScreen: undefined;
@@ -21,8 +19,8 @@ export type RootStackParamList = {
   UserDetailRegisterScreen: { phone: string; password: string };
   SearchDrugScreen: undefined;
   SearchBarcodeScreen: undefined;
-  DrugDetailScreen: undefined;
-  AddDrugAlertScreen: { pill?: string | undefined; bgColor?: string | undefined; dose?: string | undefined; frequency: string[] | undefined; type: string | undefined};
+  DrugDetailScreen: {data:any};
+  AddDrugAlertScreen: {name:string, size:string, shape:string}
   ProfileEditScreen: undefined;
   ProfileEditAllergiesScreen: undefined;
   ProfileEditChronicScreen: undefined;
@@ -41,7 +39,7 @@ export type RootTabParamList = {
 export type BottomSheetParamList = {
   RootNavigator: undefined;
   PharmacistRequestSheet: undefined;
-  HomeMedicalSheet: { data: IMedicine[]; monDate: string; time: string,mutate: KeyedMutator<History> };
+  HomeMedicalSheet: { data: IMedicine[]; monDate: string; time: string; strDate:string };
   DeleteAlertSheet: { id: string };
   DrugStyleChooseSheet: undefined;
   DosageChooseSheet: undefined;
