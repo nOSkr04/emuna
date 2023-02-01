@@ -13,14 +13,22 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
 import RxIcon from "../../../assets/svg/rx.svg";
+import { useSWRToken } from "../../hooks/useSWRToken";
+import { DrugsApi } from "../../apis";
 type Props = NativeStackScreenProps<RootStackParamList, "DrugDetailScreen">;
 
 const EditPlace = ({ route }: Props) => {
-  const { data } = route.params;
+  const { id } = route.params;
   const scrollA = useRef(new Animated.Value(0)).current;
   const insents = useSafeAreaInsets();
   const navigation = useNavigation();
+  const { data } = useSWRToken(`/drugs/${id}`, () => {
+    return DrugsApi.getDrugDetail(id);
+  });
   const [type, setType] = useState(1);
+  if(!data){
+    return null;
+  }
   return (
     <>
       <View style={styles.headerContainer}>

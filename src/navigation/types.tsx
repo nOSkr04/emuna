@@ -19,7 +19,7 @@ export type RootStackParamList = {
   UserDetailRegisterScreen: { phone: string; password: string };
   SearchDrugScreen: undefined;
   SearchBarcodeScreen: undefined;
-  DrugDetailScreen: {data:any};
+  DrugDetailScreen: {id:string};
   AddDrugAlertScreen: {name:string, size:string, shape:string}
   ProfileEditScreen: undefined;
   ProfileEditAllergiesScreen: undefined;

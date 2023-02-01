@@ -12,8 +12,8 @@ import Toast from "react-native-root-toast";
 
 const LoginScreen = memo(() => {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState("99110523");
-  const [password, setPassword] = useState("Dadamn04");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
   const onSubmit = async () => {
     const token = (await Notifications.getExpoPushTokenAsync()).data;
     try {
@@ -23,12 +23,12 @@ const LoginScreen = memo(() => {
       Toast.show(err.error.message, {
         duration       : Toast.durations.SHORT,
         position       : Toast.positions.TOP + 50,
-        textColor      : "black",
+        textColor      : Colors.white,
         shadow         : true,
         animation      : true,
         hideOnPress    : true,
         delay          : 0,
-        backgroundColor: "#FFB6C1",
+        backgroundColor: Colors.primary,
       });
     }
   };

@@ -30,7 +30,6 @@ const ProfileEditAllergiesScreen = memo(() => {
         isAllergy: isAllergy,
         allergy  : health
       };
-      console.log(values);
       await AuthApi.editAllergy(values);
       const res = await AuthApi.me();
       dispatch(authMe(res));

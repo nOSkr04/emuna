@@ -11,7 +11,7 @@ type Props = {
 const SearchDrug = memo(({ data }: Props) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("DrugDetailScreen", { data: data })} style={styles.container}>
+    <TouchableOpacity onPress={() => navigation.navigate("DrugDetailScreen", { id: data.id })} style={styles.container}>
       <Mon700 style={styles.drugName}>{data.name}</Mon700>
       <View style={styles.detailContainer}>
         <Mon500 style={styles.drugDetail}>{data.shape}</Mon500>

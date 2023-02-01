@@ -12,8 +12,12 @@ export const otpVerify = async (phone: string) => {
   return res;
 };
 
+export const checkOtp = async (phone: string, random:string) => {
+  const res = await httpRequest.post("/users/checkOTP", { phone: phone,random: random });
+  return res;
+};
 export const login = async (phone: string, password: string, token: string) => {
-  const res = await httpRequest.post("/users/login", { phone: phone, password: password, expoPushToken: token });
+  const res = await httpRequest.post("/users/login", { phone: phone, password: password, expoPushToken: token,isNotificationOn: true });
   return res;
 };
 // phone, password,token, firstName && firstName, height && height, weight && weight, gender && gender,
@@ -27,13 +31,14 @@ export const register = async (
   gender?: string,
 ) => {
   const res = await httpRequest.post("/users/register", {
-    phone        : phone,
-    password     : password,
-    expoPushToken: token,
-    firstName    : firstName,
-    height       : height,
-    weight       : weight,
-    gender       : gender,
+    phone           : phone,
+    password        : password,
+    expoPushToken   : token,
+    firstName       : firstName,
+    height          : height,
+    weight          : weight,
+    gender          : gender,
+    isNotificationOn: true
   });
   return res;
 };

@@ -14,7 +14,6 @@ const FrequencyDrugSheet = memo(() => {
   const navigation = useNavigation();
   const [value, setValue] = useState<string[]>(["Monday"]);
   const [type, setType] = useState(2);
-  console.log(value);
   const data = [
     { id: 2, name: "Сонгогдсон өдрүүдэд" },
     { id: 3, name: "Өдөр бүр" },

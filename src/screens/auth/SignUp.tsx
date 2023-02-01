@@ -1,29 +1,44 @@
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput } from "react-native";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { AuthApi } from "../../apis";
+import { Mon600 } from "../../components/StyledText";
 const SignUpScreen = memo(() => {
   const [phone, setPhone] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const onSubmit = async (phone: string) => {
-    try{
+    setLoading(true);
+    try {
       await AuthApi.otpVerify(phone);
       navigation.navigate("OtpVerifyScreen", { phone: phone });
-    } catch (err){
-      console.log(err);
+    } catch (err: any) {
+      setError(err.error.message);
+    } finally {
+      setLoading(false);
     }
   };
   const height = useHeaderHeight();
   return (
-    <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={height}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.inputLabel}>Утасны дугаар</Text>
-        <TextInput onChangeText={setPhone} style={styles.input} value={phone} />
-      </ScrollView>
-      <Button onPress={() => onSubmit(phone)} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх" />
+    <KeyboardAvoidingView style={styles.container} {...(Platform.OS === "ios" && { behavior: "padding" })} keyboardVerticalOffset={height}>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator color={Colors.primary} size={"large"} />
+        </View>
+      ) : (
+        <>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Mon600 style={styles.inputLabel}>Утасны дугаар</Mon600>
+            <TextInput keyboardType="number-pad" onChangeText={setPhone} style={error ? styles.error : styles.input} value={phone} />
+            {error && <Mon600 style={styles.errorMessage}>{error}</Mon600>}
+          </ScrollView>
+          <Button onPress={() => onSubmit(phone)} secondary={phone.length > 7 ? false : true} style={styles.button} title="Үргэлжлүүлэх" />
+        </>
+      )}
     </KeyboardAvoidingView>
   );
 });
@@ -37,7 +52,6 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize        : 11,
-    fontFamily      : "Mon600",
     color           : Colors.texts,
     opacity         : 0.72,
     marginHorizontal: 32,
@@ -52,9 +66,32 @@ const styles = StyleSheet.create({
     marginTop       : 8,
     padding         : 8,
   },
+  error: {
+    borderWidth     : 1,
+    marginHorizontal: 24,
+    height          : 48,
+    borderColor     : Colors.redPill,
+    borderRadius    : 8,
+    marginTop       : 8,
+    padding         : 8,
+  },
   button: {
     bottom          : 20,
     marginHorizontal: 24,
+  },
+  errorMessage: {
+    fontSize        : 11,
+    lineHeight      : 16,
+    letterSpacing   : 0.15,
+    marginHorizontal: 30,
+    color           : Colors.redPill,
+    marginVertical  : 15,
+  },
+  loadingContainer: {
+    flex           : 1,
+    backgroundColor: Colors.white,
+    alignItems     : "center",
+    justifyContent : "center",
   },
 });
 

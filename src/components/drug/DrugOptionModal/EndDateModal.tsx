@@ -2,7 +2,7 @@ import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { Dispatch, SetStateAction, memo } from "react";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { differenceInDays, format } from "date-fns";
+import { addMonths, differenceInDays, format } from "date-fns";
 import { Mon500, Mon700 } from "../../StyledText";
 import { Colors } from "../../../constants/Colors";
 import Button from "../../Button";
@@ -23,7 +23,12 @@ type Props = {
 
 const EndDateModal = memo(({ isEndDatePickerVisible,setIsEndDatePickerVisible,setInfinity, infinity,startDate ,setEndDate , endDate ,setAndroidEndDate, androidEndDate }: Props) => {
   const endDatePickerToggleModal = () => {
-    setIsEndDatePickerVisible(!isEndDatePickerVisible);
+    if(infinity){
+      setEndDate(addMonths(endDate, 3));
+      setIsEndDatePickerVisible(!isEndDatePickerVisible);
+    } else {
+      setIsEndDatePickerVisible(!isEndDatePickerVisible);
+    }
   };
   return (
     <Modal
@@ -35,7 +40,7 @@ const EndDateModal = memo(({ isEndDatePickerVisible,setIsEndDatePickerVisible,se
         <Mon700 style={styles.headerTitle}>Дуусах хугацаа</Mon700>
         <TouchableOpacity onPress={() => setInfinity(!infinity)} style={styles.statusContainer}>
           <Mon500 style={styles.infityText}>Хязгааргүй уух</Mon500>
-          <View>{infinity ? <UnCheckedBox /> : <CheckedBox />}</View>
+          <View>{!infinity ? <UnCheckedBox /> : <CheckedBox />}</View>
         </TouchableOpacity>
         {!infinity && (
           <>
