@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import React, { memo, useEffect, useRef, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import BirthDayField from "../../components/auth/BirthDayField";
@@ -24,6 +24,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "UserDetailRegisterScree
 
 const UserDetailScreen = memo((props : Props) => {
   const navigation = useNavigation();
+  const [loading,setLoading] = useState(false);
   const keyboardHeight = useHeaderHeight();
   const [step, setStep] = useState([1]);
   const { phone,password } = props.route.params;
@@ -44,11 +45,14 @@ const UserDetailScreen = memo((props : Props) => {
   const dispatch = useDispatch();
   const onSubmit = async () => {
     const token = (await Notifications.getExpoPushTokenAsync()).data;
+    setLoading(true);
     try {
       const data = await AuthApi.register(phone, password,token, firstName && firstName, height && height, weight && weight, gender && gender,  );
       dispatch(authLogin(data));
     } catch (err) {
       console.log(err);
+    } finally{
+      setLoading(false);
     }
   };
   // let listViewRef;
@@ -122,40 +126,45 @@ const UserDetailScreen = memo((props : Props) => {
   }, [navigation]);
   return (
     <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={keyboardHeight}>
-      <ScrollView
+      {loading ? 
+        <View>
+          <ActivityIndicator color={Colors.primary} size={"large"}  />
+        </View>  
+    :
+        <ScrollView
         contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
         ref={scrollViewRef}
         showsVerticalScrollIndicator={false}>
-        {step.includes(1) && <StepOne step={step} stepOne={stepOne} />}
-        {step.includes(2) && <StepTwo firstName={firstName} nameInput={nameInput} />}
-        {step.includes(3) && <StepThree _scrollToEnd={_scrollToEnd} gender={genderArray} setGender={setGender} stepThree={stepThree} />}
-        {step.includes(4) && <StepFour birthInput={birthInput} day={day} month={month} year={year} />}
-        {step.includes(5) && <StepFive height={height} heightInput={heightInput} weight={weight}  />}
-        {step.includes(6) && <StepSix _scrollToEnd={_scrollToEnd} select={select} selectDone={selectDone} selected={selected} stepSeven={stepSeven}  unselect={unselect} />}
-        {step.includes(7) && <StepSeven firstName={firstName} onSubmit={onSubmit} />}
-        {nameInput && (
-          <View style={styles.inputContainer}>
-            <TextInput
+          {step.includes(1) && <StepOne step={step} stepOne={stepOne} />}
+          {step.includes(2) && <StepTwo firstName={firstName} nameInput={nameInput} />}
+          {step.includes(3) && <StepThree _scrollToEnd={_scrollToEnd} gender={genderArray} setGender={setGender} stepThree={stepThree} />}
+          {step.includes(4) && <StepFour birthInput={birthInput} day={day} month={month} year={year} />}
+          {step.includes(5) && <StepFive height={height} heightInput={heightInput} weight={weight}  />}
+          {step.includes(6) && <StepSix _scrollToEnd={_scrollToEnd} select={select} selectDone={selectDone} selected={selected} stepSeven={stepSeven}  unselect={unselect} />}
+          {step.includes(7) && <StepSeven firstName={firstName} onSubmit={onSubmit} />}
+          {nameInput && (
+            <View style={styles.inputContainer}>
+              <TextInput
               onChangeText={setFirstName}
               placeholder={"Нэр"}
               style={firstName.length === 0 ? styles.darkInput : styles.primaryInput}
               value={firstName}
             />
-            {firstName.length !== 0 && (
-              <TouchableOpacity
+              {firstName.length !== 0 && (
+                <TouchableOpacity
                 onPress={() => {
                   stepTwo(3);
                 }}
                 style={styles.iconContainer}>
-                <IconButton />
-              </TouchableOpacity>
+                  <IconButton />
+                </TouchableOpacity>
             )}
-          </View>
+            </View>
         )}
-        {birthInput && (
-          <View style={styles.birthContainer}>
-            <BirthDayField
+          {birthInput && (
+            <View style={styles.birthContainer}>
+              <BirthDayField
               maxLength={4}
               setValue={setYear}
               style={year.length === 0 ? styles.darkGrey : styles.primary}
@@ -164,7 +173,7 @@ const UserDetailScreen = memo((props : Props) => {
               value={year}
               width="30%"
             />
-            <BirthDayField
+              <BirthDayField
               maxLength={2}
               setValue={setMonth}
               style={month.length === 0 ? styles.darkGrey : styles.primary}
@@ -173,7 +182,7 @@ const UserDetailScreen = memo((props : Props) => {
               value={month}
               width="25%"
             />
-            <BirthDayField
+              <BirthDayField
               maxLength={2}
               setValue={setDay}
               style={day.length === 0 ? styles.darkGrey : styles.primary}
@@ -182,18 +191,18 @@ const UserDetailScreen = memo((props : Props) => {
               value={day}
               width="25%"
             />
-            <TouchableOpacity
+              <TouchableOpacity
               onPress={() => {
                 stepFive(5);
               }}
               style={styles.iconButton}>
-              <IconButton />
-            </TouchableOpacity>
-          </View>
+                <IconButton />
+              </TouchableOpacity>
+            </View>
         )}
-        {heightInput && (
-          <View style={styles.birthContainer}>
-            <BirthDayField
+          {heightInput && (
+            <View style={styles.birthContainer}>
+              <BirthDayField
               maxLength={3}
               setValue={setHeight}
               style={height.length === 0 ? styles.darkGrey : styles.primary}
@@ -202,7 +211,7 @@ const UserDetailScreen = memo((props : Props) => {
               value={height}
               width="40%"
             />
-            <BirthDayField
+              <BirthDayField
               maxLength={3}
               setValue={setWeight}
               style={weight.length === 0 ? styles.darkGrey : styles.primary}
@@ -211,17 +220,18 @@ const UserDetailScreen = memo((props : Props) => {
               value={weight}
               width="40%"
             />
-            <TouchableOpacity
+              <TouchableOpacity
               onPress={() => {
                 stepSix(6);
                 _scrollToEnd();
               }}
               style={styles.iconButton}>
-              <IconButton />
-            </TouchableOpacity>
-          </View>
+                <IconButton />
+              </TouchableOpacity>
+            </View>
         )}
-      </ScrollView>
+        </ScrollView>
+       }
     </KeyboardAvoidingView>
   );
 });
@@ -283,5 +293,11 @@ const styles = StyleSheet.create({
   },
   activeBirthTitle: {
     color: Colors.primary,
+  },
+  loadingContainer: {
+    backgroundColor: Colors.white,
+    flex           : 1,
+    alignItems     : "center",
+    justifyContent : "center"
   },
 });

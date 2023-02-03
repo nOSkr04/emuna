@@ -7,6 +7,11 @@ export const me = async () => {
   return res.data;
 };
 
+export const deleteAccount = async (id:string) => {
+  const res = await httpRequest.del(`/users/${id}`);
+  return res.data;
+};
+
 export const otpVerify = async (phone: string) => {
   const res = await httpRequest.post("/users/send", { phone: phone });
   return res;

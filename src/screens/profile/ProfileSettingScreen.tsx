@@ -9,8 +9,10 @@ import DangerArrowRight from "../../../assets/svg/DangerRight.svg";
 import LogOutIcon from "../../../assets/svg/SignOut.svg";
 import { Mon500 } from "../../components/StyledText";
 import LogoutModal from "../../components/profile/LogoutModal";
+import { useNavigation } from "@react-navigation/native";
 const ProfileSettingScreen = memo(() => {
   const [isEnabled, setIsEnabled] = useState(false);
+  const navigation = useNavigation();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isModalVisible, setIsModalVisible] = useState(false);
  
@@ -41,13 +43,13 @@ const ProfileSettingScreen = memo(() => {
         <ArrowRight/>
       </View> */}
       {/* <View style={styles.border} /> */}
-      <View style={styles.contentContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate("DeleteAccountSheet")} style={styles.contentContainer} >
         <View style={styles.titleContainer}>
           <TrashIcon  />
           <Mon500 style={styles.title}>Бүртгэл устгах</Mon500>
         </View>
         <ArrowRight/>
-      </View>
+      </TouchableOpacity>
       <View style={styles.border} />
       <TouchableOpacity onPress={toggleModal} style={styles.logoutContainer}>
         <View style={styles.titleContainer}>

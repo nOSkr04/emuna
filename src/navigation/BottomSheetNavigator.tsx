@@ -14,6 +14,7 @@ import ProfileHealthDetailSheet from "../sheets/ProfileHealthDetail";
 import SavedDrugMenuSheets from "../sheets/SavedDrugMenu";
 import FrequencyDrugSheet from "../sheets/addDrug/FrequencyDrug";
 import DrinkConditions from "../sheets/addDrug/DrinkConditions";
+import DeleteAccountSheet from "../sheets/DeleteAccount";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -53,6 +54,16 @@ const BottomSheetNavigator = () => {
       <Screen
         component={DeleteAlertSheet}
         name="DeleteAlertSheet"
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints       : ["40%"],
+          index            : 1,
+          topInset         : insets.top,
+        }}
+      />
+      <Screen
+        component={DeleteAccountSheet}
+        name="DeleteAccountSheet"
         options={{
           backdropComponent: renderBackdrop,
           snapPoints       : ["40%"],

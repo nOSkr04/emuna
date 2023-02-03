@@ -48,6 +48,7 @@ export type BottomSheetParamList = {
   SavedDrugMenuSheets: undefined;
   FrequencyDrugSheet: undefined;
   DrinkConditions: undefined;
+  DeleteAccountSheet: undefined;
 };
 
 

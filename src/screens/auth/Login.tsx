@@ -19,6 +19,7 @@ const LoginScreen = memo(() => {
     try {
       const data = await AuthApi.login(phone, password ,token);
       dispatch(authLogin(data));
+      console.log(token);
     } catch (err: any) {
       Toast.show(err.error.message, {
         duration       : Toast.durations.SHORT,
@@ -28,7 +29,7 @@ const LoginScreen = memo(() => {
         animation      : true,
         hideOnPress    : true,
         delay          : 0,
-        backgroundColor: Colors.primary,
+        backgroundColor: Colors.redPill,
       });
     }
   };

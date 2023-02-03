@@ -2,7 +2,7 @@
   "expo": {
     "name": "emuna",
     "slug": "emun",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "emuna",
@@ -16,19 +16,21 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/1d2d4979-84da-43e3-981e-b87b7904e800"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "mn.emuna",
-      "buildNumber": "1.0.7",
+      "buildNumber": "1.0.8",
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
+      },
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Access to your photo library is required to attach photos to scan barcode",
+        "NSCameraUsageDescription": "Emuna requires access to your camera to medicine box scanning barcode"
       }
     },
     "android": {
-      "versionCode": 17,
+      "versionCode": 18,
       "package": "mn.emuna",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
