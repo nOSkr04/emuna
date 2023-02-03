@@ -2,7 +2,7 @@
   "expo": {
     "name": "emuna",
     "slug": "emun",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "emuna",
@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "mn.emuna",
-      "buildNumber": "1.0.8",
+      "buildNumber": "1.0.9",
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
       },
@@ -30,7 +30,7 @@
       }
     },
     "android": {
-      "versionCode": 18,
+      "versionCode": 19,
       "package": "mn.emuna",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
