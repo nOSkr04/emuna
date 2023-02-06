@@ -4,9 +4,9 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../constants/Colors";
 import BackIcon from "../../assets/svg/xButotn.svg";
 import UserIcon from "../../assets/svg/UserCircle.svg";
-import SaveIcon from "../../assets/svg/BookmarkSimple.svg";
+// import SaveIcon from "../../assets/svg/BookmarkSimple.svg";
 import SettingsIcon from "../../assets/svg/GearSix.svg";
-import SheildIcon from "../../assets/svg/ShieldCheck.svg";
+// import SheildIcon from "../../assets/svg/ShieldCheck.svg";
 import Button from "../components/Button";
 import LogoutModal from "../components/profile/LogoutModal";
 const ProfileMenuSheets = memo(() => {

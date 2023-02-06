@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet,  TextInput, TouchableOpacity,  } from "react-native";
 import React, { memo, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import Button from "../../components/Button";
@@ -6,27 +6,40 @@ import { RootStackParamList } from "../../navigation/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { Mon400, Mon600 } from "../../components/StyledText";
 type Props = NativeStackScreenProps<RootStackParamList, "SetPasswordScreen">;
 
 const SetPasswordScreen = memo((props: Props) => {
   const navigation = useNavigation();
   const height = useHeaderHeight();
-  const { phone } = props.route.params; 
+  const { phone } = props.route.params;
+  const [isPrivacy, setIsPrivacy] = useState(false);
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
-  const onSubmit =  () => {
-    if(password === password1){
+  const onSubmit = () => {
+    if (password === password1) {
       navigation.navigate("UserDetailRegisterScreen", { phone: phone, password: password });
     }
-    
   };
   return (
-    <KeyboardAvoidingView style={styles.container} {...Platform.OS === "ios" && { behavior: "padding" }} keyboardVerticalOffset={height}>
+    <KeyboardAvoidingView style={styles.container} {...(Platform.OS === "ios" && { behavior: "padding" })} keyboardVerticalOffset={height}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.inputLabel}>Нууц үг</Text>
+        <Mon600 style={styles.inputLabel}>Нууц үг</Mon600>
         <TextInput onChangeText={setPassword} secureTextEntry style={styles.input} value={password} />
-        <Text style={styles.inputLabel}>Нууц үгээ давтана уу</Text>
-        <TextInput onChangeText={setPassword1} secureTextEntry style={styles.input} value={password1}/>
+        <Mon600 style={styles.inputLabel}>Нууц үгээ давтана уу</Mon600>
+        <TextInput onChangeText={setPassword1} secureTextEntry style={styles.input} value={password1} />
+        <TouchableOpacity onPress={() => setIsPrivacy(!isPrivacy)} style={styles.privacyText}>
+          {isPrivacy ? (
+            <MaterialCommunityIcons color="black" name="checkbox-blank-circle" size={24} />
+          ) : (
+            <MaterialCommunityIcons color="black" name="checkbox-blank-circle-outline" size={24} />
+          )}
+          <Mon400 >Үйлчилгээний нөхцөл </Mon400>
+          <TouchableOpacity onPress={() => navigation.navigate("PrivacyScreen")} style={styles.primaryButton}>
+            <Mon400 style={styles.primaryText}>зөвшөөрөх </Mon400>
+          </TouchableOpacity>
+        </TouchableOpacity>
       </ScrollView>
       <Button
         onPress={onSubmit}
@@ -47,7 +60,6 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize        : 11,
-    fontFamily      : "Mon600",
     color           : Colors.texts,
     opacity         : 0.72,
     marginHorizontal: 32,
@@ -66,6 +78,19 @@ const styles = StyleSheet.create({
     bottom          : 20,
     marginHorizontal: 24,
   },
+  privacyText: {
+    marginHorizontal: 24,
+    flexDirection   : "row",
+    marginTop       : 16,
+    flexWrap        : "wrap",
+    alignItems      : "center"
+  },
+  primaryText: {
+    color: Colors.primary
+  },
+  primaryButton: {
+    padding: 5
+  }
 });
 
 export default SetPasswordScreen;

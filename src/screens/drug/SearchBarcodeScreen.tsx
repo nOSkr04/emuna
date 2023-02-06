@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import React, { memo, useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import { BarCodeScanner } from "expo-barcode-scanner";
@@ -9,7 +9,7 @@ import axios from "axios";
 const SearchBarcodeScreen = memo(() => {
   const [hasPermission, setHasPermission] = useState<boolean | string | null>(null);
   const [scanned, setScanned] = useState(false);
-  const [data, setData] = useState([]);
+  const [datas, setDatas] = useState([]);
   // const [size,setSize] = useState("")
 
   const navigation = useNavigation();
@@ -22,15 +22,21 @@ const SearchBarcodeScreen = memo(() => {
     getBarCodeScannerPermissions();
   }, []);
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
+    setScanned(true);
     axios
       .get(`http://24.199.126.56/api/v1/drugs?barcode=${data}`)
       .then(res => {
-        setData(res.data.data);
-        setScanned(true);
+        setDatas(res.data.data);
+        if (res.data.data.length === 0) {
+          Alert.alert("Таны хайсан баркодтой эм олдсонгүй");
+          setScanned(false);
+        } else {
+          setScanned(true);
+        }
       })
       .catch(err => {
-        setScanned(false);
         console.log(err);
+        setScanned(false);
       });
   };
   if (hasPermission === null) {
@@ -44,7 +50,7 @@ const SearchBarcodeScreen = memo(() => {
       <View style={styles.barcodeContainer}>
         <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={styles.barcode} />
       </View>
-      {scanned ? (
+      {/* {scanned ? (
         <>
           {data[0] && (
             <>
@@ -55,12 +61,19 @@ const SearchBarcodeScreen = memo(() => {
         </>
       ) : (
         <Text style={styles.title}>Та эмийнхээ баркодыг уншуулна уу?</Text>
+      )} */}
+      {datas.length > 0 ? (
+        <>
+          <Text style={styles.scannedTitle}>{datas[0]?.name}</Text>
+          <Text style={styles.scannedTitle}>{datas[0]?.size}</Text>
+        </>
+      ) : (
+        <Text style={styles.title}>Та эмийнхээ баркодыг уншуулна уу?</Text>
       )}
-   
       <Button
-        disabled={data[0] ? false : true}
-        onPress={() => navigation.navigate("DrugDetailScreen", { id: data[0].id })}
-        secondary={data[0] ? false : true}
+        disabled={datas.length > 0 ? false : true}
+        onPress={() => navigation.navigate("DrugDetailScreen", { id: datas[0].id })}
+        secondary={datas.length > 0 ? false : true}
         style={styles.button}
         title="Үргэлжлүүлэх"
       />

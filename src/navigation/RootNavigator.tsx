@@ -21,11 +21,13 @@ import {
   barCodeScannerScreenOptions,
   loginScreenOptions,
   otpVerifyScreenOptions,
+  privacyScreenOptions,
   profileEditAllergiesScreenOptions,
   profileEditChronicScreenOptions,
   profileEditScreenOptions,
   profileSettingsScreenOptions,
   savedDrugScreenOptions,
+  secretPrivacyScreenOptions,
   setPasswordScreenOptions,
 } from "../components/headers";
 import SignUpScreen from "../screens/auth/SignUp";
@@ -45,6 +47,8 @@ import ProfileEditChronicScreen from "../screens/profile/ProfileEditChronicScree
 import SavedDrugScreen from "../screens/drug/SavedDrugScreen";
 import ProfileSettingScreen from "../screens/profile/ProfileSettingScreen";
 import AdsDetailScreen from "../screens/home/AdsDetailScreen";
+import PrivacyScreen from "../screens/auth/Privacy";
+import SecretPrivacyScreen from "../screens/profile/SecretPrivacyScreen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -96,6 +100,7 @@ function RootNavigator() {
           <Stack.Screen component={SavedDrugScreen} name="SavedDrugScreen" options={savedDrugScreenOptions} />
           <Stack.Screen component={ProfileSettingScreen} name="ProfileSettingScreen" options={profileSettingsScreenOptions} />
           <Stack.Screen component={AdsDetailScreen} name="AdsDetailScreen" options={adsDetailScreenOptions} />
+          <Stack.Screen component={SecretPrivacyScreen} name="SecretPrivacyScreen" options={secretPrivacyScreenOptions} />
         </Stack.Group>
       ) : (
         <Stack.Group
@@ -108,6 +113,7 @@ function RootNavigator() {
           <Stack.Screen component={OtpVerifyScreen} name="OtpVerifyScreen" options={otpVerifyScreenOptions} />
           <Stack.Screen component={SetPasswordScreen} name="SetPasswordScreen" options={setPasswordScreenOptions} />
           <Stack.Screen component={UserDetailRegisterScreen} name="UserDetailRegisterScreen"  />
+          <Stack.Screen component={PrivacyScreen} name="PrivacyScreen" options={privacyScreenOptions}  />
         </Stack.Group>
       )}
     </Stack.Navigator>

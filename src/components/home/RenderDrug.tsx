@@ -18,8 +18,8 @@ const RenderDrug = memo(({  when,quantity, status, medicine, color, icon }: IMed
         <Mon700 style={styles.drugName}>{medicine}</Mon700>
         <View style={styles.bottomContainer}>
           <Mon500 style={styles.when}>{when} </Mon500>
-          {/* <Dot color={Colors.helperText} /> */}
-          {/* <Mon500 style={styles.when}> {quantity}ш</Mon500> */}
+          <Dot color={Colors.helperText} />
+          <Mon500 style={styles.when}> {quantity}ш</Mon500>
         </View>
         {status === "drinked" && <View style={styles.infoContainer}>
           <View style={[styles.infoIcon, styles.checkedInfoIcon]}>

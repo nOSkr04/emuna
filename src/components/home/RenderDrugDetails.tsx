@@ -13,19 +13,16 @@ import PencilIcon from "../../../assets/svg/pencil.svg";
 import TrashIcon from "../../../assets/svg/Trash.svg";
 import { Colors } from "../../constants/Colors";
 import { HistoryApi } from "../../apis";
-import { format } from "date-fns";
 import { useMutate } from "../../hooks/useMutate";
 const RenderDrugDetails = memo(({ item,strDate }: { item: IMedicine, strDate:string }) => {
   const navigation = useNavigation();
   const mutate = useMutate();
   const [dataStatus,setDataStatus] = useState<string>(`${item.status}`);
-  const [statusDate,setStatusDate] = useState<Date>(new Date());
   const [isModalVisible, setIsModalVisible] = useState(false);
   const changeStatus = async (id:string, status:string, ) => {
     try {
       await HistoryApi.editStatusHistory(id,status);
       setDataStatus(status);
-      setStatusDate(new Date());
     } catch (err) {
       console.log(err);
     } finally{
@@ -51,7 +48,7 @@ const RenderDrugDetails = memo(({ item,strDate }: { item: IMedicine, strDate:str
             <View style={styles.textContainer}>
               <Text style={styles.itemWhen}>{item.when}</Text>
               <DotIcon color={Colors.text} style={styles.dot} />
-              <Text style={styles.itemWhen}>{item.quantity}</Text>
+              <Text style={styles.itemWhen}>{item.quantity} ш</Text>
             </View>
             {dataStatus === "drinked" && (
               <View style={styles.infoContainer}>

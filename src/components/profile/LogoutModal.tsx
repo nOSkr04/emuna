@@ -16,10 +16,10 @@ const LogoutModal = memo(({ isModalVisible, toggleModal }: Props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const logout = async () => {
-    
     try {
       await AuthApi.logout();
       dispatch(authLogout());
+      toggleModal();
       navigation.goBack();
     } catch (err) {
       console.log(err);

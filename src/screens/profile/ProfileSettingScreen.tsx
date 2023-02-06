@@ -5,20 +5,21 @@ import BellIcon from "../../../assets/svg/Bell.svg";
 // import PhoneIcon from "../../../assets/svg/phone.svg";
 import TrashIcon from "../../../assets/svg/UserCircle.svg";
 import ArrowRight from "../../../assets/svg/CaretRight.svg";
-import DangerArrowRight from "../../../assets/svg/DangerRight.svg";
-import LogOutIcon from "../../../assets/svg/SignOut.svg";
+import PencilIcon from "../../../assets/svg/PencilSimple.svg";
+// import DangerArrowRight from "../../../assets/svg/DangerRight.svg";
+// import LogOutIcon from "../../../assets/svg/SignOut.svg";
 import { Mon500 } from "../../components/StyledText";
-import LogoutModal from "../../components/profile/LogoutModal";
+// import LogoutModal from "../../components/profile/LogoutModal";
 import { useNavigation } from "@react-navigation/native";
 const ProfileSettingScreen = memo(() => {
   const [isEnabled, setIsEnabled] = useState(false);
   const navigation = useNavigation();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
  
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
+  // const toggleModal = () => {
+  //   setIsModalVisible(!isModalVisible);
+  // };
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer1}>
@@ -51,14 +52,22 @@ const ProfileSettingScreen = memo(() => {
         <ArrowRight/>
       </TouchableOpacity>
       <View style={styles.border} />
-      <TouchableOpacity onPress={toggleModal} style={styles.logoutContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate("SecretPrivacyScreen")} style={styles.contentContainer} >
+        <View style={styles.titleContainer}>
+          <PencilIcon height={20} width={20} />
+          <Mon500 style={styles.title}>Нууцлалын бодлого</Mon500>
+        </View>
+        <ArrowRight/>
+      </TouchableOpacity>
+      <View style={styles.border} />
+      {/* <TouchableOpacity onPress={toggleModal} style={styles.logoutContainer}>
         <View style={styles.titleContainer}>
           <LogOutIcon  />
           <Mon500 style={[styles.dangerColor,styles.title, ]}>Системээс гарах</Mon500>
         </View>
         <DangerArrowRight />
       </TouchableOpacity>
-      <LogoutModal isModalVisible={isModalVisible} toggleModal={toggleModal}  />
+      <LogoutModal isModalVisible={isModalVisible} toggleModal={toggleModal}  /> */}
     </View>
   );
 });

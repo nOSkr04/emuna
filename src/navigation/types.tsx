@@ -27,6 +27,8 @@ export type RootStackParamList = {
   SavedDrugScreen: undefined;
   ProfileSettingScreen: undefined;
   AdsDetailScreen: { id: string };
+  PrivacyScreen: undefined;
+  SecretPrivacyScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;

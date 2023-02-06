@@ -28,6 +28,11 @@ export const setPasswordScreenOptions = {
   headerTitle        : "Нууц үг",
   headerLeft         : () => <BackArrow/>
 };
+export const privacyScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Үйлчилгээний нөхцөл",
+  headerLeft         : () => <BackArrow/>
+};
 export const otpVerifyScreenOptions = {
   headerShadowVisible: false,
   headerTitle        : "",
@@ -85,5 +90,10 @@ export const profileSettingsScreenOptions = {
 export const adsDetailScreenOptions = {
   headerShadowVisible: false,
   headerTitle        : "Мэдээлэл",
+  headerLeft         : () => <BackButton/>
+};
+export const secretPrivacyScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Нууцлалын бодлого",
   headerLeft         : () => <BackButton/>
 };

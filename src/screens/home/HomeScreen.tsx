@@ -34,6 +34,7 @@ const HomeScreen = memo(() => {
   if(error){
     return null;
   }
+  
   return (
     <View style={styles.container}>
       {data?.invited === undefined || data?.invited === 0 ? null  : <DrugAlert />}
