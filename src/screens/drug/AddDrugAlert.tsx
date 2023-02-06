@@ -320,7 +320,7 @@ const AddDrugAlertScreen = memo(({ route }: Props) => {
           />
         </BottomSheetModal>
       </>
-      <AlertModal alertVisible={alertVisible} setAlertVisible={setAlertVisible}  />
+      <AlertModal alertVisible={alertVisible} name={name}  setAlertVisible={setAlertVisible} shape={shape} size={size}  />
     </>
   );
 });

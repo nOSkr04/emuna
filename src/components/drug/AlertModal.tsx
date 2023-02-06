@@ -9,9 +9,12 @@ import { useNavigation } from "@react-navigation/native";
 type Props = {
   alertVisible: boolean;
   setAlertVisible: Dispatch<SetStateAction<boolean>>;
+  name:string,
+   size: string,
+    shape: string
 };
 
-const AlertModal = ({ alertVisible, setAlertVisible }: Props) => {
+const AlertModal = ({ alertVisible, setAlertVisible, name, size, shape }: Props) => {
   const navigation = useNavigation();
   const timePickerToggleModal = () => {
     setAlertVisible(!alertVisible);
@@ -26,7 +29,7 @@ const AlertModal = ({ alertVisible, setAlertVisible }: Props) => {
           </View>
         </View>
         <Mon700 style={styles.title}>Сануулга амжилттай хадгалагдлаа.</Mon700>
-        <Mon400 style={styles.description}>Ибупрофен, Капсул, 400 мг</Mon400>
+        <Mon400 style={styles.description}>{name}, {shape}, {size}</Mon400>
         <Button onPress={timePickerToggleModal} style={styles.button} title="Ойлголлоо"  />
       </View>
     </Modal>

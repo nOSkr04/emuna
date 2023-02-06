@@ -23,6 +23,11 @@ export const loginScreenOptions = {
   headerTitle        : "Нэвтрэх / Бүртгүүлэх",
   headerLeft         : () => <BackArrow/>
 };
+export const setPasswordScreenOptions = {
+  headerShadowVisible: false,
+  headerTitle        : "Нууц үг",
+  headerLeft         : () => <BackArrow/>
+};
 export const otpVerifyScreenOptions = {
   headerShadowVisible: false,
   headerTitle        : "",

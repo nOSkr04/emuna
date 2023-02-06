@@ -26,6 +26,7 @@ import {
   profileEditScreenOptions,
   profileSettingsScreenOptions,
   savedDrugScreenOptions,
+  setPasswordScreenOptions,
 } from "../components/headers";
 import SignUpScreen from "../screens/auth/SignUp";
 import OtpVerifyScreen from "../screens/auth/OtpVerify";
@@ -105,7 +106,7 @@ function RootNavigator() {
           <Stack.Screen component={LoginScreen} name="LoginScreen" options={loginScreenOptions} />
           <Stack.Screen component={SignUpScreen} name="SignUpScreen" options={loginScreenOptions} />
           <Stack.Screen component={OtpVerifyScreen} name="OtpVerifyScreen" options={otpVerifyScreenOptions} />
-          <Stack.Screen component={SetPasswordScreen} name="SetPasswordScreen" />
+          <Stack.Screen component={SetPasswordScreen} name="SetPasswordScreen" options={setPasswordScreenOptions} />
           <Stack.Screen component={UserDetailRegisterScreen} name="UserDetailRegisterScreen"  />
         </Stack.Group>
       )}
