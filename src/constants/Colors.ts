@@ -12,7 +12,6 @@ export abstract class Colors  {
   static DarkText = "#545659";
   static darkGrey = "#A5A6A7";
   static text = "#091535";
-// 
  static texts = "rgba(17, 20, 24, 0.72);";
  static strokeDark = "#E0E7F1";
  static chatBotBg = "#F8F8F8";

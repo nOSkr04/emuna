@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     borderColor     : Colors.primary,
     borderRadius    : 8,
     marginTop       : 8,
-    padding         : 8
+    padding         : 8,
   }
 });
 
